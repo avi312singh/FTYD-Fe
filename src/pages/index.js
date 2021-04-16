@@ -3,7 +3,7 @@ import axios from 'axios'
 import Dropdown from 'react-dropdown';
 import { LineChart, XAxis, YAxis, Tooltip, CartesianGrid, Line } from 'recharts'
 import 'react-dropdown/style.css';
-import {Container, Tab, Tabs } from "@material-ui/core";
+import { Container, Tab, Tabs } from "@material-ui/core";
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -100,7 +100,7 @@ export default function Home() {
   const [response, setResponse] = useState([]);
   const [currentOption, setCurrentOption] = useState(288)
   const [value, setValue] = React.useState(0);
-  const[open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   const config = {
     method: 'get',
@@ -113,14 +113,15 @@ export default function Home() {
   useEffect(() => {
     axios(config)
       .then((response) => {
-        setResponse(response.data.result);
+        if (response.status === 201 || 200) {
+          setResponse(response.data.result.response);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
 
   }, [currentOption])
-  console.log(response)
 
   const defaultOption = options[0];
 
@@ -187,7 +188,7 @@ export default function Home() {
           <Divider />
           <List>
             {['Home', 'Top Players', 'Donate', 'Server Info'].map((text, index) => (
-              <ListItem button key={text}>
+              <ListItem to={`/${text}`} button key={text}>
                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
@@ -201,39 +202,65 @@ export default function Home() {
           })}
         >
           <div className={classes.drawerHeader} />
-      <div>
-        <h2>Fall to your death server</h2>
-        <Dropdown options={options} value={defaultOption} onChange={parseSelected} placeholder="Select an option" />
-      </div>
+          <div>
+            <h2>Fall to your death server</h2>
+            <Dropdown options={options} value={defaultOption} onChange={parseSelected} placeholder="Select an option" />
+          </div>
 
-      <Container className={classes.graphContainer}>
-        <Tabs
-          value={value}
-          onChange={handleTabChange}
-          indicatorColor="primary"
-          textColor="primary"
-          centered
-        >
-          <Tab label="Player Count" />
-          <Tab label="Kill Count" />
-          <Tab label="Duration Count" />
-        </Tabs>
+          <Container className={classes.graphContainer}>
+            <Tabs
+              value={value}
+              onChange={handleTabChange}
+              indicatorColor="primary"
+              textColor="primary"
+              centered
+            >
+              <Tab label="Player Count" />
+              <Tab label="Kill Count" />
+              <Tab label="Duration Count" />
+            </Tabs>
 
+            {value === 0 && <LineChart
+              width={1000}
+              height={400}
+              data={response}
+              margin={{ top: 10, right: 20, left: 10, bottom: 5 }}
+            >
+              <Line type="monotone" dataKey="playerCount" stroke="black" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
+              <XAxis dataKey="time" />
+              <YAxis dataKey="playerCount" />
+              <Tooltip />
+            </LineChart>}
 
-        <LineChart
-          width={1000}
-          height={400}
-          data={response.response}
-          margin={{ top: 10, right: 20, left: 10, bottom: 5 }}
-        >
-          <Line type="monotone" dataKey="playerCount" stroke="black" />
-          <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
-          <XAxis dataKey="time" />
-          <YAxis dataKey="playerCount" />
-          <Tooltip />
-        </LineChart>
-      </Container>
-      </main>
+            {value === 1 && <LineChart
+              width={1000}
+              height={400}
+              data={response}
+              margin={{ top: 10, right: 20, left: 10, bottom: 5 }}
+            >
+              <Line type="monotone" dataKey="playerCount" stroke="black" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
+              <XAxis dataKey="time" />
+              <YAxis dataKey="playerCount" />
+              <Tooltip />
+            </LineChart>}
+
+            {value === 2 && <LineChart
+              width={1000}
+              height={400}
+              data={response}
+              margin={{ top: 10, right: 20, left: 10, bottom: 5 }}
+            >
+              <Line type="monotone" dataKey="durationCount" stroke="black" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
+              <XAxis dataKey="time" />
+              <YAxis dataKey="durationCount" />
+              <Tooltip />
+            </LineChart>}
+
+          </Container>
+        </main>
       </div>
     </>)
 }
