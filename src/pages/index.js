@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"
 import axios from 'axios'
 import Dropdown from 'react-dropdown';
-import { LineChart, XAxis, YAxis, Tooltip, CartesianGrid, Line } from 'recharts'
+import { LineChart, XAxis, YAxis, Tooltip, CartesianGrid, Line, Pie, PieChart, Cell } from 'recharts'
 import 'react-dropdown/style.css';
+
 import { Container, Tab, Tabs } from "@material-ui/core";
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -37,7 +38,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   graphContainer: {
-    paddingTop: '68px',
+    paddingTop: '16px',
+  },
+  durationDropdown: {
+    paddingTop: '8px'
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -101,6 +105,28 @@ export default function Home() {
   const [currentOption, setCurrentOption] = useState(288)
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState(false);
+
+  const data = [
+    {
+      "name": "Today",
+      "kills": 884
+    },
+    {
+      "name": "Week",
+      "kills": 884
+    },
+    {
+      "name": "Month",
+      "kills": 80306
+    },
+    {
+      "name": "All",
+      "kills": 611231
+    }
+  ];
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#42C1FF'];
+
+
 
   const config = {
     method: 'get',
@@ -196,6 +222,8 @@ export default function Home() {
           </List>
           <Divider />
         </Drawer>
+
+
         <main
           className={clsx(classes.content, {
             [classes.contentShift]: open,
@@ -204,7 +232,6 @@ export default function Home() {
           <div className={classes.drawerHeader} />
           <div>
             <h2>Fall to your death server</h2>
-            <Dropdown options={options} value={defaultOption} onChange={parseSelected} placeholder="Select an option" />
           </div>
 
           <Container className={classes.graphContainer}>
@@ -220,44 +247,69 @@ export default function Home() {
               <Tab label="Duration Count" />
             </Tabs>
 
-            {value === 0 && <LineChart
-              width={1000}
-              height={400}
-              data={response}
-              margin={{ top: 10, right: 20, left: 10, bottom: 5 }}
-            >
-              <Line type="monotone" dataKey="playerCount" stroke="black" />
-              <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
-              <XAxis dataKey="time" />
-              <YAxis dataKey="playerCount" />
-              <Tooltip />
-            </LineChart>}
+            {value === 0 &&
+              <>
+                <Dropdown options={options} value={defaultOption} onChange={parseSelected} placeholder="Select an option" className={classes.durationDropdown} />
 
-            {value === 1 && <LineChart
-              width={1000}
-              height={400}
-              data={response}
-              margin={{ top: 10, right: 20, left: 10, bottom: 5 }}
-            >
-              <Line type="monotone" dataKey="playerCount" stroke="black" />
-              <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
-              <XAxis dataKey="time" />
-              <YAxis dataKey="playerCount" />
-              <Tooltip />
-            </LineChart>}
+                <LineChart
+                  width={1000}
+                  height={400}
+                  data={response}
+                  margin={{ top: 10, right: 20, left: 10, bottom: 5 }}
+                >
+                  <Line type="monotone" dataKey="playerCount" stroke="black" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
+                  <XAxis dataKey="time" />
+                  <YAxis dataKey="playerCount" />
+                  <Tooltip />
+                </LineChart>
+              </>}
 
-            {value === 2 && <LineChart
-              width={1000}
-              height={400}
-              data={response}
-              margin={{ top: 10, right: 20, left: 10, bottom: 5 }}
-            >
-              <Line type="monotone" dataKey="durationCount" stroke="black" />
-              <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
-              <XAxis dataKey="time" />
-              <YAxis dataKey="durationCount" />
-              <Tooltip />
-            </LineChart>}
+            {value === 1 &&
+              <PieChart width={800} height={400}>
+                <Tooltip />
+                <Pie
+                  data={data}
+                  dataKey="kills"
+                  cx={240}
+                  cy={200}
+                  innerRadius={100}
+                  outerRadius={130}
+                  fill="#8884d8"
+                  paddingAngle={5}
+                  label
+                  labelLine
+                  animationDuration="500"
+                >
+                  {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Pie
+                  data={data}
+                  dataKey="kills"
+                  cx={620}
+                  cy={200}
+                  startAngle={180}
+                  endAngle={0}
+                  innerRadius={60}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  paddingAngle={5}
+                  label
+                  labelLine
+                >
+                  {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+              </PieChart>
+            }
+
+            {
+              value === 2 &&
+              "durations"
+            }
 
           </Container>
         </main>
