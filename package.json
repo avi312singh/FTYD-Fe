@@ -19,6 +19,7 @@
     "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "gatsby": "^3.0.1",
+    "gatsby-plugin-material-ui": "^3.0.1",
     "gatsby-source-graphql": "^3.0.0",
     "mui-datatables": "^3.7.7",
     "react": "^16.12.0",
