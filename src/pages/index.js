@@ -23,6 +23,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
 import KillsPieChart from './components/KillsPieChart/KillsPieChart'
+import DurationPieChart from './components/DurationPieChart/DurationPieChart'
 import 'react-dropdown/style.css';
 
 const drawerWidth = 240;
@@ -144,39 +145,8 @@ export default function Home() {
   const handleTabChange = (event, newValue) => {
     setCurrentOption(288);
     if (value !== newValue) {
-    setValue(newValue);
-      switch (newValue) {
-    default: console.error("Unknown value: ", newValue)
-    break;
-    case 0:
-        setConfig({
-          method: 'get',
-          url: `${endpoint}aggregatedstats/playerCount?duration=${currentOption}`,
-          headers: {
-            'Authorization': `Basic ${authorisation}`,
-          }
-        })
-      break;
-    case 1:
-        setConfig({
-          method: 'get',
-          url: `${endpoint}aggregatedstats/killCount?duration=999`,
-          headers: {
-            'Authorization': `Basic ${authorisation}`,
-          }
-        })
-      break;
-    case 2:
-        setConfig({
-          method: 'get',
-          url: `${endpoint}aggregatedstats/durationCount?duration=999`,
-          headers: {
-            'Authorization': `Basic ${authorisation}`,
-          }
-        })
-      break;
+      setValue(newValue);
     }
-  }
   };
 
   const handleDrawerOpen = () => {
@@ -228,7 +198,7 @@ export default function Home() {
           </div>
           <Divider />
           <List>
-            {[{text: 'Home', href: 'home'}, {text: 'Top Players', href: 'top-players'}, {text: 'Donate', href: 'donate'}, {text: 'Server Info', href: 'server-info'}].map((link, index) => (
+            {[{ text: 'Home', href: '/' }, { text: 'Top Players', href: 'top-players' }, { text: 'Donate', href: 'donate' }, { text: 'Server Info', href: 'server-info' }].map((link, index) => (
               <ListItem key={link.text} component="a" href={link.href} button color="inherit">
                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                 <ListItemText primary={link.text} />
@@ -256,7 +226,7 @@ export default function Home() {
             >
               <Tab label="Player Count" />
               <Tab label="Kill Count" />
-              <Tab label="Duration Count" />
+              <Tab label="Hours Spent" />
             </Tabs>
             {value === 0 &&
               <>
@@ -275,11 +245,11 @@ export default function Home() {
                 </LineChart>
               </>}
             {value === 1 &&
-            <KillsPieChart/>
+              <KillsPieChart />
             }
             {
               value === 2 &&
-              "durations"
+              <DurationPieChart />
             }
           </Container>
         </main>

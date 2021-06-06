@@ -14,14 +14,17 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
+    "@fontsource/roboto": "^4.4.5",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "gatsby": "^3.0.1",
     "gatsby-source-graphql": "^3.0.0",
+    "mui-datatables": "^3.7.7",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-dropdown": "^1.9.1",
+    "react-paypal-button-v2": "^2.6.3",
     "recharts": "^2.0.9"
   },
   "devDependencies": {
