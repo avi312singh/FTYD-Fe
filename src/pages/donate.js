@@ -110,6 +110,8 @@ export default function Home() {
         color: "black"
     }
 
+    const clientId = process.env.GATSBY_PAYPAL_CLIENTID || (() => { new Error("Provide a paypal client id in env vars") });
+
     return (
         <>
             <div className={classes.root}>
@@ -151,7 +153,7 @@ export default function Home() {
                     </div>
                     <Divider />
                     <List>
-                        {[{ text: 'Home', href: '/', icon: <HomeIcon /> }, { text: 'Top Players', href: '/top-players', icon: <PersonIcon /> }, { text: 'Donate', href: '/donate', icon: <AttachMoneyIcon /> }, { text: 'Server Info', href: '/server-info', icon: <InfoIcon/> }].map((link, index) => (
+                        {[{ text: 'Home', href: '/', icon: <HomeIcon /> }, { text: 'Top Players', href: '/top-players', icon: <PersonIcon /> }, { text: 'Donate', href: '/donate', icon: <AttachMoneyIcon /> }, { text: 'Server Info', href: '/server-info', icon: <InfoIcon /> }].map((link, index) => (
                             <ListItem key={link.text}>
                                 <ListItemIcon>{link.icon}</ListItemIcon>
                                 <Link to={link.href} style={linkStyles}>{link.text}</Link>
@@ -173,22 +175,17 @@ export default function Home() {
                         Please support the server and this site for future content and free hosting!
                     </Typography>
                     <div className={classes.PayPalButton}>
-                    <PayPalButton
-                        amount="0.01"
-                        // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-                        onSuccess={(details) => {
-                            alert("Transaction completed by " + details.payer.name.given_name);
-
-                            // OPTIONAL: Call your server to save the transaction
-                            return fetch("/paypal-transaction-complete", {
-                                method: "post",
-                                body: JSON.stringify({
-                                    test: "test"
-                                })
-                            });
-                        }}
+                        <PayPalButton
+                            currency="GBP"
+                            shippingPreference="NO_SHIPPING"
+                            onSuccess={(details) => {
+                                console.log("Transaction completed by " + details.payer.name.given_name);
+                            }}
+                            options={{
+                                clientId: clientId
+                            }}
                         />
-                        </div>
+                    </div>
                 </main>
             </div>
         </>)
