@@ -198,7 +198,7 @@ export default function Home() {
           </div>
           <Divider />
           <List>
-            {[{ text: 'Home', href: '/' }, { text: 'Top Players', href: 'top-players' }, { text: 'Donate', href: 'donate' }, { text: 'Server Info', href: 'server-info' }].map((link, index) => (
+            {[{ text: 'Home', href: '/' }, { text: 'Top Players', href: '/top-players' }, { text: 'Donate', href: '/donate' }, { text: 'Server Info', href: '/server-info' }].map((link, index) => (
               <ListItem key={link.text} component="a" href={link.href} button color="inherit">
                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                 <ListItemText primary={link.text} />
