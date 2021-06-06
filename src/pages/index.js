@@ -18,9 +18,12 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import HomeIcon from '@material-ui/icons/Home';
+import InfoIcon from '@material-ui/icons/Info';
+import PersonIcon from '@material-ui/icons/Person';
+
+import { Link } from "gatsby"
 
 import KillsPieChart from './components/KillsPieChart/KillsPieChart'
 import DurationPieChart from './components/DurationPieChart/DurationPieChart'
@@ -157,6 +160,11 @@ export default function Home() {
   };
   const theme = useTheme();
 
+  const linkStyles = {
+    textDecoration: "none",
+    color: "black"
+  }
+
   return (
     <>
       <div className={classes.root}>
@@ -198,10 +206,10 @@ export default function Home() {
           </div>
           <Divider />
           <List>
-            {[{ text: 'Home', href: '/' }, { text: 'Top Players', href: '/top-players' }, { text: 'Donate', href: '/donate' }, { text: 'Server Info', href: '/server-info' }].map((link, index) => (
-              <ListItem key={link.text} component="a" href={link.href} button color="inherit">
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={link.text} />
+            {[{ text: 'Home', href: '/', icon: <HomeIcon /> }, { text: 'Top Players', href: '/top-players', icon: <PersonIcon /> }, { text: 'Donate', href: '/donate', icon: <AttachMoneyIcon /> }, { text: 'Server Info', href: '/server-info', icon: <InfoIcon /> }].map((link, index) => (
+              <ListItem key={link.text}>
+                <ListItemIcon>{link.icon}</ListItemIcon>
+                <Link to={link.href} style={linkStyles}>{link.text}</Link>
               </ListItem>
             ))}
           </List>

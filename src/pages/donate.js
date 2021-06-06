@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react"
-import axios from 'axios'
+import React from "react"
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -15,12 +14,12 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import PersonIcon from '@material-ui/icons/Person';
 
+import { Link } from "gatsby"
 import { PayPalButton } from "react-paypal-button-v2";
 
 import 'react-dropdown/style.css';
@@ -106,6 +105,11 @@ export default function Home() {
     };
     const theme = useTheme();
 
+    const linkStyles = {
+        textDecoration: "none",
+        color: "black"
+    }
+
     return (
         <>
             <div className={classes.root}>
@@ -147,10 +151,10 @@ export default function Home() {
                     </div>
                     <Divider />
                     <List>
-                        {[{ text: 'Home', href: '/', icon: <HomeIcon /> }, { text: 'Top Players', href: 'top-players', icon: <PersonIcon /> }, { text: 'Donate', href: 'donate', icon: <AttachMoneyIcon /> }, { text: 'Server Info', href: 'server-info', icon: <InfoIcon/> }].map((link, index) => (
-                            <ListItem key={link.text} component="a" href={link.href} button color="inherit">
+                        {[{ text: 'Home', href: '/', icon: <HomeIcon /> }, { text: 'Top Players', href: '/top-players', icon: <PersonIcon /> }, { text: 'Donate', href: '/donate', icon: <AttachMoneyIcon /> }, { text: 'Server Info', href: '/server-info', icon: <InfoIcon/> }].map((link, index) => (
+                            <ListItem key={link.text}>
                                 <ListItemIcon>{link.icon}</ListItemIcon>
-                                <ListItemText primary={link.text} />
+                                <Link to={link.href} style={linkStyles}>{link.text}</Link>
                             </ListItem>
                         ))}
                     </List>
