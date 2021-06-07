@@ -22,6 +22,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import CheckIcon from '@material-ui/icons/Check';
 import ErrorIcon from '@material-ui/icons/Error';
 import MUIDataTable from "mui-datatables";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 import { Link } from "gatsby"
 
@@ -98,6 +100,8 @@ const useStyles = makeStyles((theme) => ({
 export default function ServerInfo() {
     const [open, setOpen] = React.useState(false);
     const [response, setResponse] = useState([]);
+    const [players, setPlayers] = useState([]);
+    const [serverInfo, setServerInfo] = useState({ loading: true });
     const classes = useStyles();
 
     const handleDrawerOpen = () => {
@@ -122,13 +126,33 @@ export default function ServerInfo() {
         axios(config)
             .then((response) => {
                 if (response.status === 201 || 200) {
-                    setResponse(response.data.response);
+                    setTimeout(() => {
+                        setResponse(response.data.response);
+                        setServerInfo(response.data.response[0].directQueryInfo, { loading: false })
+                        if (serverInfo.status === "online") {
+                            setPlayers(response.data.response[1].directPlayerInfo)
+                        }
+                        console.log(response);
+                    }, 1000
+                    )
                 }
             })
             .catch((error) => {
                 console.log(error);
             });
     }, [])
+
+    // if(serverInfo.status === "online") {
+    //     const playersAmount = players && response[1]?.directPlayerInfo?.map(Object.values).length
+    //     const indexForDuration = playersAmount + 2;
+
+    //     for (var i = 0; i < playersAmount; i++) {
+    //         const player = players[i];
+    //         for (var j = 2; j < indexForDuration * 2; j += 2) {
+    //             player[j] = player[j] / 60;
+    //         }
+    //     }
+    // }
 
     const columns = ["Name", "Score", "Seconds"];
 
@@ -200,17 +224,18 @@ export default function ServerInfo() {
                     <div>
                         <h2>Fall to your death server</h2>
                     </div>
-                    <Typography className={classes.serverStatus}>
-                        Server Status:
-                        {response[0]?.directQueryInfo?.status === "online" ? <CheckIcon /> : <ErrorIcon />}
-                    </Typography>
-
-                    {response[1]?.directPlayerInfo && <MUIDataTable
+                    {<MUIDataTable
                         title={"Current Players"}
-                        data={response[1]?.directPlayerInfo?.map(Object.values)}
+                        data={players}
                         columns={columns}
                         options={options}
                     />}
+                    <Typography className={classes.serverStatus}>
+                        Server Status:
+                        {serverInfo.loading === true ? <CircularProgress size="1.5rem" />
+                            : serverInfo.status === "online" ? <CheckIcon /> : <ErrorIcon />}
+                    </Typography>
+
                 </main>
             </div>
         </>)
