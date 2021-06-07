@@ -178,8 +178,15 @@ export default function Home() {
                         <PayPalButton
                             currency="GBP"
                             shippingPreference="NO_SHIPPING"
-                            onSuccess={(details) => {
+                            onSuccess={(details, data) => {
                                 console.log("Transaction completed by " + details.payer.name.given_name);
+
+                                return fetch("/thank-you", {
+                                    method: "post",
+                                    body: JSON.stringify({
+                                        orderId: data.orderID
+                                    })
+                                });
                             }}
                             options={{
                                 clientId: clientId
