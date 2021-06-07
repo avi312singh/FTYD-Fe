@@ -18,9 +18,11 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import PersonIcon from '@material-ui/icons/Person';
+import TextField from '@material-ui/core/TextField';
+
 
 import { Link } from "gatsby"
-import { PayPalButton } from "react-paypal-button-v2";
+import Paypal from "gatsby-plugin-paypal"
 
 import 'react-dropdown/style.css';
 
@@ -90,6 +92,9 @@ const useStyles = makeStyles((theme) => ({
     PayPalButton: {
         marginTop: theme.spacing(1),
         marginLeft: theme.spacing(5)
+    },
+    amountInput: {
+        marginTop: theme.spacing(1),
     }
 }))
 
@@ -110,7 +115,16 @@ export default function Home() {
         color: "black"
     }
 
-    const clientId = process.env.GATSBY_PAYPAL_CLIENTID || (() => { new Error("Provide a paypal client id in env vars") });
+    const [donationAmount, setDonationAmount] = React.useState({ "donationAmount": "5.00" });
+    // const handleInputChange = event => {
+    //     const target = event.target
+    //     const value = target.value
+    //     setDonationAmount({
+    //         ...donationAmount,
+    //         [value]: value
+    //     })
+    //     console.log(donationAmount)
+    // }
 
     return (
         <>
@@ -174,23 +188,27 @@ export default function Home() {
                     <Typography>
                         Please support the server and this site for future content and free hosting!
                     </Typography>
+                    <form className={classes.amountInput} noValidate autoComplete="off">
+                        <TextField defaultValue="5.00"
+                            label="Error" helperText="Please enter donation amount greater than 0.01"
+                            id="outlined-basic"
+                            label="Donation Amount"
+                            variant="outlined"
+                            style={{ "min-width": "55%", "margin-left": "40px" }}
+                            onChange={e => setDonationAmount(e.target.value)} />
+                    </form>
+                    {console.log(donationAmount)}
                     <div className={classes.PayPalButton}>
-                        <PayPalButton
+                        <Paypal
+                            style={{
+                                shape: 'rect',
+                                color: 'blue',
+                                layout: 'horizontal',
+                                label: 'paypal',
+                            }}
                             currency="GBP"
+                            amount={0.01}
                             shippingPreference="NO_SHIPPING"
-                            onSuccess={(details, data) => {
-                                console.log("Transaction completed by " + details.payer.name.given_name);
-
-                                return fetch("/thank-you", {
-                                    method: "post",
-                                    body: JSON.stringify({
-                                        orderId: data.orderID
-                                    })
-                                });
-                            }}
-                            options={{
-                                clientId: clientId
-                            }}
                         />
                     </div>
                 </main>
