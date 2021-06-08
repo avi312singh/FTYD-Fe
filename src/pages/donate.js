@@ -22,8 +22,7 @@ import TextField from '@material-ui/core/TextField';
 
 
 import { Link } from "gatsby"
-import Paypal from "gatsby-plugin-paypal"
-import { PayPalButton } from "react-paypal-button-v2";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import 'react-dropdown/style.css';
 
@@ -214,25 +213,9 @@ export default function Home() {
                             </form>
                     }
                     <div className={classes.PayPalButton}>
-                        <PayPalButton
-                            amount={donationAmount}
-                            currency="GBP"
-                            shippingPreference="NO_SHIPPING"
-                            onSuccess={(details, data) => {
-                                console.log("Transaction completed by " + details.payer.name.given_name);
-
-                                // OPTIONAL: Call your server to save the transaction
-                                return fetch("/thank-you", {
-                                    method: "post",
-                                    body: JSON.stringify({
-                                        orderId: data.orderID
-                                    })
-                                });
-                            }}
-                            options={{
-                                clientId: clientId,
-                            }}
-                        />
+                        <PayPalScriptProvider options={{ "client-id": clientId }}>
+                            {donationAmount.match(donationAmountRegex) ? <PayPalButtons /> : <PayPalButtons disabled/>}
+                        </PayPalScriptProvider>
                     </div>
                     {console.log(donationAmount.replace(/^0+/, ''))}
                 </main>

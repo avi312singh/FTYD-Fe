@@ -9,13 +9,5 @@ require("dotenv").config({
 
 module.exports = {
   /* Your site config here */
-  plugins: [`gatsby-plugin-material-ui`,
-    {
-      resolve: `gatsby-plugin-paypal`,
-      options: {
-        clientId: process.env.GATSBY_PAYPAL_CLIENTID,
-        currency: `GBP`,
-        vault: true
-      }
-    }],
+  plugins: [`gatsby-plugin-material-ui`],
 }
