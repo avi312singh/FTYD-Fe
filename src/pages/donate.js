@@ -116,18 +116,28 @@ export default function Home() {
     }
 
     const [donationAmount, setDonationAmount] = React.useState("5.00");
-    // const handleInputChange = event => {
-    //     const target = event.target
-    //     const value = target.value
-    //     setDonationAmount({
-    //         ...donationAmount,
-    //         [value]: value
-    //     })
-    //     console.log(donationAmount)
-    // }
+    const [orderID, setOrderID] = React.useState(false);
+
 
     const donationAmountRegex = /^[0-9]*\.{1}[0-9][0-9]$/g;
     const clientId = process.env.GATSBY_PAYPAL_CLIENTID;
+
+    const createOrder = (data, actions) => {
+        return actions.order
+            .create({
+                purchase_units: [
+                    {
+                        amount: {
+                            value: donationAmount,
+                        },
+                    },
+                ],
+            })
+            .then((orderID) => {
+                setOrderID(orderID);
+                return orderID;
+            });
+    }
 
     return (
         <>
@@ -198,7 +208,7 @@ export default function Home() {
                                     id="outlined-basic"
                                     label="Donation Amount"
                                     variant="outlined"
-                                    style={{ "min-width": "55%", "margin-left": "40px" }}
+                                    style={{ "minWidth": "55%", "margin-left": "40px" }}
                                     onChange={e => setDonationAmount(e.target.value)} />
                             </form>
                             :
@@ -208,13 +218,13 @@ export default function Home() {
                                     id="outlined-basic"
                                     label="Donation Amount"
                                     variant="outlined"
-                                    style={{ "min-width": "55%", "margin-left": "40px" }}
+                                    style={{ "minWidth": "55%", "margin-left": "40px" }}
                                     onChange={e => setDonationAmount(e.target.value)} />
                             </form>
                     }
                     <div className={classes.PayPalButton}>
-                        <PayPalScriptProvider options={{ "client-id": clientId }}>
-                            {donationAmount.match(donationAmountRegex) ? <PayPalButtons /> : <PayPalButtons disabled/>}
+                        <PayPalScriptProvider options={{ "client-id": clientId, currency: "GBP", "disable-funding": "sofort"}}>
+                            {donationAmount.match(donationAmountRegex) ? <PayPalButtons createOrder={createOrder}/> : <PayPalButtons disabled/>}
                         </PayPalScriptProvider>
                     </div>
                     {console.log(donationAmount.replace(/^0+/, ''))}

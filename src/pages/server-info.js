@@ -25,6 +25,7 @@ import MUIDataTable from "mui-datatables";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 
+
 import { Link } from "gatsby"
 
 import 'react-dropdown/style.css';
@@ -99,7 +100,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ServerInfo() {
     const [open, setOpen] = React.useState(false);
-    const [response, setResponse] = useState([]);
     const [players, setPlayers] = useState([]);
     const [serverInfo, setServerInfo] = useState({ loading: true });
     const classes = useStyles();
@@ -127,16 +127,10 @@ export default function ServerInfo() {
             .then((response) => {
                 if (response.status === 201 || 200) {
                     setTimeout(() => {
-                        setResponse(response.data.response);
                         setServerInfo(response.data.response[0].directQueryInfo, { loading: false })
-                        if (serverInfo.status === "online") {
-                            setPlayers(response.data.response[1].directPlayerInfo)
-                        }
-                        console.log(response);
-                    }, 1000
-                    )
-                }
-            })
+                        response.data.response[0].directQueryInfo.status === "online" && setPlayers(response.data.response[1].directPlayerInfo.map(Object.values))
+                    }, 1000)
+            }})
             .catch((error) => {
                 console.log(error);
             });
@@ -224,17 +218,23 @@ export default function ServerInfo() {
                     <div>
                         <h2>Fall to your death server</h2>
                     </div>
-                    {<MUIDataTable
-                        title={"Current Players"}
-                        data={players}
-                        columns={columns}
-                        options={options}
-                    />}
-                    <Typography className={classes.serverStatus}>
-                        Server Status:
+                    {console.log(players)}
+                    <div>
+                        <Typography className={classes.serverStatus}>
+                            Server Status:
                         {serverInfo.loading === true ? <CircularProgress size="1.5rem" />
-                            : serverInfo.status === "online" ? <CheckIcon /> : <ErrorIcon />}
-                    </Typography>
+                                : serverInfo.status === "online" ? <CheckIcon />
+                                    : <ErrorIcon />}
+                        </Typography>
+                    </div>
+                    {
+                        players && <MUIDataTable
+                            title={"Current Players"}
+                            data={players}
+                            columns={columns}
+                            options={options}
+                        />
+                    }
 
                 </main>
             </div>
