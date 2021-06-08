@@ -23,6 +23,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { Link } from "gatsby"
 import Paypal from "gatsby-plugin-paypal"
+import { PayPalButton } from "react-paypal-button-v2";
 
 import 'react-dropdown/style.css';
 
@@ -90,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 0,
     },
     PayPalButton: {
-        marginTop: theme.spacing(1),
+        marginTop: theme.spacing(2),
         marginLeft: theme.spacing(5)
     },
     amountInput: {
@@ -115,7 +116,7 @@ export default function Home() {
         color: "black"
     }
 
-    const [donationAmount, setDonationAmount] = React.useState({ "donationAmount": "5.00" });
+    const [donationAmount, setDonationAmount] = React.useState("5.00");
     // const handleInputChange = event => {
     //     const target = event.target
     //     const value = target.value
@@ -125,6 +126,9 @@ export default function Home() {
     //     })
     //     console.log(donationAmount)
     // }
+
+    const donationAmountRegex = /^[0-9]*\.{1}[0-9][0-9]$/g;
+    const clientId = process.env.GATSBY_PAYPAL_CLIENTID;
 
     return (
         <>
@@ -188,29 +192,49 @@ export default function Home() {
                     <Typography>
                         Please support the server and this site for future content and free hosting!
                     </Typography>
-                    <form className={classes.amountInput} noValidate autoComplete="off">
-                        <TextField defaultValue="5.00"
-                            label="Error" helperText="Please enter donation amount greater than 0.01"
-                            id="outlined-basic"
-                            label="Donation Amount"
-                            variant="outlined"
-                            style={{ "min-width": "55%", "margin-left": "40px" }}
-                            onChange={e => setDonationAmount(e.target.value)} />
-                    </form>
-                    {console.log(donationAmount)}
+                    {
+                        donationAmount.match(donationAmountRegex) ?
+                            <form className={classes.amountInput} noValidate autoComplete="off">
+                                <TextField defaultValue="5.00"
+                                    id="outlined-basic"
+                                    label="Donation Amount"
+                                    variant="outlined"
+                                    style={{ "min-width": "55%", "margin-left": "40px" }}
+                                    onChange={e => setDonationAmount(e.target.value)} />
+                            </form>
+                            :
+                            <form className={classes.amountInput} noValidate autoComplete="off">
+                                <TextField defaultValue="5.00"
+                                    label="Error" helperText="Please enter a valid donation amount greater than 0.01"
+                                    id="outlined-basic"
+                                    label="Donation Amount"
+                                    variant="outlined"
+                                    style={{ "min-width": "55%", "margin-left": "40px" }}
+                                    onChange={e => setDonationAmount(e.target.value)} />
+                            </form>
+                    }
                     <div className={classes.PayPalButton}>
-                        <Paypal
-                            style={{
-                                shape: 'rect',
-                                color: 'blue',
-                                layout: 'horizontal',
-                                label: 'paypal',
-                            }}
+                        <PayPalButton
+                            amount={donationAmount}
                             currency="GBP"
-                            amount={0.01}
                             shippingPreference="NO_SHIPPING"
+                            onSuccess={(details, data) => {
+                                console.log("Transaction completed by " + details.payer.name.given_name);
+
+                                // OPTIONAL: Call your server to save the transaction
+                                return fetch("/thank-you", {
+                                    method: "post",
+                                    body: JSON.stringify({
+                                        orderId: data.orderID
+                                    })
+                                });
+                            }}
+                            options={{
+                                clientId: clientId,
+                            }}
                         />
                     </div>
+                    {console.log(donationAmount.replace(/^0+/, ''))}
                 </main>
             </div>
         </>)
