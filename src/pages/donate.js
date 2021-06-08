@@ -224,7 +224,7 @@ export default function Home() {
                     }
                     <div className={classes.PayPalButton}>
                         <PayPalScriptProvider options={{ "client-id": clientId, currency: "GBP", "disable-funding": "sofort"}}>
-                            {donationAmount.match(donationAmountRegex) ? <PayPalButtons createOrder={createOrder}/> : <PayPalButtons disabled/>}
+                            {donationAmount.match(donationAmountRegex) ? <PayPalButtons forceReRender={[donationAmount]} createOrder={createOrder}/> : <PayPalButtons disabled/>}
                         </PayPalScriptProvider>
                     </div>
                     {console.log(donationAmount.replace(/^0+/, ''))}
