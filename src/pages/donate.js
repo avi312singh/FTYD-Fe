@@ -8,14 +8,24 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import 'react-dropdown/style.css';
 import Seo from "./components/Seo/Seo";
+import { Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-    PayPalButton: {
+    PayPalContainer: {
         marginTop: theme.spacing(2),
-        marginLeft: theme.spacing(5)
+
+    },
+    PayPalButton: {
+        maxWidth: "100%"
     },
     amountInput: {
-        marginTop: theme.spacing(1),
+        minWidth: 'auto',
+        maxWidth: '100%',
+        width: '100%'
+    },
+    form: {
+        maxWidth: '749px',
+        minWidth: '200px'
     },
     donateMessage: {
         marginBottom: theme.spacing(3)
@@ -52,46 +62,49 @@ export default function Home() {
     }
     return (
         <>
-        <Seo/>
+            <Seo />
             <NavDrawer customDrawerWidth={5}>
                 <div className={classes.donateMessage}>
-                <Typography >
-                    Please support the server and this site for future content and free hosting!
+                    <Typography >
+                        Please support the server and this site for future content and free hosting!
                     </Typography>
                 </div>
-                {
-                    donationAmount.match(donationAmountRegex) && donationAmount >= 0.01 ?
-                        <form className={classes.amountInput} noValidate autoComplete="off">
-                            <TextField defaultValue="5.00"
-                                id="outlined-basic"
-                                label="Donation Amount"
-                                variant="outlined"
-                                style={{ "minWidth": "55%", "marginLeft": "40px" }}
-                                onChange={e => setDonationAmount(e.target.value)}
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">£</InputAdornment>,
-                                }} />
-                        </form>
-                        :
-                        <form className={classes.amountInput} noValidate autoComplete="off">
-                            <TextField defaultValue="5.00"
-                                helperText="Please enter a valid donation amount of at least 0.01"
-                                id="outlined-basic"
-                                label="Donation Amount"
-                                variant="outlined"
-                                style={{ "minWidth": "55%", "marginLeft": "40px" }}
-                                onChange={e => setDonationAmount(e.target.value)}
-                                 />
-                        </form>
-                }
-                <div className={classes.PayPalButton}>
-                    <PayPalScriptProvider options={{ "client-id": clientId, currency: "GBP", "disable-funding": "sofort" }}>
-                        {donationAmount.match(donationAmountRegex) && donationAmount >= 0.01 ?
-                            <PayPalButtons forceReRender={[donationAmount]} createOrder={createOrder} />
+                <Box width="60%">
+                    {
+                        donationAmount.match(donationAmountRegex) && donationAmount >= 0.01 ?
+                            <form className={classes.form} noValidate autoComplete="off">
+                                <TextField defaultValue="5.00"
+                                    className={classes.amountInput}
+                                    id="outlined-basic"
+                                    label="Donation Amount"
+                                    variant="outlined"
+                                    onChange={e => setDonationAmount(e.target.value)}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">£</InputAdornment>,
+                                    }} />
+                            </form>
                             :
-                            <PayPalButtons disabled />}
-                    </PayPalScriptProvider>
-                </div>
+                            <form className={classes.form} noValidate autoComplete="off">
+                                <TextField
+                                    className={classes.amountInput}
+                                    defaultValue="5.00"
+                                    helperText="Please enter a valid donation amount of at least 0.01"
+                                    id="outlined-basic"
+                                    label="Donation Amount"
+                                    variant="outlined"
+                                    onChange={e => setDonationAmount(e.target.value)}
+                                />
+                            </form>
+                    }
+                    <div className={classes.PayPalContainer}>
+                        <PayPalScriptProvider options={{ "client-id": clientId, currency: "GBP", "disable-funding": "sofort" }}>
+                            {donationAmount.match(donationAmountRegex) && donationAmount >= 0.01 ?
+                                <PayPalButtons className={classes.PayPalButton} forceReRender={[donationAmount]} createOrder={createOrder} />
+                                :
+                                <PayPalButtons className={classes.PayPalButton} disabled />}
+                        </PayPalScriptProvider>
+                    </div>
+                </Box>
             </NavDrawer>
 
         </>)
