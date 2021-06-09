@@ -1,6 +1,7 @@
 import React from "react"
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import NavDrawer from "./components/NavDrawer/NavDrawer"
 import Typography from '@material-ui/core/Typography';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
@@ -36,8 +37,13 @@ export default function Home() {
                         amount: {
                             value: donationAmount,
                         },
+                        description: "Fall to your death donation",
+                        category: "DIGITAL_GOODS"
                     },
                 ],
+                application_context: {
+                    shipping_preference: "NO_SHIPPING"
+                }
             })
             .then((orderID) => {
                 setOrderID(orderID);
@@ -61,7 +67,10 @@ export default function Home() {
                                 label="Donation Amount"
                                 variant="outlined"
                                 style={{ "minWidth": "55%", "marginLeft": "40px" }}
-                                onChange={e => setDonationAmount(e.target.value)} />
+                                onChange={e => setDonationAmount(e.target.value)}
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start">£</InputAdornment>,
+                                }} />
                         </form>
                         :
                         <form className={classes.amountInput} noValidate autoComplete="off">
@@ -71,7 +80,8 @@ export default function Home() {
                                 label="Donation Amount"
                                 variant="outlined"
                                 style={{ "minWidth": "55%", "marginLeft": "40px" }}
-                                onChange={e => setDonationAmount(e.target.value)} />
+                                onChange={e => setDonationAmount(e.target.value)}
+                                 />
                         </form>
                 }
                 <div className={classes.PayPalButton}>
