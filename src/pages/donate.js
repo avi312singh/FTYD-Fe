@@ -42,6 +42,9 @@ export default function Home() {
     return (
         <>
             <NavDrawer customDrawerWidth={5}>
+                <Typography>
+                    Please support the server and this site for future content and free hosting!
+                    </Typography>
                 {
                     donationAmount.match(donationAmountRegex) && donationAmount >= 0.01 ?
                         <form className={classes.amountInput} noValidate autoComplete="off">
@@ -66,9 +69,9 @@ export default function Home() {
                 <div className={classes.PayPalButton}>
                     <PayPalScriptProvider options={{ "client-id": clientId, currency: "GBP", "disable-funding": "sofort" }}>
                         {donationAmount.match(donationAmountRegex) && donationAmount >= 0.01 ?
-                        <PayPalButtons forceReRender={[donationAmount]} createOrder={createOrder} />
-                        :
-                        <PayPalButtons disabled />}
+                            <PayPalButtons forceReRender={[donationAmount]} createOrder={createOrder} />
+                            :
+                            <PayPalButtons disabled />}
                     </PayPalScriptProvider>
                 </div>
             </NavDrawer>
