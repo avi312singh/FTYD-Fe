@@ -8,6 +8,7 @@ import KillsPieChart from './components/KillsPieChart/KillsPieChart'
 import DurationPieChart from './components/DurationPieChart/DurationPieChart'
 import { makeStyles } from '@material-ui/core/styles';
 import 'react-dropdown/style.css';
+import Seo from "./components/Seo/Seo";
 
 const options = [
   { value: 288, label: 'Day' },
@@ -77,6 +78,7 @@ export default function Home() {
 
   return (
     <>
+      <Seo/>
       <NavDrawer>
         {<Container className={classes.graphContainer}>
           <Tabs

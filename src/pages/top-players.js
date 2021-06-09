@@ -3,6 +3,7 @@ import axios from 'axios'
 import NavDrawer from "./components/NavDrawer/NavDrawer"
 import MUIDataTable from "mui-datatables";
 import 'react-dropdown/style.css';
+import Seo from "./components/Seo/Seo";
 
 export default function Home() {
     const endpoint = process.env.GATSBY_ENDPOINT || (() => { new Error("Provide an endpoint in env vars") });
@@ -37,6 +38,7 @@ export default function Home() {
     return (
         <NavDrawer>
             <>
+                <Seo />
                 <MUIDataTable
                     title={"Top Players"}
                     data={response}

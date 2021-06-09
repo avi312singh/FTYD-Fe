@@ -8,6 +8,7 @@ import ErrorIcon from '@material-ui/icons/Error';
 import MUIDataTable from "mui-datatables";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import 'react-dropdown/style.css';
+import Seo from "./components/Seo/Seo";
 
 const useStyles = makeStyles((theme) => ({
     serverStatus: {
@@ -64,6 +65,7 @@ export default function ServerInfo() {
 
     return (
         <>
+            <Seo />
             <NavDrawer>
                 <div>
                     <Typography className={classes.serverStatus}>

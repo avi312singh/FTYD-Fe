@@ -2,9 +2,11 @@ import React from "react"
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import NavDrawer from "./components/NavDrawer/NavDrawer"
+import Typography from '@material-ui/core/Typography';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import 'react-dropdown/style.css';
+import Seo from "./components/Seo/Seo";
 
 const useStyles = makeStyles((theme) => ({
     PayPalButton: {
@@ -13,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     },
     amountInput: {
         marginTop: theme.spacing(1),
+    },
+    donateMessage: {
+        marginBottom: theme.spacing(3)
     }
 }))
 
@@ -41,10 +46,13 @@ export default function Home() {
     }
     return (
         <>
+        <Seo/>
             <NavDrawer customDrawerWidth={5}>
-                <Typography>
+                <div className={classes.donateMessage}>
+                <Typography >
                     Please support the server and this site for future content and free hosting!
                     </Typography>
+                </div>
                 {
                     donationAmount.match(donationAmountRegex) && donationAmount >= 0.01 ?
                         <form className={classes.amountInput} noValidate autoComplete="off">

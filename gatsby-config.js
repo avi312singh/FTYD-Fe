@@ -9,5 +9,13 @@ require("dotenv").config({
 
 module.exports = {
   /* Your site config here */
-  plugins: [`gatsby-plugin-material-ui`],
+  plugins: [`gatsby-plugin-material-ui`, `gatsby-plugin-react-helmet`],
+  siteMetadata: {
+    title: "Fall to Your Death",
+    titleTemplate: "%s · The official website",
+    description:
+      "The official website of the Fall to Your Death server",
+    url: "https://falltoyourdeath.gatsbyjs.io/", // No trailing slash allowed!
+    image: "/images/ftyd.jpg", // Path to your image you placed in the 'static' folder
+  },
 }
