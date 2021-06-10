@@ -4,7 +4,7 @@ import NavDrawer from "./components/NavDrawer/NavDrawer"
 import MUIDataTable from "mui-datatables";
 import Seo from "./components/Seo/Seo";
 
-export default function Home() {
+export default function TopPlayers() {
     const endpoint = process.env.GATSBY_ENDPOINT || (() => { new Error("Provide an endpoint in env vars") });
     const authorisation = process.env.GATSBY_AUTHORISATION || (() => { new Error("Provide a server IP in env vars") });
     const [response, setResponse] = useState([]);

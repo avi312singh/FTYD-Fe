@@ -41,7 +41,6 @@ export default function Home() {
   })
 
   useEffect(() => {
-    console.log(config)
     axios(config)
       .then((response) => {
         if (response.status === 201 || 200) {

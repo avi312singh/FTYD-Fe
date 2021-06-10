@@ -16,7 +16,6 @@ const KillsPieChart = () => {
     };
 
     useEffect(() => {
-        console.log(config)
         axios(config)
             .then((response) => {
                 if (response.status === 201 || 200) {
@@ -27,8 +26,6 @@ const KillsPieChart = () => {
                 console.log(error);
             });
     }, [])
-
-    console.log(response)
 
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#42C1FF'];
     return (
