@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import axios from 'axios'
 import NavDrawer from "./components/NavDrawer/NavDrawer"
 import MUIDataTable from "mui-datatables";
-import 'react-dropdown/style.css';
 import Seo from "./components/Seo/Seo";
 
 export default function Home() {

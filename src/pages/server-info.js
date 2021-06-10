@@ -7,7 +7,6 @@ import CheckIcon from '@material-ui/icons/Check';
 import ErrorIcon from '@material-ui/icons/Error';
 import MUIDataTable from "mui-datatables";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import 'react-dropdown/style.css';
 import Seo from "./components/Seo/Seo";
 
 const useStyles = makeStyles((theme) => ({

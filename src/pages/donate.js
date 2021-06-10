@@ -5,15 +5,16 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import NavDrawer from "./components/NavDrawer/NavDrawer"
 import Typography from '@material-ui/core/Typography';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-
-import 'react-dropdown/style.css';
 import Seo from "./components/Seo/Seo";
 import { Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+    donateContainer: {
+        marginLeft: theme.spacing(7),
+        width: '60%'
+    },
     PayPalContainer: {
         marginTop: theme.spacing(2),
-
     },
     PayPalButton: {
         maxWidth: "100%"
@@ -69,7 +70,7 @@ export default function Home() {
                         Please support the server and this site for future content and free hosting!
                     </Typography>
                 </div>
-                <Box width="60%">
+                <Box className={classes.donateContainer}>
                     {
                         donationAmount.match(donationAmountRegex) && donationAmount >= 0.01 ?
                             <form className={classes.form} noValidate autoComplete="off">
