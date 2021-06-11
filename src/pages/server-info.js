@@ -62,7 +62,12 @@ export default function ServerInfo() {
         filterType: 'checkbox',
         responsive: "simple",
         selectableRows: "none",
-        pagination: false
+        pagination: false,
+        print: false,
+        search: false,
+        filter: false,
+        download: false,
+        viewColumns: false
     };
 
     return (
