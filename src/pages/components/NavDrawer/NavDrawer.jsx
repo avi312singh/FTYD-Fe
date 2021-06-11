@@ -110,14 +110,12 @@ const NavDrawer = ({ children, window }) => {
             {darkTheme ?
                 <Tooltip title="Light Mode" className={classes.darkThemeMobileButton} onClick={handleLightThemeToggle}>
                     <IconButton aria-label="Light Mode">
-
                         <DarkThemeIcon />
                     </IconButton>
                 </Tooltip>
                 :
                 <Tooltip title="Dark Mode" className={classes.darkThemeMobileButton} onClick={handleLightThemeToggle}>
                     <IconButton aria-label="Dark Mode">
-
                         <LightThemeIcon />
                     </IconButton>
                 </Tooltip>
@@ -139,7 +137,6 @@ const NavDrawer = ({ children, window }) => {
     );
 
     const container = window !== undefined ? () => window().document.body : undefined;
-    const darkThemeState = window !== undefined ? () => window().history.state : undefined;
 
     return (
         <ThemeProvider theme={darkThemeStyling}>
@@ -162,14 +159,12 @@ const NavDrawer = ({ children, window }) => {
                         {darkTheme ?
                             <Tooltip title="Light Mode" className={classes.darkThemeButton} onClick={handleLightThemeToggle}>
                                 <IconButton aria-label="Light Mode">
-
                             <DarkThemeIcon />
                              </IconButton>
                             </Tooltip>
                          :
                             <Tooltip title="Dark Mode" className={classes.darkThemeButton} onClick={handleLightThemeToggle}>
                                     <IconButton aria-label="Dark Mode">
-
                                 <LightThemeIcon />
                                 </IconButton>
                                </Tooltip>
