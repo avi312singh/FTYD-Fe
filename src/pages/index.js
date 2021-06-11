@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from "react"
 import axios from 'axios'
-import Dropdown from 'react-dropdown';
 import { LineChart, XAxis, YAxis, Tooltip, CartesianGrid, Line } from 'recharts'
 import { Container, Tab, Tabs } from "@material-ui/core";
-import NavDrawer from './components/NavDrawer/NavDrawer'
-import KillsPieChart from './components/KillsPieChart/KillsPieChart'
-import DurationPieChart from './components/DurationPieChart/DurationPieChart'
-import { makeStyles } from '@material-ui/core/styles';
+import NavDrawer from './components/NavDrawer/NavDrawer';
+import KillsPieChart from './components/KillsPieChart/KillsPieChart';
+import DurationPieChart from './components/DurationPieChart/DurationPieChart';
+import InputLabel from '@material-ui/core/InputLabel';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import 'react-dropdown/style.css';
 import Seo from "./components/Seo/Seo";
-
-const options = [
-  { value: 288, label: 'Day' },
-  { value: 2016, label: 'Week' },
-  { value: 8760, label: 'Month' },
-];
 
 const useStyles = makeStyles((theme) => ({
   graphContainer: {
     paddingTop: theme.spacing(2),
   },
   durationDropdown: {
-    paddingTop: theme.spacing(1)
   },
 }))
 
@@ -52,10 +50,8 @@ export default function Home() {
       });
   }, [currentOption, config])
 
-  const defaultOption = options[0];
-
   const parseSelected = (event) => {
-    const valueToParse = event.value;
+    const valueToParse = event.target.value;
     setCurrentOption(valueToParse);
     setConfig({
       method: 'get',
@@ -66,6 +62,7 @@ export default function Home() {
     })
   }
 
+
   const handleTabChange = (event, newValue) => {
     setCurrentOption(288);
     if (value !== newValue) {
@@ -73,6 +70,8 @@ export default function Home() {
     }
   };
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('sm'));
   const classes = useStyles();
 
   return (
@@ -93,7 +92,20 @@ export default function Home() {
           </Tabs>
           {value === 0 &&
             <>
-              <Dropdown options={options} value={defaultOption} onChange={parseSelected} placeholder="Select an option" className={classes.durationDropdown} />
+            <FormControl fullWidth={matches ? true : false} variant="outlined" className={classes.durationDropdown}>
+              <InputLabel id="duration-filled-label">Duration</InputLabel>
+              <Select
+                labelId="duration-filled-label"
+                id="duration-filled"
+                value={currentOption}
+                onChange={parseSelected}
+                label="Duration"
+              >
+                <MenuItem value={288}>Day</MenuItem>
+                <MenuItem value={2016}>Week</MenuItem>
+                <MenuItem value={8760}>Month</MenuItem>
+              </Select>
+            </FormControl>
               <LineChart
                 width={1000}
                 height={400}
