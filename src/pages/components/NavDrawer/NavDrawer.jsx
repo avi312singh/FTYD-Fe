@@ -19,13 +19,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import LightThemeIcon from '@material-ui/icons/Brightness7';
+import DarkThemeIcon from '@material-ui/icons/Brightness4';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import { Link } from "gatsby"
-
-const linkStyles = {
-    textDecoration: "none",
-    color: "black"
-}
 
 const drawerWidth = 240;
 
@@ -60,29 +58,83 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
+    darkThemeButton: {
+        background: "none",
+        border: "none",
+    },
+    darkThemeMobileButton: {
+        [theme.breakpoints.up('sm')]: {
+            display: "none",
+        },
+        [theme.breakpoints.down('sm')]: {
+            background: "none",
+            border: "none",
+            display: "visible",
+            paddingLeft: theme.spacing(2),
+            minWidth: '25%'
+
+        },
+    },
+    menuHeaderText: {
+        minWidth: '97%',
+    }
 }));
 
 const NavDrawer = ({ children, window }) => {
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [darkTheme, setDarkTheme] = React.useState(true);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
+    const handleLightThemeToggle = () => {
+        setDarkTheme(!darkTheme);
+    };
+
+    const linkStyles = {
+        textDecoration: "none",
+        color: darkTheme ? "white" : "black"
+    }
+
+    const activeStyle = {
+        textDecoration: "none",
+        color: "red"
+    }
+
+    const darkThemeStyling = createMuiTheme(darkTheme ? {
+        palette: {
+            type: "dark",
+        }
+    } :
+        {
+            palette: {
+                type: "light",
+            }
+        });
+
     const drawer = (
         <div>
             <div className={classes.toolbar} />
+            {
+                darkTheme ? <button className={classes.darkThemeMobileButton} onClick={handleLightThemeToggle}>
+                    <DarkThemeIcon />
+                </button> :
+                    <button className={classes.darkThemeMobileButton} onClick={handleLightThemeToggle}>
+                        <LightThemeIcon />
+                    </button>
+            }
             <Divider />
             <List>
                 {[{ text: 'Home', href: '/', icon: <HomeIcon /> }, { text: 'Leaderboards', href: '/top-players', icon: <PersonIcon /> },
-                    { text: 'Donate', href: '/donate', icon: <AttachMoneyIcon /> }, { text: 'Server Info', href: '/server-info', icon: <InfoIcon /> },
-                    { text: 'Player Stats', href: '/player-stats', icon: <SearchIcon /> }]
+                { text: 'Donate', href: '/donate', icon: <AttachMoneyIcon /> }, { text: 'Server Info', href: '/server-info', icon: <InfoIcon /> },
+                { text: 'Player Stats', href: '/player-stats', icon: <SearchIcon /> }]
                     .map((link, index) => (
                         <ListItem key={link.text}>
                             <ListItemIcon>{link.icon}</ListItemIcon>
-                            <Link to={link.href} style={linkStyles}>{link.text}</Link>
+                            <Link to={link.href} activeStyle={activeStyle} style={linkStyles} state={{ darkTheme: darkTheme }}>{link.text}</Link>
                         </ListItem>
                     ))}
             </List>
@@ -91,62 +143,71 @@ const NavDrawer = ({ children, window }) => {
     );
 
     const container = window !== undefined ? () => window().document.body : undefined;
+    const darkThemeState = window !== undefined ? () => window().history.state : undefined;
 
     return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <AppBar position="fixed" className={classes.appBar}>
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
-                        onClick={handleDrawerToggle}
-                        className={classes.menuButton}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap>
-                        Fall to your death
+        <ThemeProvider theme={darkThemeStyling}>
+            <div className={classes.root}>
+                <CssBaseline />
+                <AppBar position="fixed" className={classes.appBar}>
+                    <Toolbar>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            edge="start"
+                            onClick={handleDrawerToggle}
+                            className={classes.menuButton}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography className={classes.menuHeaderText} variant="h6" noWrap>
+                            Fall to your death
           </Typography>
-                </Toolbar>
-            </AppBar>
-            <nav className={classes.drawer} aria-label="mailbox folders">
-                {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-                <Hidden smUp implementation="css">
-                    <SwipeableDrawer
-                        container={container}
-                        variant="temporary"
-                        anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-                        open={mobileOpen}
-                        onClose={handleDrawerToggle}
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
-                        ModalProps={{
-                            keepMounted: true, // Better open performance on mobile.
-                        }}
-                    >
-                        {drawer}
-                    </SwipeableDrawer>
-                </Hidden>
-                <Hidden xsDown implementation="css">
-                    <Drawer
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
-                        variant="permanent"
-                        open
-                    >
-                        {drawer}
-                    </Drawer>
-                </Hidden>
-            </nav>
-            <main className={classes.content}>
-                <div className={classes.toolbar} />
-                {children}
-            </main>
-        </div>
+                        {console.log("darkThemeState ", darkThemeState)}
+                        {darkTheme ? <button className={classes.darkThemeButton} onClick={handleLightThemeToggle}>
+                            <DarkThemeIcon />
+                        </button> :
+                            <button className={classes.darkThemeButton} onClick={handleLightThemeToggle}>
+                                <LightThemeIcon />
+                            </button>}
+                    </Toolbar>
+                </AppBar>
+                <nav className={classes.drawer} aria-label="navigation links">
+                    <Hidden smUp implementation="css">
+                        <SwipeableDrawer
+                            container={container}
+                            variant="temporary"
+                            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+                            open={mobileOpen}
+                            onClose={handleDrawerToggle}
+                            classes={{
+                                paper: classes.drawerPaper,
+                            }}
+                            ModalProps={{
+                                keepMounted: true, // Better open performance on mobile.
+                            }}
+                        >
+                            {drawer}
+                        </SwipeableDrawer>
+                    </Hidden>
+                    <Hidden xsDown implementation="css">
+                        <Drawer
+                            classes={{
+                                paper: classes.drawerPaper,
+                            }}
+                            variant="permanent"
+                            open
+                        >
+                            {drawer}
+                        </Drawer>
+                    </Hidden>
+                </nav>
+                <main className={classes.content}>
+                    <div className={classes.toolbar} />
+                    {children}
+                </main>
+            </div>
+        </ThemeProvider>
     );
 }
 

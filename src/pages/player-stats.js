@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react"
 import axios from 'axios'
 import NavDrawer from "./components/NavDrawer/NavDrawer"
 import MUIDataTable from "mui-datatables";
+import Skeleton from '@material-ui/lab/Skeleton';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Seo from "./components/Seo/Seo";
 
 export default function PlayerSearch() {
@@ -146,7 +149,7 @@ export default function PlayerSearch() {
         },
     ];
 
-    const options = {
+    const tableOptions = {
         filterType: 'multiselect',
         rowsPerPage: 100,
         rowsPerPageOptions: [100, 200, 1000],
@@ -154,16 +157,26 @@ export default function PlayerSearch() {
         responsive: "standard"
     };
 
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.up('sm'));
+
     return (
         <NavDrawer>
             <>
                 <Seo />
+                {players.length > 0 ?
                     <MUIDataTable
-                        title={"All Players"}
+                        title={`Player Statistics (${players.length} Players)`}
                         data={players}
                         columns={columns}
-                        options={options}
+                        options={tableOptions}
                     />
+                    :
+                    <div>
+                        {matches && <Skeleton variant="rect" width={1550} height={9655} />}
+                        {!matches && <Skeleton variant="rect" width={910} height={9655} />}
+                    </div>
+                }
             </>
         </NavDrawer>
     )

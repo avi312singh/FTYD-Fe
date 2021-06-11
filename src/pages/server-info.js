@@ -12,7 +12,7 @@ import Seo from "./components/Seo/Seo";
 const useStyles = makeStyles((theme) => ({
     serverStatus: {
         marginBottom: theme.spacing(3),
-    }
+    },
 }))
 
 export default function ServerInfo() {
@@ -60,6 +60,8 @@ export default function ServerInfo() {
     const columns = ["Name", "Score", "Seconds"];
     const options = {
         filterType: 'checkbox',
+        responsive: "simple",
+        selectableRows: "none"
     };
 
     return (
@@ -76,7 +78,7 @@ export default function ServerInfo() {
                 </div>
                 {
                     players && <MUIDataTable
-                        title={"Current Players"}
+                        title={`Current Players: ${(players.length)}`}
                         data={players}
                         columns={columns}
                         options={options}

@@ -94,7 +94,9 @@ export default function Home() {
                                     label="Donation Amount"
                                     variant="outlined"
                                     onChange={e => setDonationAmount(e.target.value)}
-                                />
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">£</InputAdornment>,
+                                    }} />
                             </form>
                     }
                     <div className={classes.PayPalContainer}>

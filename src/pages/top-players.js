@@ -32,6 +32,8 @@ export default function TopPlayers() {
     const columns = ["Name", "Weekly Kills", "Weekly Hours", "Kills Per Time Ratio"];
     const options = {
         filterType: 'checkbox',
+        responsive: "responsive",
+        selectableRows: "none"
     };
 
     return (
@@ -39,7 +41,7 @@ export default function TopPlayers() {
             <>
                 <Seo />
                 <MUIDataTable
-                    title={"Top Players"}
+                    title={"Top Weekly Players"}
                     data={response}
                     columns={columns}
                     options={options}
