@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react"
 import axios from 'axios'
-import NavDrawer from "./components/NavDrawer/NavDrawer"
 import MUIDataTable from "mui-datatables";
 import Skeleton from '@material-ui/lab/Skeleton';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+
+import NavDrawer from "./components/NavDrawer/NavDrawer"
 import Seo from "./components/Seo/Seo";
 
 export default function PlayerSearch() {

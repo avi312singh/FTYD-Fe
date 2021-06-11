@@ -1,12 +1,10 @@
 import React from "react"
+import { TextField, InputAdornment, Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import NavDrawer from "./components/NavDrawer/NavDrawer"
-import Typography from '@material-ui/core/Typography';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
+import NavDrawer from "./components/NavDrawer/NavDrawer"
 import Seo from "./components/Seo/Seo";
-import { Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     donateContainer: {

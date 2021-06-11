@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react"
 import axios from 'axios'
 import { LineChart, XAxis, YAxis, Tooltip, CartesianGrid, Line } from 'recharts'
-import { Container, Tab, Tabs } from "@material-ui/core";
+import DurationPieChart from './components/DurationPieChart/DurationPieChart';
+import { InputLabel, MenuItem, FormControl, Container, Tab, Tabs, Select } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 import NavDrawer from './components/NavDrawer/NavDrawer';
 import KillsPieChart from './components/KillsPieChart/KillsPieChart';
-import DurationPieChart from './components/DurationPieChart/DurationPieChart';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Seo from "./components/Seo/Seo";
 
 const useStyles = makeStyles((theme) => ({

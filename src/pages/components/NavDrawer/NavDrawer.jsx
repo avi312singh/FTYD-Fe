@@ -1,28 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+import { AppBar, CssBaseline, Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, Toolbar, Tooltip, Typography, SwipeableDrawer } from '@material-ui/core';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import SearchIcon from '@material-ui/icons/Search';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import PersonIcon from '@material-ui/icons/Person';
 import MenuIcon from '@material-ui/icons/Menu';
-import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
 import LightThemeIcon from '@material-ui/icons/Brightness7';
 import DarkThemeIcon from '@material-ui/icons/Brightness4';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import { Link } from "gatsby"
 
@@ -136,9 +124,9 @@ const NavDrawer = ({ children, window }) => {
             }
             <Divider />
             <List>
-                {[{ text: 'Home', href: '/', icon: <HomeIcon /> }, { text: 'Leaderboards', href: '/top-players', icon: <PersonIcon /> },
-                { text: 'Donate', href: '/donate', icon: <AttachMoneyIcon /> }, { text: 'Server Info', href: '/server-info', icon: <InfoIcon /> },
-                { text: 'Player Stats', href: '/player-stats', icon: <SearchIcon /> }]
+                {[{ text: 'Home', href: '/', icon: <HomeIcon /> }, { text: 'Leaderboards', href: '/top-players/', icon: <PersonIcon /> },
+                { text: 'Donate', href: '/donate/', icon: <AttachMoneyIcon /> }, { text: 'Server Info', href: '/server-info/', icon: <InfoIcon /> },
+                { text: 'Player Stats', href: '/player-stats/', icon: <SearchIcon /> }]
                     .map((link, index) => (
                         <ListItem key={link.text}>
                             <ListItemIcon>{link.icon}</ListItemIcon>

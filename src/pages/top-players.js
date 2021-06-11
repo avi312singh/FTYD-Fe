@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import axios from 'axios'
 import NavDrawer from "./components/NavDrawer/NavDrawer"
 import MUIDataTable from "mui-datatables";
+
 import Seo from "./components/Seo/Seo";
 
 export default function TopPlayers() {
