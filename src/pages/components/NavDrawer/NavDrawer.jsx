@@ -16,6 +16,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import PersonIcon from '@material-ui/icons/Person';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -84,7 +85,7 @@ const NavDrawer = ({ children, window }) => {
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [darkTheme, setDarkTheme] = React.useState(true);
+    const [darkTheme, setDarkTheme] = React.useState(false);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -118,13 +119,20 @@ const NavDrawer = ({ children, window }) => {
     const drawer = (
         <div>
             <div className={classes.toolbar} />
-            {
-                darkTheme ? <button className={classes.darkThemeMobileButton} onClick={handleLightThemeToggle}>
-                    <DarkThemeIcon />
-                </button> :
-                    <button className={classes.darkThemeMobileButton} onClick={handleLightThemeToggle}>
+            {darkTheme ?
+                <Tooltip title="Light Mode" className={classes.darkThemeMobileButton} onClick={handleLightThemeToggle}>
+                    <IconButton aria-label="Light Mode">
+
+                        <DarkThemeIcon />
+                    </IconButton>
+                </Tooltip>
+                :
+                <Tooltip title="Dark Mode" className={classes.darkThemeMobileButton} onClick={handleLightThemeToggle}>
+                    <IconButton aria-label="Dark Mode">
+
                         <LightThemeIcon />
-                    </button>
+                    </IconButton>
+                </Tooltip>
             }
             <Divider />
             <List>
@@ -163,13 +171,21 @@ const NavDrawer = ({ children, window }) => {
                         <Typography className={classes.menuHeaderText} variant="h6" noWrap>
                             Fall to your death
           </Typography>
-                        {console.log("darkThemeState ", darkThemeState)}
-                        {darkTheme ? <button className={classes.darkThemeButton} onClick={handleLightThemeToggle}>
+                        {darkTheme ?
+                            <Tooltip title="Light Mode" className={classes.darkThemeButton} onClick={handleLightThemeToggle}>
+                                <IconButton aria-label="Light Mode">
+
                             <DarkThemeIcon />
-                        </button> :
-                            <button className={classes.darkThemeButton} onClick={handleLightThemeToggle}>
+                             </IconButton>
+                            </Tooltip>
+                         :
+                            <Tooltip title="Dark Mode" className={classes.darkThemeButton} onClick={handleLightThemeToggle}>
+                                    <IconButton aria-label="Dark Mode">
+
                                 <LightThemeIcon />
-                            </button>}
+                                </IconButton>
+                               </Tooltip>
+                            }
                     </Toolbar>
                 </AppBar>
                 <nav className={classes.drawer} aria-label="navigation links">
