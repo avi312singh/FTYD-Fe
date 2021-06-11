@@ -6,13 +6,11 @@ import NavDrawer from './components/NavDrawer/NavDrawer';
 import KillsPieChart from './components/KillsPieChart/KillsPieChart';
 import DurationPieChart from './components/DurationPieChart/DurationPieChart';
 import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import 'react-dropdown/style.css';
 import Seo from "./components/Seo/Seo";
 
 const useStyles = makeStyles((theme) => ({
