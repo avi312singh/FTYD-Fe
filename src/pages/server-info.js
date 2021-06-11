@@ -61,7 +61,8 @@ export default function ServerInfo() {
     const options = {
         filterType: 'checkbox',
         responsive: "simple",
-        selectableRows: "none"
+        selectableRows: "none",
+        pagination: false
     };
 
     return (

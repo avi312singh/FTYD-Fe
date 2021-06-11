@@ -33,7 +33,8 @@ export default function TopPlayers() {
     const options = {
         filterType: 'checkbox',
         responsive: "responsive",
-        selectableRows: "none"
+        selectableRows: "none",
+        pagination: false
     };
 
     return (
