@@ -42,7 +42,7 @@ export default function TopPlayers() {
             <>
                 <Seo />
                 <MUIDataTable
-                    title={"Top Weekly Players"}
+                    title={`Top Weekly Players (${response.length} Players)`}
                     data={response}
                     columns={columns}
                     options={options}

@@ -45,19 +45,18 @@ export default function ServerInfo() {
             });
     }, [])
 
-    // if(serverInfo.status === "online") {
-    //     const playersAmount = players && response[1]?.directPlayerInfo?.map(Object.values).length
-    //     const indexForDuration = playersAmount + 2;
+    if(serverInfo.status === "online") {
+        for (var i = 0; i < players.length; i++) {
+            const eachPlayer = players[i];
+            for (var j = 2; j < eachPlayer.length; j++) {
+                const eachScoreInMinutes = Math.trunc(eachPlayer[j]/60);
+                eachPlayer[j] = eachScoreInMinutes
+                console.log(eachScoreInMinutes)
+            }
+        }
+    }
 
-    //     for (var i = 0; i < playersAmount; i++) {
-    //         const player = players[i];
-    //         for (var j = 2; j < indexForDuration * 2; j += 2) {
-    //             player[j] = player[j] / 60;
-    //         }
-    //     }
-    // }
-
-    const columns = ["Name", "Score", "Seconds"];
+    const columns = ["Name", "Score", " Minutes"];
     const options = {
         filterType: 'checkbox',
         responsive: "simple",
