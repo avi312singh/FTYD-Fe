@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { AppBar, CssBaseline, Divider, Drawer, Hidden, IconButton, List, ListItem, ListItemIcon, Toolbar, Tooltip, Typography, SwipeableDrawer } from '@material-ui/core';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -9,9 +9,9 @@ import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import PersonIcon from '@material-ui/icons/Person';
 import MenuIcon from '@material-ui/icons/Menu';
-import LightThemeIcon from '@material-ui/icons/Brightness7';
-import DarkThemeIcon from '@material-ui/icons/Brightness4';
 
+import DarkThemeContext from '../DarkThemeContext/DarkThemeContext';
+import DarkThemeSwitcher from '../DarkThemeSwitcher/DarkThemeSwitcher';
 import { Link } from "gatsby"
 
 const drawerWidth = 240;
@@ -47,11 +47,11 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
-    darkThemeButton: {
+    darkModeButton: {
         background: "none",
         border: "none",
     },
-    darkThemeMobileButton: {
+    darkModeMobileButton: {
         [theme.breakpoints.up('sm')]: {
             display: "none",
         },
@@ -73,19 +73,18 @@ const NavDrawer = ({ children, window }) => {
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [darkTheme, setDarkTheme] = React.useState(false);
+    const [darkMode, setDarkMode] = React.useState(React.useContext(DarkThemeContext).darkMode ? true : false);
+    const value = { darkMode, setDarkMode };
+
+    console.log("darkMode useContext", React.useContext(DarkThemeContext).darkMode)
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
-    const handleLightThemeToggle = () => {
-        setDarkTheme(!darkTheme);
-    };
-
     const linkStyles = {
         textDecoration: "none",
-        color: darkTheme ? "white" : "black"
+        color: darkMode ? "white" : "black"
     }
 
     const activeStyle = {
@@ -93,7 +92,7 @@ const NavDrawer = ({ children, window }) => {
         color: "red"
     }
 
-    const darkThemeStyling = createMuiTheme(darkTheme ? {
+    const darkModeStyling = createMuiTheme(darkMode ? {
         palette: {
             type: "dark",
         }
@@ -107,19 +106,7 @@ const NavDrawer = ({ children, window }) => {
     const drawer = (
         <div>
             <div className={classes.toolbar} />
-            {darkTheme ?
-                <Tooltip title="Light Mode" className={classes.darkThemeMobileButton} onClick={handleLightThemeToggle}>
-                    <IconButton aria-label="Light Mode">
-                        <DarkThemeIcon />
-                    </IconButton>
-                </Tooltip>
-                :
-                <Tooltip title="Dark Mode" className={classes.darkThemeMobileButton} onClick={handleLightThemeToggle}>
-                    <IconButton aria-label="Dark Mode">
-                        <LightThemeIcon />
-                    </IconButton>
-                </Tooltip>
-            }
+            <DarkThemeSwitcher mobile/>
             <Divider />
             <List>
                 {[{ text: 'Home', href: '/', icon: <HomeIcon /> }, { text: 'Leaderboards', href: '/top-players/', icon: <PersonIcon /> },
@@ -128,7 +115,7 @@ const NavDrawer = ({ children, window }) => {
                     .map((link, index) => (
                         <ListItem key={link.text}>
                             <ListItemIcon>{link.icon}</ListItemIcon>
-                            <Link to={link.href} activeStyle={activeStyle} style={linkStyles} state={{ darkTheme: darkTheme }}>{link.text}</Link>
+                            <Link to={link.href} activeStyle={activeStyle} style={linkStyles} state={{ darkMode: darkMode }}>{link.text}</Link>
                         </ListItem>
                     ))}
             </List>
@@ -139,74 +126,64 @@ const NavDrawer = ({ children, window }) => {
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
-        <ThemeProvider theme={darkThemeStyling}>
-            <div className={classes.root}>
-                <CssBaseline />
-                <AppBar position="fixed" className={classes.appBar}>
-                    <Toolbar>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            edge="start"
-                            onClick={handleDrawerToggle}
-                            className={classes.menuButton}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography className={classes.menuHeaderText} variant="h6" noWrap>
-                            Fall to your death
-          </Typography>
-                        {darkTheme ?
-                            <Tooltip title="Light Mode" className={classes.darkThemeButton} onClick={handleLightThemeToggle}>
-                                <IconButton aria-label="Light Mode">
-                            <DarkThemeIcon />
-                             </IconButton>
-                            </Tooltip>
-                         :
-                            <Tooltip title="Dark Mode" className={classes.darkThemeButton} onClick={handleLightThemeToggle}>
-                                    <IconButton aria-label="Dark Mode">
-                                <LightThemeIcon />
-                                </IconButton>
-                               </Tooltip>
-                            }
-                    </Toolbar>
-                </AppBar>
-                <nav className={classes.drawer} aria-label="navigation links">
-                    <Hidden smUp implementation="css">
-                        <SwipeableDrawer
-                            container={container}
-                            variant="temporary"
-                            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-                            open={mobileOpen}
-                            onClose={handleDrawerToggle}
-                            classes={{
-                                paper: classes.drawerPaper,
-                            }}
-                            ModalProps={{
-                                keepMounted: true, // Better open performance on mobile.
-                            }}
-                        >
-                            {drawer}
-                        </SwipeableDrawer>
-                    </Hidden>
-                    <Hidden xsDown implementation="css">
-                        <Drawer
-                            classes={{
-                                paper: classes.drawerPaper,
-                            }}
-                            variant="permanent"
-                            open
-                        >
-                            {drawer}
-                        </Drawer>
-                    </Hidden>
-                </nav>
-                <main className={classes.content}>
-                    <div className={classes.toolbar} />
-                    {children}
-                </main>
-            </div>
-        </ThemeProvider>
+        <DarkThemeContext.Provider value={value}>
+            <ThemeProvider theme={darkModeStyling}>
+                <div className={classes.root}>
+                    <CssBaseline />
+                    <AppBar position="fixed" className={classes.appBar}>
+                        <Toolbar>
+                            <IconButton
+                                color="inherit"
+                                aria-label="open drawer"
+                                edge="start"
+                                onClick={handleDrawerToggle}
+                                className={classes.menuButton}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                            <Typography className={classes.menuHeaderText} variant="h6" noWrap>
+                                Fall to your death
+                            </Typography>
+                            <DarkThemeSwitcher mobile={false}/>
+                        </Toolbar>
+                    </AppBar>
+                    <nav className={classes.drawer} aria-label="navigation links">
+                        <Hidden smUp implementation="css">
+                            <SwipeableDrawer
+                                container={container}
+                                variant="temporary"
+                                anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+                                open={mobileOpen}
+                                onClose={handleDrawerToggle}
+                                classes={{
+                                    paper: classes.drawerPaper,
+                                }}
+                                ModalProps={{
+                                    keepMounted: true, // Better open performance on mobile.
+                                }}
+                            >
+                                {drawer}
+                            </SwipeableDrawer>
+                        </Hidden>
+                        <Hidden xsDown implementation="css">
+                            <Drawer
+                                classes={{
+                                    paper: classes.drawerPaper,
+                                }}
+                                variant="permanent"
+                                open
+                            >
+                                {drawer}
+                            </Drawer>
+                        </Hidden>
+                    </nav>
+                    <main className={classes.content}>
+                        <div className={classes.toolbar} />
+                        {children}
+                    </main>
+                </div>
+            </ThemeProvider>
+        </DarkThemeContext.Provider>
     );
 }
 

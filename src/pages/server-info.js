@@ -56,7 +56,33 @@ export default function ServerInfo() {
         }
     }
 
-    const columns = ["Name", "Score", " Minutes"];
+    const columns = [
+        {
+        name: "name",
+        label: "Name",
+        options: {
+            filter: true,
+            sort: true,
+        }
+    },
+        {
+            name: "score",
+            label: "Score",
+            options: {
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "minutes",
+            label: "Minutes",
+            options: {
+                filter: true,
+                sort: true,
+            }
+        }
+    ];
+
     const options = {
         filterType: 'checkbox',
         responsive: "simple",
@@ -66,7 +92,8 @@ export default function ServerInfo() {
         search: false,
         filter: false,
         download: false,
-        viewColumns: false
+        viewColumns: false,
+        sortOrder: {name: 'name', direction: 'asc'}
     };
 
     return (

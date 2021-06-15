@@ -12,7 +12,7 @@ module.exports = {
   plugins: [`gatsby-plugin-material-ui`, `gatsby-plugin-react-helmet`],
   siteMetadata: {
     title: "Fall to Your Death",
-    titleTemplate: "%s · The official website",
+    titleTemplate: "%s · The official server website",
     description:
       "The official website of the Fall to Your Death server",
     url: "https://falltoyourdeath.gatsbyjs.io/", // No trailing slash allowed!
