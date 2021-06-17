@@ -131,7 +131,6 @@ const NavDrawer = ({ children, window }) => {
               to={link.href}
               activeStyle={activeStyle}
               style={linkStyles}
-              state={{ darkMode: darkMode }}
             >
               {link.text}
             </Link>
