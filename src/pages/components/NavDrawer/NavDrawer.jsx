@@ -173,6 +173,7 @@ const NavDrawer = ({ children, window }) => {
               variant="temporary"
               anchor={theme.direction === "rtl" ? "right" : "left"}
               open={mobileOpen}
+              onOpen={console.debug("mobile draw open")}
               onClose={handleDrawerToggle}
               classes={{
                 paper: classes.drawerPaper,
