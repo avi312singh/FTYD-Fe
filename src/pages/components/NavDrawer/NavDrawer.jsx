@@ -103,25 +103,38 @@ const NavDrawer = ({ children, window }) => {
             }
         });
 
-    const drawer = (
-        <div>
-            <div className={classes.toolbar} />
-            <DarkThemeSwitcher mobile/>
-            <Divider />
-            <List>
-                {[{ text: 'Home', href: '/', icon: <HomeIcon /> }, { text: 'Leaderboards', href: '/top-players/', icon: <PersonIcon /> },
-                { text: 'Donate', href: '/donate/', icon: <AttachMoneyIcon /> }, { text: 'Server Info', href: '/server-info/', icon: <InfoIcon /> },
-                { text: 'Player Stats', href: '/player-stats/', icon: <SearchIcon /> }]
-                    .map((link, index) => (
-                        <ListItem key={link.text}>
-                            <ListItemIcon>{link.icon}</ListItemIcon>
-                            <Link to={link.href} activeStyle={activeStyle} style={linkStyles} state={{ darkMode: darkMode }}>{link.text}</Link>
-                        </ListItem>
-                    ))}
-            </List>
-            <Divider />
-        </div>
-    );
+  const drawer = (
+    <div>
+      <div className={classes.toolbar} />
+      <DarkThemeSwitcher mobile />
+      <Divider />
+      <List>
+        {[
+          { text: "Home", href: "/", icon: <HomeIcon /> },
+          { text: "Leaderboards", href: "/top-players/", icon: <PersonIcon /> },
+          { text: "Donate", href: "/donate/", icon: <AttachMoneyIcon /> },
+          { text: "Server Info", href: "/server-info/", icon: <InfoIcon /> },
+          {
+            text: "Player Stats",
+            href: "/player-stats/",
+            icon: <SearchIcon />,
+          },
+        ].map((link, index) => (
+          <ListItem key={link.text}>
+            <ListItemIcon>{link.icon}</ListItemIcon>
+            <Link
+              to={link.href}
+              activeStyle={activeStyle}
+              style={linkStyles}
+            >
+              {link.text}
+            </Link>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+    </div>
+  )
 
     const container = window !== undefined ? () => window().document.body : undefined;
 
