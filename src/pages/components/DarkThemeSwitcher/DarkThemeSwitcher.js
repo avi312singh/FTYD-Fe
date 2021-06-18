@@ -1,74 +1,51 @@
-import React, { useContext } from 'react';
-import { IconButton, Tooltip } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import LightThemeIcon from '@material-ui/icons/Brightness7';
-import DarkThemeIcon from '@material-ui/icons/Brightness4';
+import React from "react"
+import { IconButton, Tooltip } from "@material-ui/core"
+import { makeStyles, useTheme } from "@material-ui/core/styles"
+import LightThemeIcon from "@material-ui/icons/Brightness7"
+import DarkThemeIcon from "@material-ui/icons/Brightness4"
+import useDarkThemeContext from "../DarkThemeContext/DarkThemeContext"
 
-import DarkThemeContext from '../DarkThemeContext/DarkThemeContext';
+const useStyles = makeStyles(theme => ({
+  darkThemeButton: {
+    background: "none",
+    border: "none",
+  },
+  darkThemeMobileButton: {
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
+    [theme.breakpoints.down("sm")]: {
+      background: "none",
+      border: "none",
+      display: "visible",
+      paddingLeft: theme.spacing(2),
+      minWidth: "25%",
+    },
+  },
+  menuHeaderText: {
+    minWidth: "97%",
+  },
+}))
 
 const DarkThemeSwitcher = ({ mobile }) => {
-    const useStyles = makeStyles((theme) => ({
-        darkThemeButton: {
-            background: "none",
-            border: "none",
-        },
-        darkThemeMobileButton: {
-            [theme.breakpoints.up('sm')]: {
-                display: "none",
-            },
-            [theme.breakpoints.down('sm')]: {
-                background: "none",
-                border: "none",
-                display: "visible",
-                paddingLeft: theme.spacing(2),
-                minWidth: '25%'
+  const classes = useStyles()
+  const { darkMode, setDarkMode } = useDarkThemeContext();
 
-            },
-        },
-        menuHeaderText: {
-            minWidth: '97%',
-        }
-    }));
+  const handleLightThemeToggle = () => {
+    setDarkMode(darkMode => !darkMode)
+  }
 
-
-
-    const classes = useStyles();
-    const { darkMode, setDarkMode } = useContext(DarkThemeContext);
-
-    const handleLightThemeToggle = () => {
-        setDarkMode(darkMode => !darkMode);
-        console.log("dark mode is ", darkMode)
-    };
-    console.log("React.useContext(DarkThemeContext).darkMode ", React.useContext(DarkThemeContext).darkMode)
-
-    return (
-        mobile ?
-        darkMode ?
-            <Tooltip title="Light Mode" className={classes.darkThemeMobileButton} onClick={handleLightThemeToggle} >
-                <IconButton aria-label="Light Mode">
-                    <DarkThemeIcon />
-                </IconButton>
-            </Tooltip >
-            :
-            <Tooltip title="Dark Mode" className={classes.darkThemeMobileButton} onClick={handleLightThemeToggle} >
-                <IconButton aria-label="Dark Mode">
-                    <LightThemeIcon />
-                </IconButton>
-            </Tooltip>
-        :
-            darkMode ?
-                <Tooltip title="Light Mode" className={classes.darkThemeButton} onClick={handleLightThemeToggle} >
-                    <IconButton aria-label="Light Mode">
-                        <DarkThemeIcon />
-                    </IconButton>
-                </Tooltip >
-                :
-                <Tooltip title="Dark Mode" className={classes.darkThemeButton} onClick={handleLightThemeToggle} >
-                    <IconButton aria-label="Dark Mode">
-                        <LightThemeIcon />
-                    </IconButton>
-                </Tooltip>
-    )
+  return (
+    <Tooltip
+      title={`${darkMode ? 'Dark' : "Light"} Mode`}
+      className={mobile ? classes.darkThemeMobileButton : classes.darkThemeButton}
+      onClick={handleLightThemeToggle}
+    >
+      <IconButton aria-label={`${darkMode ? 'Dark' : "Light"} Mode`}>
+        {darkMode ? <LightThemeIcon /> : <DarkThemeIcon />}
+      </IconButton>
+    </Tooltip>
+  )
 }
 
-export default DarkThemeSwitcher;
+export default DarkThemeSwitcher

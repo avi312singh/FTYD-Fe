@@ -33,7 +33,6 @@ export default function TopPlayers() {
     const columns = ["Name", "Weekly Kills", "Weekly Hours", "Kills Per Time Ratio"];
     const options = {
         filterType: 'checkbox',
-        responsive: "responsive",
         selectableRows: "none",
         pagination: false,
         filter: false,
