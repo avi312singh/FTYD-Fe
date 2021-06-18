@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
 import axios from 'axios'
-import NavDrawer from "./components/NavDrawer/NavDrawer"
+import NavDrawer from "../../components/NavDrawer/NavDrawer"
 import MUIDataTable from "mui-datatables";
 
-import Seo from "./components/Seo/Seo";
+import Seo from "../../components/Seo/Seo";
 
 export default function TopPlayers() {
     const endpoint = process.env.GATSBY_ENDPOINT || (() => { new Error("Provide an endpoint in env vars") });
