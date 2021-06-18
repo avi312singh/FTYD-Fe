@@ -37,11 +37,11 @@ const DarkThemeSwitcher = ({ mobile }) => {
 
   return (
     <Tooltip
-      title={`${darkMode ? 'Dark' : "Light"} Mode`}
+      title={`${darkMode ? 'Light' : "Dark"} Mode`}
       className={mobile ? classes.darkThemeMobileButton : classes.darkThemeButton}
       onClick={handleLightThemeToggle}
     >
-      <IconButton aria-label={`${darkMode ? 'Dark' : "Light"} Mode`}>
+      <IconButton aria-label={`${darkMode ? 'Light' : "Dark"} Mode`}>
         {darkMode ? <LightThemeIcon /> : <DarkThemeIcon />}
       </IconButton>
     </Tooltip>

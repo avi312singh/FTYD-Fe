@@ -5,8 +5,8 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import NavDrawer from "./components/NavDrawer/NavDrawer"
-import Seo from "./components/Seo/Seo";
+import NavDrawer from "../components/NavDrawer/NavDrawer"
+import Seo from "../components/Seo/Seo";
 
 export default function PlayerSearch() {
     const endpoint = process.env.GATSBY_ENDPOINT || (() => { new Error("Provide an endpoint in env vars") });

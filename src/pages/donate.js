@@ -3,8 +3,8 @@ import { TextField, InputAdornment, Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-import NavDrawer from "./components/NavDrawer/NavDrawer"
-import Seo from "./components/Seo/Seo";
+import NavDrawer from "../components/NavDrawer/NavDrawer"
+import Seo from "../components/Seo/Seo";
 
 const useStyles = makeStyles((theme) => ({
     donateContainer: {
