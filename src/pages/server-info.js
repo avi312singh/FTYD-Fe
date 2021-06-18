@@ -51,7 +51,6 @@ export default function ServerInfo() {
             for (var j = 2; j < eachPlayer.length; j++) {
                 const eachScoreInMinutes = Math.trunc(eachPlayer[j] / 60);
                 eachPlayer[j] = eachScoreInMinutes
-                console.log(eachScoreInMinutes)
             }
         }
     }

@@ -1,12 +1,21 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 
 const DarkThemeContext = React.createContext({
   darkMode: false,
-  setDarkMode: () => {},
+  setDarkMode: () => { },
 })
 
 export const DarkThemeProvider = ({ children }) => {
-  const [isDark, setIsDark] = useState(false)
+  console.log("check here ", localStorage.getItem('darkModeLocalStorage'))
+  const [isDark, setIsDark] = useState(
+    localStorage.getItem('darkModeLocalStorage') !== null ? localStorage.getItem('darkModeLocalStorage') : false
+  );
+  useEffect(() => {
+    localStorage.setItem('darkModeLocalStorage', isDark);
+  }, [localStorage.getItem('darkModeLocalStorage'), isDark])
+
+
+ console.log("isdark in context ", isDark)
 
   return (
     <DarkThemeContext.Provider
