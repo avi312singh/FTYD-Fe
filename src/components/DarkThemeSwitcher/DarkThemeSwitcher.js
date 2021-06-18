@@ -1,6 +1,6 @@
 import React from "react"
 import { IconButton, Tooltip } from "@material-ui/core"
-import { makeStyles, useTheme } from "@material-ui/core/styles"
+import { makeStyles } from "@material-ui/core/styles"
 import LightThemeIcon from "@material-ui/icons/Brightness7"
 import DarkThemeIcon from "@material-ui/icons/Brightness4"
 import useDarkThemeContext from "../DarkThemeContext/DarkThemeContext"

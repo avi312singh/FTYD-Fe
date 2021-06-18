@@ -84,7 +84,7 @@ const NavDrawer = ({ children, window }) => {
   const classes = useStyles()
   const theme = useTheme()
   const [mobileOpen, setMobileOpen] = React.useState(false)
-  const { darkMode, setDarkMode } = useDarkThemeContext()
+  const { darkMode } = useDarkThemeContext()
 
   console.log({ darkMode })
 
