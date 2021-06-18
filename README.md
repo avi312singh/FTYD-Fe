@@ -8,4 +8,6 @@
   Fall to your death front end
 </h1>
 
-Front end for data aggregation service used by a chivalry dedicated server
+Front end for a data aggregation service used by a chivalry dedicated server (can be used by any steam dedicated server using the source protocol)
+
+Deployed at: https://falltoyourdeath.gatsbyjs.io/
