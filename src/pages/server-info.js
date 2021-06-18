@@ -5,9 +5,9 @@ import { Typography, CircularProgress } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import ErrorIcon from '@material-ui/icons/Error';
 import MUIDataTable from "mui-datatables";
-import Seo from "./components/Seo/Seo";
+import Seo from "../components/Seo/Seo";
 
-import NavDrawer from "./components/NavDrawer/NavDrawer"
+import NavDrawer from "../components/NavDrawer/NavDrawer"
 
 const useStyles = makeStyles((theme) => ({
     serverStatus: {
