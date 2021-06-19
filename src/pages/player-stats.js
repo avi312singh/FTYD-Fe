@@ -35,7 +35,7 @@ export default function PlayerSearch() {
             .catch((error) => {
                 console.log(error);
             });
-    }, [])
+    }, [refreshIndex])
 
     const columns = [
         {

@@ -32,7 +32,7 @@ export default function TopPlayers() {
             .catch((error) => {
                 console.log(error);
             });
-    }, [])
+    }, [refreshIndex])
 
     const refreshButton = () => {
         setRefreshIndex(refreshIndex + 1)

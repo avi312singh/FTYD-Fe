@@ -24,13 +24,14 @@ export default function Home() {
   const [currentOption, setCurrentOption] = useState(288)
   const [value, setValue] = React.useState(0);
 
-  const [config, setConfig] = React.useState({
+  const config = {
     method: 'get',
     url: `${endpoint}aggregatedstats/playerCount?duration=${currentOption}`,
     headers: {
       'Authorization': `Basic ${authorisation}`,
     }
-  })
+  };
+
 
   useEffect(() => {
     axios(config)
@@ -42,27 +43,7 @@ export default function Home() {
       .catch((error) => {
         console.log(error);
       });
-  }, [currentOption, config])
-
-  const parseSelected = (event) => {
-    const valueToParse = event.target.value;
-    setCurrentOption(valueToParse);
-    setConfig({
-      method: 'get',
-      url: `${endpoint}aggregatedstats/playerCount?duration=${valueToParse}`,
-      headers: {
-        'Authorization': `Basic ${authorisation}`,
-      }
-    })
-  }
-
-
-  const handleTabChange = (event, newValue) => {
-    setCurrentOption(288);
-    if (value !== newValue) {
-      setValue(newValue);
-    }
-  };
+  }, [])
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
@@ -70,7 +51,7 @@ export default function Home() {
 
   const items = [
     {
-      name: "Random Name #1",
+      name: "Player of the week",
       description: "Probably the most random thing you have ever seen!"
     },
     {
@@ -79,7 +60,8 @@ export default function Home() {
     }
   ]
 
-  const Item = (props) => <Paper>
+  const Item = (props) =>
+  <Paper>
     <h2>{props.item.name}</h2>
     <p>{props.item.description}</p>
 
@@ -93,7 +75,8 @@ export default function Home() {
       <Seo/>
       <NavDrawer>
 
-        <Carousel>
+        <Carousel
+        interval={7000}>
           {
             items.map((item, i) => <Item key={i} item={item} />)
           }
