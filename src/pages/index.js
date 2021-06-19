@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
   const endpoint = process.env.GATSBY_ENDPOINT || (() => { new Error("Provide an endpoint in env vars") });
   const authorisation = process.env.GATSBY_AUTHORISATION || (() => { new Error("Provide a server IP in env vars") });
+  const googleAnalytics = process.env.GATSBY_GA || (() => { new Error("Provide a server IP in env vars") });
   const [response, setResponse] = useState([]);
   const config = {
     method: 'get',
@@ -56,7 +57,7 @@ export default function Home() {
     }
   };
 
-  ReactGA.initialize('G-9YJVK17ZBM');
+  ReactGA.initialize(googleAnalytics);
   ReactGA.pageview('/');
 
   const { darkMode } = useDarkThemeContext()
@@ -99,6 +100,13 @@ export default function Home() {
       name: response[2] ? response[2][0] : "No 3rd player yet",
       kills: response[2] ? response[2][1] : "",
     }
+  ]
+
+  const contentCreators = [
+    { name: "Lord Wisel" },
+    { name: "Llyweln Ap-Pudding" },
+    { name: "| avi312singh" },
+    { name: "OberTechno" },
   ]
 
 
@@ -179,36 +187,28 @@ export default function Home() {
 
         <div className={classes.cardsContainer}>
 
-          <Card className={classes.miniCardContainers}>
-            <CardContent>
-              <Typography className={classes.title} color="textSecondary" gutterBottom>
-                Content Creator
-              </Typography>
-              <Typography variant={notMobile ? "h4" : "body"} component={notMobile ? "h3" : "body2"}>
-                Lord Wisel
-              </Typography>
-            </CardContent>
-          </Card>
-          <Card className={classes.miniCardContainers}>
-            <CardContent>
-              <Typography className={classes.title} color="textSecondary" gutterBottom>
-                Content Creator
-              </Typography>
-              <Typography variant={notMobile ? "h4" : "body"} component={notMobile ? "h3" : "body2"}>
-                Llyweln Ap-Pudding
-              </Typography>
-            </CardContent>
-          </Card>
-          <Card className={classes.miniCardContainers}>
-            <CardContent>
-              <Typography className={classes.title} color="textSecondary" gutterBottom>
-                Content Creator
-              </Typography>
-              <Typography variant={notMobile ? "h4" : "body"} component={notMobile ? "h3" : "body2"}>
-                | avi312singh
-              </Typography>
-            </CardContent>
-          </Card>
+          <>
+            <Carousel
+              className={classes.carouselContainer}
+              interval={4500}
+              navButtonsAlwaysInvisible={true}
+              swipe={false}
+              indicators={false}>
+              {contentCreators.map((item, i) =>
+                <Card className={classes.miniCardContainers}>
+                  <CardContent>
+                    <Typography className={classes.title} color="textSecondary" gutterBottom>
+                      Content Creator
+                    </Typography>
+                    <Typography variant={notMobile ? "h4" : "body"} component={notMobile ? "h3" : "body2"}>
+                      {item.name}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              )
+              }
+            </Carousel>
+          </>
         </div>
 
       </NavDrawer>

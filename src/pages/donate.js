@@ -32,14 +32,15 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function Home() {
+export default function Donate() {
     const classes = useStyles();
+    const googleAnalytics = process.env.GATSBY_GA || (() => { new Error("Provide a server IP in env vars") });
     const [donationAmount, setDonationAmount] = React.useState("5.00");
     const [orderID, setOrderID] = React.useState(false);
     const donationAmountRegex = /^[0-9]*\.{1}[0-9][0-9]$/g;
     const clientId = process.env.GATSBY_PAYPAL_CLIENTID;
 
-    ReactGA.initialize('G-9YJVK17ZBM');
+    ReactGA.initialize(googleAnalytics);
     ReactGA.pageview('/donate');
 
     const createOrder = (data, actions) => {

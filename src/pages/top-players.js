@@ -12,6 +12,7 @@ import Seo from "../components/Seo/Seo";
 export default function TopPlayers() {
     const endpoint = process.env.GATSBY_ENDPOINT || (() => { new Error("Provide an endpoint in env vars") });
     const authorisation = process.env.GATSBY_AUTHORISATION || (() => { new Error("Provide a server IP in env vars") });
+    const googleAnalytics = process.env.GATSBY_GA || (() => { new Error("Provide a server IP in env vars") });
     const [response, setResponse] = useState([]);
     const [refreshIndex, setRefreshIndex] = useState(0);
     const [disableRefresh, setDisableRefresh] = useState(false)
@@ -85,7 +86,7 @@ export default function TopPlayers() {
         },
     };
 
-    ReactGA.initialize('G-9YJVK17ZBM');
+    ReactGA.initialize(googleAnalytics);
     ReactGA.pageview('/top-players');
 
     return (

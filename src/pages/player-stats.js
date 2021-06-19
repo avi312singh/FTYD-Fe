@@ -11,9 +11,10 @@ import ReactGA from 'react-ga';
 import NavDrawer from "../components/NavDrawer/NavDrawer"
 import Seo from "../components/Seo/Seo";
 
-export default function PlayerSearch() {
+export default function PlayerStats() {
     const endpoint = process.env.GATSBY_ENDPOINT || (() => { new Error("Provide an endpoint in env vars") });
     const authorisation = process.env.GATSBY_AUTHORISATION || (() => { new Error("Provide a server IP in env vars") });
+    const googleAnalytics = process.env.GATSBY_GA || (() => { new Error("Provide a server IP in env vars") });
     const [players, setPlayers] = useState([]);
     const [refreshIndex, setRefreshIndex] = useState(0);
     const [disableRefresh, setDisableRefresh] = useState(false)
@@ -38,7 +39,7 @@ export default function PlayerSearch() {
             });
     }, [refreshIndex])
 
-    ReactGA.initialize('G-9YJVK17ZBM');
+    ReactGA.initialize(googleAnalytics);
     ReactGA.pageview('/player-stats');
 
     const columns = [

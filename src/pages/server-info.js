@@ -27,6 +27,7 @@ export default function ServerInfo() {
 
     const endpoint = process.env.GATSBY_ENDPOINT || (() => { new Error("Provide an endpoint in env vars") });
     const authorisation = process.env.GATSBY_AUTHORISATION || (() => { new Error("Provide a server IP in env vars") });
+    const googleAnalytics = process.env.GATSBY_GA || (() => { new Error("Provide a server IP in env vars") });
     const config = {
         method: 'get',
         url: `${endpoint}serverStats`,
@@ -60,7 +61,7 @@ export default function ServerInfo() {
         }
     }
 
-    ReactGA.initialize('G-9YJVK17ZBM');
+    ReactGA.initialize(googleAnalytics);
     ReactGA.pageview('/server-info');
 
     const columns = [

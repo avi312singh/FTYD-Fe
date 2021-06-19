@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ServerData() {
     const endpoint = process.env.GATSBY_ENDPOINT || (() => { new Error("Provide an endpoint in env vars") });
     const authorisation = process.env.GATSBY_AUTHORISATION || (() => { new Error("Provide a server IP in env vars") });
+    const googleAnalytics = process.env.GATSBY_GA || (() => { new Error("Provide a server IP in env vars") });
     const [response, setResponse] = useState([]);
     const [currentOption, setCurrentOption] = useState(288)
     const [value, setValue] = React.useState(0);
@@ -68,7 +69,7 @@ export default function ServerData() {
         }
     };
 
-    ReactGA.initialize('G-9YJVK17ZBM');
+    ReactGA.initialize(googleAnalytics);
     ReactGA.pageview('/server-data');
 
     const theme = useTheme();
