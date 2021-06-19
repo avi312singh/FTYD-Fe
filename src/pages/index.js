@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react"
 import axios from 'axios'
-import { Card, CardActions, CardContent, Paper, Button, Typography } from '@material-ui/core';
+import { Card, CardContent, Paper, Button, Typography } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import YouTube from 'react-youtube';
 
 import NavDrawer from '../components/NavDrawer/NavDrawer';
 import Carousel from 'react-material-ui-carousel'
-
 import Seo from "../components/Seo/Seo";
+import useDarkThemeContext from "../components/DarkThemeContext/DarkThemeContext"
+
+// import { Link } from "gatsby"
 
 const useStyles = makeStyles((theme) => ({
   miniCardContainers: {
@@ -26,13 +28,13 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 12,
   },
   carouselHeading: {
+    paddingTop: theme.spacing(4),
     textAlign: 'center',
   },
   carouselContainer: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
   },
-  youtubeMusicContainer : {
+  youtubeMusicContainer: {
     paddingTop: theme.spacing(4),
     textAlign: 'center',
   },
@@ -47,11 +49,13 @@ export default function Home() {
   const [response, setResponse] = useState([]);
   const config = {
     method: 'get',
-    url: `${endpoint}aggregatedstats/playerCount?duration=288`,
+    url: `${endpoint}aggregatedstats/topPlayers`,
     headers: {
       'Authorization': `Basic ${authorisation}`,
     }
   };
+
+  const { darkMode } = useDarkThemeContext()
 
 
   useEffect(() => {
@@ -70,18 +74,32 @@ export default function Home() {
   const notMobile = useMediaQuery(theme.breakpoints.up('sm'));
   const classes = useStyles();
 
+  console.log(response)
+  // console.log(response[0])
+  // console.log(response[1])
+  // console.log(response[2])
+
   const items = [
     {
-      name: <Typography variant="h4" gutterBottom className={classes.carouselHeading}>
-        Player of the Week
-      </Typography>,
-      description: "Probably the most random thing you have ever seen!"
+      // name: "response[0][0]",
+      name: response[0] ? response[0][0] : "No 1st player yet!",
+      kills: response[0] ? response[0][1] : "",
     },
-    // {
-    //   name: "Random Name #2",
-    //   description: "Hello World!"
-    // }
+    {
+      // name: "response[1][0]",
+      name: response[1] ? response[1][0] : "No 2nd player yet",
+      kills: response[1] ? response[1][1] : "",
+    },
+    {
+      // name: "response[2][0]",
+      name: response[2] ? response[2][0] : "No 3rd player yet",
+      kills: response[2] ? response[2][1] : "",
+    }
   ]
+
+
+  items.filter(el => el != null)
+  console.log(items)
 
   const opts = {
     height: notMobile ? '390' : '195',
@@ -99,15 +117,10 @@ export default function Home() {
     },
   };
 
-  const Item = (props) =>
-    <Paper>
-      <h2>{props.item.name}</h2>
-      <p>{props.item.description}</p>
-
-      <Button className="CheckButton">
-        Check it out!
-      </Button>
-    </Paper>
+  const linkStyles = {
+    textDecoration: "none",
+    color: darkMode ? "white" : "black",
+  }
 
   return (
     <>
@@ -119,15 +132,37 @@ export default function Home() {
         <Typography variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
           To the official website of the fall to your death server
         </Typography>
-        <Carousel
-          className={classes.carouselContainer}
-          interval={7000}>
-          {
-            items.map((item, i) => <Item key={i} item={item} />)
-          }
-        </Carousel>
-        <Typography style={{'text-align' : 'center'}} variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
-         FTYD Playlist
+        {
+          items !== [] ?
+            <>
+              <Typography variant="h5" gutterBottom className={classes.carouselHeading}>
+                Players of the Week
+              </Typography>
+              <Carousel
+                className={classes.carouselContainer}
+                interval={7000}>
+                {
+                  items
+                    .map((item, i) =>
+                      <Paper>
+                        <h2>{item.name}</h2>
+                        {item.kills ? <><Typography variant="body">Kills:</Typography> <p>{item.kills}</p></> : ''}
+
+                        <Button className="CheckButton">
+                          {/* <Link style={linkStyles} to={'player-info'}>Leaderboards</Link> */}
+                        </Button>
+                      </Paper>)
+                }
+              </Carousel>
+
+              <Typography variant="h4" gutterBottom className={classes.carouselHeading}>
+              </Typography>
+            </>
+            :
+            <br />
+        }
+        <Typography gutterBottom style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "h6"} component={notMobile ? "h5" : "h6"}>
+          FTYD Playlist
         </Typography>
         <YouTube
           className={'string'}
@@ -138,39 +173,39 @@ export default function Home() {
           Special Thanks
         </Typography>
 
-          <div className={classes.cardsContainer}>
+        <div className={classes.cardsContainer}>
 
-        <Card className={classes.miniCardContainers}>
-          <CardContent>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-              Content Creator
-            </Typography>
-              <Typography variant={notMobile ? "h4" : "body"} component={notMobile ? "h3" : "body"}>
-              Lord Wisel
-            </Typography>
-          </CardContent>
-        </Card>
-        <Card className={classes.miniCardContainers}>
-          <CardContent>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-              Content Creator
-            </Typography>
-            <Typography variant={notMobile ? "h4" : "body"} component={notMobile ? "h3" : "body"}>
-              Llyweln Ap-Pudding
-            </Typography>
-          </CardContent>
-        </Card>
-        <Card className={classes.miniCardContainers}>
-          <CardContent>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-              Content Creator
-            </Typography>
-            <Typography variant={notMobile ? "h4" : "body"} component={notMobile ? "h3" : "body"}>
-              | avi312singh
-            </Typography>
-          </CardContent>
-        </Card>
-          </div>
+          <Card className={classes.miniCardContainers}>
+            <CardContent>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                Content Creator
+              </Typography>
+              <Typography variant={notMobile ? "h4" : "body"} component={notMobile ? "h3" : "body2"}>
+                Lord Wisel
+              </Typography>
+            </CardContent>
+          </Card>
+          <Card className={classes.miniCardContainers}>
+            <CardContent>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                Content Creator
+              </Typography>
+              <Typography variant={notMobile ? "h4" : "body"} component={notMobile ? "h3" : "body2"}>
+                Llyweln Ap-Pudding
+              </Typography>
+            </CardContent>
+          </Card>
+          <Card className={classes.miniCardContainers}>
+            <CardContent>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                Content Creator
+              </Typography>
+              <Typography variant={notMobile ? "h4" : "body"} component={notMobile ? "h3" : "body2"}>
+                | avi312singh
+              </Typography>
+            </CardContent>
+          </Card>
+        </div>
 
       </NavDrawer>
     </>)
