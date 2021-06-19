@@ -103,6 +103,8 @@ const NavDrawer = ({ children, window }) => {
     color: "red",
   }
 
+  const appBarColour = darkMode ? { 'background-color': '#333' } : { 'background-color':'#2196f3'};
+
   const darkModeStyling = createMuiTheme({
     palette: {
       type: darkMode ? "dark" : "light",
@@ -146,7 +148,7 @@ const NavDrawer = ({ children, window }) => {
     <ThemeProvider theme={darkModeStyling}>
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar position="fixed" className={classes.appBar}>
+        <AppBar style={appBarColour} position="fixed" className={classes.appBar}>
           <Toolbar>
             <IconButton
               color="inherit"
