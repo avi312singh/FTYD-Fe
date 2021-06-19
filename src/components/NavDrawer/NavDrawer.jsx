@@ -18,6 +18,7 @@ import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles"
 import { makeStyles, useTheme } from "@material-ui/core/styles"
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney"
 import SearchIcon from "@material-ui/icons/Search"
+import PieChartIcon from '@material-ui/icons/PieChart';
 import HomeIcon from "@material-ui/icons/Home"
 import InfoIcon from "@material-ui/icons/Info"
 import PersonIcon from "@material-ui/icons/Person"
@@ -76,7 +77,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   menuHeaderText: {
-    minWidth: "97%",
+    minWidth: "92%",
   },
 }))
 
@@ -116,14 +117,11 @@ const NavDrawer = ({ children, window }) => {
       <List>
         {[
           { text: "Home", href: "/", icon: <HomeIcon /> },
-          { text: "Leaderboards", href: "/top-players/", icon: <PersonIcon /> },
+          { text: "Weekly Leaderboards", href: "/top-players/", icon: <PersonIcon /> },
           { text: "Donate", href: "/donate/", icon: <AttachMoneyIcon /> },
           { text: "Server Info", href: "/server-info/", icon: <InfoIcon /> },
-          {
-            text: "Player Stats",
-            href: "/player-stats/",
-            icon: <SearchIcon />,
-          },
+          { text: "Player Stats", href: "/player-stats/", icon: <SearchIcon /> },
+          { text: "Server Data", href: "/server-data/", icon: <PieChartIcon /> },
         ].map((link, index) => (
           <ListItem key={link.text}>
             <ListItemIcon>{link.icon}</ListItemIcon>
@@ -131,7 +129,6 @@ const NavDrawer = ({ children, window }) => {
               to={link.href}
               activeStyle={activeStyle}
               style={linkStyles}
-              state={{ darkMode: darkMode }}
             >
               {link.text}
             </Link>
