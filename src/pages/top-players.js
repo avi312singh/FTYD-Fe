@@ -4,6 +4,7 @@ import NavDrawer from "../components/NavDrawer/NavDrawer"
 import MUIDataTable from "mui-datatables";
 import { IconButton, Tooltip } from '@material-ui/core';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import ReactGA from 'react-ga';
 
 import useDarkThemeContext from "../components/DarkThemeContext/DarkThemeContext"
 import Seo from "../components/Seo/Seo";
@@ -83,6 +84,9 @@ export default function TopPlayers() {
             );
         },
     };
+
+    ReactGA.initialize('G-9YJVK17ZBM');
+    ReactGA.pageview('/top-players');
 
     return (
         <NavDrawer>

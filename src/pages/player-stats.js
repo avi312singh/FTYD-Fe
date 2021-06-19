@@ -6,6 +6,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import ReactGA from 'react-ga';
 
 import NavDrawer from "../components/NavDrawer/NavDrawer"
 import Seo from "../components/Seo/Seo";
@@ -36,6 +37,9 @@ export default function PlayerSearch() {
                 console.log(error);
             });
     }, [refreshIndex])
+
+    ReactGA.initialize('G-9YJVK17ZBM');
+    ReactGA.pageview('/player-stats');
 
     const columns = [
         {

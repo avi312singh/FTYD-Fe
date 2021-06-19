@@ -5,6 +5,7 @@ import DurationPieChart from '../components/DurationPieChart/DurationPieChart';
 import { InputLabel, MenuItem, FormControl, Container, Tab, Tabs, Select } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import ReactGA from 'react-ga';
 
 import NavDrawer from '../components/NavDrawer/NavDrawer';
 import KillsPieChart from '../components/KillsPieChart/KillsPieChart';
@@ -66,6 +67,9 @@ export default function ServerData() {
             setValue(newValue);
         }
     };
+
+    ReactGA.initialize('G-9YJVK17ZBM');
+    ReactGA.pageview('/server-data');
 
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.up('sm'));

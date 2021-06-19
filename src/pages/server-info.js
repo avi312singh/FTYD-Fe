@@ -6,6 +6,8 @@ import CheckIcon from '@material-ui/icons/Check';
 import ErrorIcon from '@material-ui/icons/Error';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import MUIDataTable from "mui-datatables";
+import ReactGA from 'react-ga';
+
 import Seo from "../components/Seo/Seo";
 
 import NavDrawer from "../components/NavDrawer/NavDrawer"
@@ -57,6 +59,9 @@ export default function ServerInfo() {
             }
         }
     }
+
+    ReactGA.initialize('G-9YJVK17ZBM');
+    ReactGA.pageview('/server-info');
 
     const columns = [
         {

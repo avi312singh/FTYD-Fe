@@ -4,6 +4,7 @@ import { Card, CardContent, Paper, Button, Typography } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import YouTube from 'react-youtube';
+import ReactGA from 'react-ga';
 
 import NavDrawer from '../components/NavDrawer/NavDrawer';
 import Carousel from 'react-material-ui-carousel'
@@ -54,6 +55,9 @@ export default function Home() {
       'Authorization': `Basic ${authorisation}`,
     }
   };
+
+  ReactGA.initialize('G-9YJVK17ZBM');
+  ReactGA.pageview('/');
 
   const { darkMode } = useDarkThemeContext()
 
@@ -117,10 +121,10 @@ export default function Home() {
     },
   };
 
-  const linkStyles = {
-    textDecoration: "none",
-    color: darkMode ? "white" : "black",
-  }
+  // const linkStyles = {
+  //   textDecoration: "none",
+  //   color: darkMode ? "white" : "black",
+  // }
 
   return (
     <>

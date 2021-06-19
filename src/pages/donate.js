@@ -2,6 +2,7 @@ import React from "react"
 import { TextField, InputAdornment, Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import ReactGA from 'react-ga';
 
 import NavDrawer from "../components/NavDrawer/NavDrawer"
 import Seo from "../components/Seo/Seo";
@@ -37,6 +38,9 @@ export default function Home() {
     const [orderID, setOrderID] = React.useState(false);
     const donationAmountRegex = /^[0-9]*\.{1}[0-9][0-9]$/g;
     const clientId = process.env.GATSBY_PAYPAL_CLIENTID;
+
+    ReactGA.initialize('G-9YJVK17ZBM');
+    ReactGA.pageview('/donate');
 
     const createOrder = (data, actions) => {
         return actions.order
