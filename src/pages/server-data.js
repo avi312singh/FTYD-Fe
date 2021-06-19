@@ -9,6 +9,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import NavDrawer from '../components/NavDrawer/NavDrawer';
 import KillsPieChart from '../components/KillsPieChart/KillsPieChart';
 import Seo from "../components/Seo/Seo";
+import useDarkThemeContext from "../components/DarkThemeContext/DarkThemeContext"
 
 const useStyles = makeStyles((theme) => ({
     graphContainer: {
@@ -24,6 +25,7 @@ export default function ServerData() {
     const [response, setResponse] = useState([]);
     const [currentOption, setCurrentOption] = useState(288)
     const [value, setValue] = React.useState(0);
+    const { darkMode } = useDarkThemeContext()
 
     const [config, setConfig] = React.useState({
         method: 'get',
@@ -107,8 +109,8 @@ export default function ServerData() {
                                 data={response}
                                 margin={{ top: 10, right: 20, left: 10, bottom: 5 }}
                             >
-                                <Line type="monotone" dataKey="playerCount" stroke="black" />
-                                <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
+                                <Line type="monotone" dataKey="playerCount" stroke={darkMode ? "white": "black"} />
+                            <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#000" : "#ccc"} />
                                 <XAxis dataKey="time" />
                                 <YAxis dataKey="playerCount" />
                                 <Tooltip />

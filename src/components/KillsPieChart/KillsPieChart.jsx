@@ -32,7 +32,7 @@ const KillsPieChart = () => {
         <PieChart width={800} height={400}>
             <Tooltip />
             <Pie
-                data={response}
+                data={response.filter(duration => duration.name !== "All")}
                 dataKey="kills"
                 cx={240}
                 cy={200}

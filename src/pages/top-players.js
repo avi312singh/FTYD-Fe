@@ -5,6 +5,7 @@ import MUIDataTable from "mui-datatables";
 import { IconButton, Tooltip } from '@material-ui/core';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
+import useDarkThemeContext from "../components/DarkThemeContext/DarkThemeContext"
 import Seo from "../components/Seo/Seo";
 
 export default function TopPlayers() {
@@ -13,6 +14,8 @@ export default function TopPlayers() {
     const [response, setResponse] = useState([]);
     const [refreshIndex, setRefreshIndex] = useState(0);
     const [disableRefresh, setDisableRefresh] = useState(false)
+
+    const { darkMode } = useDarkThemeContext()
 
     const config = {
         method: 'get',
@@ -42,7 +45,15 @@ export default function TopPlayers() {
         }, 5000);
     }
 
-    const columns = ["Name", "Weekly Kills", "Weekly Hours", "Kills Per Time Ratio"];
+    const topPlayerColour = darkMode ? "rgba(255,255,255,0.3)" : "#e3e3e3";
+
+    const columns = [
+        {name: "name", label: "Name"},
+        {name: "weeklyKills", label: "Weekly Kills"},
+        {name: "weeklyHours", label: "Weekly Hours"},
+        {name: "killsPerTimeRatio", label: "Kills Per Time Ratio"},
+    ];
+
     const options = {
         filterType: 'checkbox',
         selectableRows: "none",
@@ -50,6 +61,13 @@ export default function TopPlayers() {
         filter: false,
         download: false,
         viewColumns: false,
+        setRowProps: (row, index) => {
+            return {
+                style: {
+                    backgroundColor: index === 0 && topPlayerColour,
+                },
+            }
+        },
         customToolbar: () => {
             return (
                 <Tooltip
