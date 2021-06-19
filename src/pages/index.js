@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import axios from 'axios'
-import { Paper, Button, Typography } from '@material-ui/core';
+import { Card, CardActions, CardContent, Paper, Button, Typography } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import YouTube from 'react-youtube';
@@ -11,6 +11,20 @@ import Carousel from 'react-material-ui-carousel'
 import Seo from "../components/Seo/Seo";
 
 const useStyles = makeStyles((theme) => ({
+  miniCardContainers: {
+    maxWidth: 220,
+    margin: theme.spacing(0.5),
+    marginTop: theme.spacing(4),
+  },
+  cardsContainer: {
+    display: 'inline-flex',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
   carouselHeading: {
     textAlign: 'center',
   },
@@ -19,7 +33,11 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(4)
   },
   youtubeMusicContainer : {
+    paddingTop: theme.spacing(4),
     textAlign: 'center',
+  },
+  specialThanks: {
+    paddingTop: theme.spacing(4),
   }
 }))
 
@@ -55,7 +73,7 @@ export default function Home() {
   const items = [
     {
       name: <Typography variant="h4" gutterBottom className={classes.carouselHeading}>
-        Player of the week
+        Player of the Week
       </Typography>,
       description: "Probably the most random thing you have ever seen!"
     },
@@ -109,13 +127,50 @@ export default function Home() {
           }
         </Carousel>
         <Typography style={{'text-align' : 'center'}} variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
-         Ftyd playlist
+         FTYD Playlist
         </Typography>
         <YouTube
           className={'string'}
           containerClassName={classes.youtubeMusicContainer}
           opts={opts}
         />
+        <Typography className={classes.specialThanks} style={{ 'text-align': 'center' }} variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
+          Special Thanks
+        </Typography>
+
+          <div className={classes.cardsContainer}>
+
+        <Card className={classes.miniCardContainers}>
+          <CardContent>
+            <Typography className={classes.title} color="textSecondary" gutterBottom>
+              Content Creator
+            </Typography>
+              <Typography variant={notMobile ? "h4" : "body"} component={notMobile ? "h3" : "body"}>
+              Lord Wisel
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card className={classes.miniCardContainers}>
+          <CardContent>
+            <Typography className={classes.title} color="textSecondary" gutterBottom>
+              Content Creator
+            </Typography>
+            <Typography variant={notMobile ? "h4" : "body"} component={notMobile ? "h3" : "body"}>
+              Llyweln Ap-Pudding
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card className={classes.miniCardContainers}>
+          <CardContent>
+            <Typography className={classes.title} color="textSecondary" gutterBottom>
+              Content Creator
+            </Typography>
+            <Typography variant={notMobile ? "h4" : "body"} component={notMobile ? "h3" : "body"}>
+              | avi312singh
+            </Typography>
+          </CardContent>
+        </Card>
+          </div>
 
       </NavDrawer>
     </>)
