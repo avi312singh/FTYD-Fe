@@ -118,7 +118,7 @@ export default function ServerInfo() {
         setDisableRefresh(true)
         setTimeout(() => {
             setDisableRefresh(false)
-        }, 5000);
+        }, 999);
     }
 
     return (
