@@ -35,6 +35,8 @@ const DarkThemeSwitcher = ({ mobile }) => {
     setDarkMode(darkMode => !darkMode)
   }
 
+  const mobileSize = mobile ? "default" : "large"
+
   return (
     <Tooltip
       title={`${darkMode ? 'Light' : "Dark"} Mode`}
@@ -42,7 +44,7 @@ const DarkThemeSwitcher = ({ mobile }) => {
       onClick={handleLightThemeToggle}
     >
       <IconButton aria-label={`${darkMode ? 'Light' : "Dark"} Mode`}>
-        {darkMode ? <LightThemeIcon /> : <DarkThemeIcon />}
+        {darkMode ? <LightThemeIcon fontSize={mobileSize} /> : <DarkThemeIcon fontSize={mobileSize}/>}
       </IconButton>
     </Tooltip>
   )

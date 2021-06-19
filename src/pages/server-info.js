@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react"
 import axios from 'axios'
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, CircularProgress } from '@material-ui/core';
+import { Typography, CircularProgress, IconButton, Tooltip } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import ErrorIcon from '@material-ui/icons/Error';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import MUIDataTable from "mui-datatables";
 import Seo from "../components/Seo/Seo";
 
@@ -18,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
 export default function ServerInfo() {
     const [players, setPlayers] = useState([]);
     const [serverInfo, setServerInfo] = useState({ loading: true });
+    const [refreshIndex, setRefreshIndex] = useState(0);
+    const [disableRefresh, setDisableRefresh] = useState(false)
     const classes = useStyles();
 
     const endpoint = process.env.GATSBY_ENDPOINT || (() => { new Error("Provide an endpoint in env vars") });
@@ -43,7 +46,7 @@ export default function ServerInfo() {
             .catch((error) => {
                 console.log(error);
             });
-    }, [])
+    }, [refreshIndex])
 
     if (serverInfo.status === "online") {
         for (var i = 0; i < players.length; i++) {
@@ -93,8 +96,30 @@ export default function ServerInfo() {
         filter: false,
         download: false,
         viewColumns: false,
-        sortOrder: {name: 'name', direction: 'asc'}
+        sortOrder: {name: 'name', direction: 'asc'},
+        customToolbar: () => {
+            return (
+                <Tooltip
+                    title="Refresh"
+                >
+                    <IconButton
+                        onClick={refreshButton}
+                        disabled={disableRefresh}
+                        aria-label="Refresh">
+                        <RefreshIcon />
+                    </IconButton>
+                </Tooltip>
+            );
+        },
     };
+
+    const refreshButton = () => {
+        setRefreshIndex(refreshIndex + 1)
+        setDisableRefresh(true)
+        setTimeout(() => {
+            setDisableRefresh(false)
+        }, 5000);
+    }
 
     return (
         <>
