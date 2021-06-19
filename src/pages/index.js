@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Paper, Button, Typography } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import YouTube from 'react-youtube';
 
 import NavDrawer from '../components/NavDrawer/NavDrawer';
 import Carousel from 'react-material-ui-carousel'
@@ -13,13 +14,12 @@ const useStyles = makeStyles((theme) => ({
   carouselHeading: {
     textAlign: 'center',
   },
-  // [theme.breakpoints.up("sm")]: {
-  // },
-  // [theme.breakpoints.down("sm")]: {
-  // },
   carouselContainer: {
     paddingTop: theme.spacing(4)
   },
+  youtubeMusicContainer : {
+    textAlign: 'center'
+  }
 }))
 
 export default function Home() {
@@ -48,7 +48,7 @@ export default function Home() {
   }, [])
 
   const theme = useTheme();
-  const mobile = useMediaQuery(theme.breakpoints.up('sm'));
+  const notMobile = useMediaQuery(theme.breakpoints.up('sm'));
   const classes = useStyles();
 
   const items = [
@@ -64,6 +64,22 @@ export default function Home() {
     // }
   ]
 
+  const opts = {
+    height: notMobile ? '390' : '195',
+    width: notMobile ? '640' : '320',
+    playerVars: {
+      autoplay: 0,
+      listType: 'playlist',
+      list: 'PLqBaHNBE-DBxLB8VfMaaAONaJJ3Jxf5bz',
+      playlist: 'PLqBaHNBE-DBxLB8VfMaaAONaJJ3Jxf5bz',
+      showinfo: 0,
+      fs: 0,
+      controls: 1,
+      modestbranding: 0,
+      color: 'white'
+    },
+  };
+
   const Item = (props) =>
     <Paper>
       <h2>{props.item.name}</h2>
@@ -78,10 +94,10 @@ export default function Home() {
     <>
       <Seo />
       <NavDrawer>
-        <Typography variant={mobile ? "h1" : "h4"} component={mobile ? "h2" : "h5"} gutterBottom>
+        <Typography variant={notMobile ? "h2" : "h4"} component={notMobile ? "h3" : "h5"} gutterBottom>
           Welcome
         </Typography>
-        <Typography variant={mobile ? "h3" : "h6"} component={mobile ? "h4" : "h6"}>
+        <Typography variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
           To the official website of the fall to your death server
         </Typography>
         <Carousel
@@ -91,7 +107,14 @@ export default function Home() {
             items.map((item, i) => <Item key={i} item={item} />)
           }
         </Carousel>
-
+        <Typography style={{'text-align' : 'center'}} variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
+         Ftyd playlist
+        </Typography>
+        <YouTube
+          className={'string'}
+          containerClassName={classes.youtubeMusicContainer}
+          opts={opts}
+        />
 
       </NavDrawer>
     </>)

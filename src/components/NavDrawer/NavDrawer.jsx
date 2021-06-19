@@ -129,7 +129,7 @@ const NavDrawer = ({ children, window }) => {
           { text: "Home", href: "/", icon: <HomeIcon /> },
           { text: "Weekly Leaderboards", href: "/top-players/", icon: <PersonIcon /> },
           { text: "Donate", href: "/donate/", icon: <AttachMoneyIcon /> },
-          { text: "Server Info", href: "/server-info/", icon: <InfoIcon /> },
+          { text: "Current Players", href: "/server-info/", icon: <InfoIcon /> },
           { text: "Player Stats", href: "/player-stats/", icon: <SearchIcon /> },
           { text: "Server Data", href: "/server-data/", icon: <PieChartIcon /> },
         ].map((link, index) => (
