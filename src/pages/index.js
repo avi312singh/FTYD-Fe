@@ -15,10 +15,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   carouselContainer: {
-    paddingTop: theme.spacing(4)
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4)
   },
   youtubeMusicContainer : {
-    textAlign: 'center'
+    textAlign: 'center',
   }
 }))
 
