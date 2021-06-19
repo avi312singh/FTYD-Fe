@@ -87,7 +87,7 @@ export default function Home() {
                                 <TextField
                                     className={classes.amountInput}
                                     defaultValue="5.00"
-                                    helperText="Please enter a valid donation amount of at least 0.01"
+                                    helperText="Please enter a valid donation amount of at least £0.01"
                                     id="outlined-basic"
                                     label="Donation Amount"
                                     variant="outlined"
