@@ -37,7 +37,19 @@ export default function ServerData() {
         }
     })
 
+    const configViewCount = {
+        method: 'get',
+        url: `${endpoint}aggregatedstats/pageCount/?page=server-data`,
+        headers: {
+            'Authorization': `Basic ${authorisation}`,
+        }
+    };
+
     useEffect(() => {
+        axios(configViewCount)
+            .catch((error) => {
+                console.log(error);
+            });
         axios(config)
             .then((response) => {
                 if (response.status === 201 || 200) {

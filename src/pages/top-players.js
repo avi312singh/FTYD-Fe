@@ -27,7 +27,19 @@ export default function TopPlayers() {
         }
     };
 
+    const configViewCount = {
+        method: 'get',
+        url: `${endpoint}aggregatedstats/pageCount/?page=top-players`,
+        headers: {
+            'Authorization': `Basic ${authorisation}`,
+        }
+    };
+
     useEffect(() => {
+        axios(configViewCount)
+            .catch((error) => {
+                console.log(error);
+            });
         axios(config)
             .then((response) => {
                 if (response.status === 201 || 200) {

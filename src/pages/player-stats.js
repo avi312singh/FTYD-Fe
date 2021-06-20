@@ -26,8 +26,19 @@ export default function PlayerStats() {
             'Authorization': `Basic ${authorisation}`,
         }
     };
+    const configViewCount = {
+        method: 'get',
+        url: `${endpoint}aggregatedstats/pageCount/?page=player-stats`,
+        headers: {
+            'Authorization': `Basic ${authorisation}`,
+        }
+    };
 
     useEffect(() => {
+        axios(configViewCount)
+            .catch((error) => {
+                console.log(error);
+            });
         axios(config)
             .then((players) => {
                 if (players.status === 201 || 200) {

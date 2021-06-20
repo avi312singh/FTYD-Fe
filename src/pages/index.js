@@ -9,7 +9,6 @@ import ReactGA from 'react-ga';
 import NavDrawer from '../components/NavDrawer/NavDrawer';
 import Carousel from 'react-material-ui-carousel'
 import Seo from "../components/Seo/Seo";
-import useDarkThemeContext from "../components/DarkThemeContext/DarkThemeContext"
 
 // import { Link } from "gatsby"
 
@@ -49,9 +48,18 @@ export default function Home() {
   const authorisation = process.env.GATSBY_AUTHORISATION || (() => { new Error("Provide a server IP in env vars") });
   const googleAnalytics = process.env.GATSBY_GA || (() => { new Error("Provide a server IP in env vars") });
   const [response, setResponse] = useState([]);
+  // const [youtubeReady, setYoutubeReady] = useState(false);
+
   const config = {
     method: 'get',
     url: `${endpoint}aggregatedstats/topPlayers`,
+    headers: {
+      'Authorization': `Basic ${authorisation}`,
+    }
+  };
+  const configViewCount = {
+    method: 'get',
+    url: `${endpoint}aggregatedstats/pageCount/?page=/`,
     headers: {
       'Authorization': `Basic ${authorisation}`,
     }
@@ -60,10 +68,12 @@ export default function Home() {
   ReactGA.initialize(googleAnalytics);
   ReactGA.pageview('/');
 
-  const { darkMode } = useDarkThemeContext()
-
 
   useEffect(() => {
+    axios(configViewCount)
+      .catch((error) => {
+        console.log(error);
+      });
     axios(config)
       .then((response) => {
         if (response.status === 201 || 200) {
@@ -180,13 +190,13 @@ export default function Home() {
           className={'string'}
           containerClassName={classes.youtubeMusicContainer}
           opts={opts}
+        // onReady={setYoutubeReady(true)}
         />
         <Typography className={classes.specialThanks} style={{ 'text-align': 'center' }} variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
           Special Thanks
         </Typography>
 
         <div className={classes.cardsContainer}>
-
           <>
             <Carousel
               className={classes.carouselContainer}
