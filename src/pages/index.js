@@ -127,7 +127,7 @@ export default function Home() {
     height: notMobile ? '390' : '195',
     width: notMobile ? '640' : '320',
     playerVars: {
-      autoplay: 0,
+      autoplay: 1,
       listType: 'playlist',
       list: 'PLqBaHNBE-DBxLB8VfMaaAONaJJ3Jxf5bz',
       playlist: 'PLqBaHNBE-DBxLB8VfMaaAONaJJ3Jxf5bz',
@@ -135,7 +135,8 @@ export default function Home() {
       fs: 0,
       controls: 1,
       modestbranding: 0,
-      color: 'white'
+      color: 'white',
+      iv_load_policy: 3,
     },
   };
 

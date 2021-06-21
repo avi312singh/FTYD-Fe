@@ -64,7 +64,7 @@ export default function TopPlayers() {
     const columns = [
         {name: "name", label: "Name"},
         {name: "weeklyKills", label: "Weekly Kills"},
-        {name: "weeklyHours", label: "Weekly Hours"},
+        {name: "weeklyHours", label: "Weekly Minutes"},
         {name: "killsPerTimeRatio", label: "Kills Per Time Ratio"},
     ];
 
