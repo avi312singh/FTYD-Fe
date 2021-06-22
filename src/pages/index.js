@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import axios from 'axios'
-import { Card, CardContent, Paper, Button, Typography } from '@material-ui/core';
+import { Card, CardContent, Paper, Typography } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import YouTube from 'react-youtube';
@@ -17,9 +17,13 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 220,
     margin: theme.spacing(0.5),
     marginTop: theme.spacing(4),
+    backgroundColor: 'rgba(33,150,243,0.1)'
   },
   cardsContainer: {
     display: 'inline-flex',
+  },
+  carouselTopPlayerItems: {
+    backgroundColor: 'rgba(33,150,243,0.1)'
   },
   title: {
     fontSize: 14,
@@ -40,7 +44,11 @@ const useStyles = makeStyles((theme) => ({
   },
   specialThanks: {
     paddingTop: theme.spacing(4),
-  }
+  },
+  websiteHits: {
+    textAlign: "center",
+    margin: theme.spacing(1)
+  },
 }))
 
 export default function Home() {
@@ -48,6 +56,7 @@ export default function Home() {
   const authorisation = process.env.GATSBY_AUTHORISATION || (() => { new Error("Provide a server IP in env vars") });
   const googleAnalytics = process.env.GATSBY_GA || (() => { new Error("Provide a server IP in env vars") });
   const [response, setResponse] = useState([]);
+  const [viewCount, setViewCount] = useState(0);
   // const [youtubeReady, setYoutubeReady] = useState(false);
 
   const config = {
@@ -64,16 +73,30 @@ export default function Home() {
       'Authorization': `Basic ${authorisation}`,
     }
   };
+  const configViewCountUpdate = {
+    method: 'put',
+    url: `${endpoint}aggregatedstats/pageCount/?page=/`,
+    headers: {
+      'Authorization': `Basic ${authorisation}`,
+    }
+  };
 
   ReactGA.initialize(googleAnalytics);
   ReactGA.pageview('/');
 
 
   useEffect(() => {
-    axios(configViewCount)
+    axios(configViewCountUpdate)
       .catch((error) => {
         console.log(error);
-      });
+      }).then(
+        axios(configViewCount)
+          .then((viewCount) => {
+            if (viewCount.status === 201 | 200) {
+              setViewCount(viewCount.data.result.result[0].hits)
+            }
+          })
+      )
     axios(config)
       .then((response) => {
         if (response.status === 201 || 200) {
@@ -89,7 +112,7 @@ export default function Home() {
   const notMobile = useMediaQuery(theme.breakpoints.up('sm'));
   const classes = useStyles();
 
-  console.log(response)
+  console.log(viewCount)
   // console.log(response[0])
   // console.log(response[1])
   // console.log(response[2])
@@ -121,7 +144,7 @@ export default function Home() {
 
 
   items.filter(el => el != null)
-  console.log(items)
+  // console.log(items)
 
   const opts = {
     height: notMobile ? '390' : '195',
@@ -167,13 +190,13 @@ export default function Home() {
                 {
                   items
                     .map((item, i) =>
-                      <Paper>
+                      <Paper className={classes.carouselTopPlayerItems}>
                         <h2>{item.name}</h2>
                         {item.kills ? <><Typography variant="body">Kills:</Typography> <p>{item.kills}</p></> : ''}
-
+                        {/*
                         <Button className="CheckButton">
-                          {/* <Link style={linkStyles} to={'player-info'}>Leaderboards</Link> */}
-                        </Button>
+                          <Link style={linkStyles} to={'player-info'}>Leaderboards</Link>
+                        </Button> */}
                       </Paper>)
                 }
               </Carousel>
@@ -221,7 +244,11 @@ export default function Home() {
             </Carousel>
           </>
         </div>
-
+        <div className={classes.websiteHits}>
+          <Typography variant="body2">
+            Website hits: {viewCount === 0 ? 0 : viewCount}
+          </Typography>
+        </div>
       </NavDrawer>
     </>)
 }
