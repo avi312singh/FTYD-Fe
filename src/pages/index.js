@@ -187,7 +187,7 @@ export default function Home() {
         {
           items !== [] ?
             <>
-              <Typography variant="h4" gutterBottom className={classes.carouselHeading}>
+              <Typography variant="h5" gutterBottom className={classes.carouselHeading}>
                 Players of the Week
               </Typography>
               <Carousel
@@ -198,7 +198,7 @@ export default function Home() {
                     .map((item, i) =>
                       <Paper className={classes.carouselTopPlayerItems}>
                         <h2>{item.name}</h2>
-                        {item.kills ? <><Typography variant="body">Kills:</Typography> <p>{item.kills}</p></> : ''}
+                        {item.kills ? <><Typography color="primary" variant="body">Kills:</Typography> <Typography color="primary" variant="body">{item.kills}</Typography></> : ''}
                         {/*
                         <Button className="CheckButton">
                           <Link style={linkStyles} to={'player-info'}>Leaderboards</Link>
@@ -213,7 +213,7 @@ export default function Home() {
             :
             <br />
         }
-        <Typography gutterBottom style={{ 'text-align': 'center' }} variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
+        <Typography gutterBottom style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "h6"} component={notMobile ? "h5" : "h6"}>
           FTYD Playlist
         </Typography>
         <YouTube
@@ -222,7 +222,7 @@ export default function Home() {
           opts={opts}
         // onReady={setYoutubeReady(true)}
         />
-        <Typography className={classes.specialThanks} style={{ 'text-align': 'center' }} variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
+        <Typography className={classes.specialThanks} style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "h6"} component={notMobile ? "h5" : "h6"}>
           Special Thanks
         </Typography>
 
