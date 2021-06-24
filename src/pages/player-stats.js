@@ -63,7 +63,7 @@ export default function PlayerStats() {
         },
         {
             name: "totalTime",
-            label: "Total Hours",
+            label: "Total Minutes",
             options: {
                 display: true,
             }
@@ -84,7 +84,7 @@ export default function PlayerStats() {
         },
         {
             name: "totalTimeDaily",
-            label: "Daily Hours",
+            label: "Daily Minutes",
             options: {
                 display: false,
             }
@@ -105,7 +105,7 @@ export default function PlayerStats() {
         },
         {
             name: "totalTimeWeekly",
-            label: "Weekly Hours",
+            label: "Weekly Minutes",
             options: {
                 display: false,
             }
@@ -126,7 +126,7 @@ export default function PlayerStats() {
         },
         {
             name: "totalTimeMonthly",
-            label: "Monthly Hours",
+            label: "Monthly Minutes",
             options: {
                 display: false,
             }

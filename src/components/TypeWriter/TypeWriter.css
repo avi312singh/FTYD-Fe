@@ -1,0 +1,14 @@
+body {
+  padding: 1em 2em;
+}
+
+#cursor {
+  border-left: .1em solid #09110b;
+  animation: blink .7s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}

@@ -6,6 +6,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import YouTube from 'react-youtube';
 import ReactGA from 'react-ga';
 
+import TypeWriter from '../components/TypeWriter/TypeWriter'
 import NavDrawer from '../components/NavDrawer/NavDrawer';
 import Carousel from 'react-material-ui-carousel'
 import Seo from "../components/Seo/Seo";
@@ -21,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
   },
   cardsContainer: {
     display: 'inline-flex',
+    width: '100%',
+    justifyContent: 'center',
+    height: '250px'
   },
   carouselTopPlayerItems: {
     backgroundColor: 'rgba(33,150,243,0.1)'
@@ -48,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
   websiteHits: {
     textAlign: "center",
     margin: theme.spacing(1)
+  },
+  welcomeTypewriter: {
+    height: '100%'
   },
 }))
 
@@ -172,21 +179,20 @@ export default function Home() {
     <>
       <Seo />
       <NavDrawer>
-        <Typography variant={notMobile ? "h2" : "h4"} component={notMobile ? "h3" : "h5"} gutterBottom>
-          Welcome
-        </Typography>
+        <TypeWriter className={classes.welcomeTypewriter} messages={["Welcome", "Bienvenue", "Benvenuta", "добро пожаловать",
+          "Bienvenidas", "欢迎", "Hosgeldiniz"]}></TypeWriter>
         <Typography variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
           To the official website of the fall to your death server
         </Typography>
         {
           items !== [] ?
             <>
-              <Typography variant="h5" gutterBottom className={classes.carouselHeading}>
+              <Typography variant="h4" gutterBottom className={classes.carouselHeading}>
                 Players of the Week
               </Typography>
               <Carousel
                 className={classes.carouselContainer}
-                interval={7000}>
+                interval={6000}>
                 {
                   items
                     .map((item, i) =>
@@ -207,7 +213,7 @@ export default function Home() {
             :
             <br />
         }
-        <Typography gutterBottom style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "h6"} component={notMobile ? "h5" : "h6"}>
+        <Typography gutterBottom style={{ 'text-align': 'center' }} variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
           FTYD Playlist
         </Typography>
         <YouTube
@@ -224,7 +230,8 @@ export default function Home() {
           <>
             <Carousel
               className={classes.carouselContainer}
-              interval={4500}
+              stopAutoPlayOnHover={false}
+              interval={4000}
               navButtonsAlwaysInvisible={true}
               swipe={false}
               indicators={false}>

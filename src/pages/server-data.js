@@ -102,7 +102,7 @@ export default function ServerData() {
                     >
                         <Tab label="Player Count" />
                         <Tab label="Kill Count" />
-                        <Tab label="Hours Spent" />
+                        <Tab label="Minutes Spent" />
                     </Tabs>
                     {value === 0 &&
                         <>
