@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline-flex',
     width: '100%',
     justifyContent: 'center',
-    height: '200px'
+    height: '180px'
   },
   carouselTopPlayerItems: {
     backgroundColor: 'rgba(33,150,243,0.1)'
@@ -37,10 +37,11 @@ const useStyles = makeStyles((theme) => ({
   },
   carouselHeading: {
     paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
     textAlign: 'center',
   },
-  carouselContainer: {
-    paddingTop: theme.spacing(4),
+  carouselContainerThanks: {
+    paddingBottom: theme.spacing(0.5),
   },
   youtubeMusicContainer: {
     paddingTop: theme.spacing(4),
@@ -229,7 +230,7 @@ export default function Home() {
         <div className={classes.cardsContainer}>
           <>
             <Carousel
-              className={classes.carouselContainer}
+              className={classes.carouselContainerThanks}
               stopAutoPlayOnHover={false}
               interval={4000}
               navButtonsAlwaysInvisible={true}
