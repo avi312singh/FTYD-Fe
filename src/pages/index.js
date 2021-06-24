@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline-flex',
     width: '100%',
     justifyContent: 'center',
-    height: '250px'
+    height: '200px'
   },
   carouselTopPlayerItems: {
     backgroundColor: 'rgba(33,150,243,0.1)'
