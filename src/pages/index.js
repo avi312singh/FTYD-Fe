@@ -187,7 +187,7 @@ export default function Home() {
         {
           items !== [] ?
             <>
-              <Typography variant="h5" gutterBottom className={classes.carouselHeading}>
+              <Typography style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "h6"} component={notMobile ? "h5" : "h6"} className={classes.carouselHeading}>
                 Players of the Week
               </Typography>
               <Carousel
