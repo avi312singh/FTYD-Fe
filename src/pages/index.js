@@ -133,7 +133,6 @@ export default function Home() {
   const chivSteamBrowser = useMediaQuery(theme.breakpoints.between('sm', 'md'));
   const classes = useStyles();
 
-  console.log(viewCount)
   // console.log(response[0])
   // console.log(response[1])
   // console.log(response[2])
