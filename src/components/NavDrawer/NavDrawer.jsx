@@ -103,7 +103,7 @@ const NavDrawer = ({ children, window }) => {
 
   const linkStyles = {
     textDecoration: "none",
-    color: !darkMode ? "black" : "white",
+    color: darkMode ? "white" : "black",
   }
 
   const activeStyle = {
@@ -111,11 +111,11 @@ const NavDrawer = ({ children, window }) => {
     color: "red",
   }
 
-  const appBarColour = !darkMode ? { 'background-color': '#2196f3' } : { 'background-color': '#333' };
+  const appBarColour = darkMode ? { 'background-color': '#333' } : { 'background-color': '#2196f3' };
 
   const darkModeStyling = createMuiTheme({
     palette: {
-      type: !darkMode ? "light" : "dark",
+      type: darkMode ? "dark" : "light",
     },
   })
 
