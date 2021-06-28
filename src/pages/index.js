@@ -190,11 +190,6 @@ export default function Home() {
     },
   };
 
-  // const linkStyles = {
-  //   textDecoration: "none",
-  //   color: darkMode ? "white" : "black",
-  // }
-
   return (
     <>
       <Seo />

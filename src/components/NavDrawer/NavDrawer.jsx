@@ -96,6 +96,7 @@ const NavDrawer = ({ children, window }) => {
   const theme = useTheme()
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const { darkMode } = useDarkThemeContext()
+  console.log('darkMode ', darkMode);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
