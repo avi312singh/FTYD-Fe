@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from "react"
 import { Typography } from '@material-ui/core';
 
-import { useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useDarkThemeContext from "../DarkThemeContext/DarkThemeContext";
 
 import "./TypeWriter.css"
+
+const useStyles = makeStyles((theme) => ({
+    [theme.breakpoints.up("sm")]: {
+        cursorNotMobile: {
+            paddingTop: theme.spacing(1.5),
+            paddingBottom: theme.spacing(1),
+            marginLeft: '1px',
+        },
+    }
+}))
 
 
 const CONSTANTS = {
@@ -15,6 +26,8 @@ const CONSTANTS = {
 export default function TypeWriter({ messages, heading }) {
     const theme = useTheme();
     const notMobile = useMediaQuery(theme.breakpoints.up('sm'));
+    const classes = useStyles();
+    const { darkMode } = useDarkThemeContext()
 
     const [state, setState] = useState({
         text: "",
@@ -76,7 +89,10 @@ export default function TypeWriter({ messages, heading }) {
         <h1>
             {heading}&nbsp;
             <Typography style={{ 'display': 'inline-flex' }} Typography variant={notMobile ? "h2" : "h4"} component={notMobile ? "h3" : "h5"} gutterBottom>{state.text}</Typography>
-            <span id="cursor" style={notMobile ? { 'padding-top': '12px', 'padding-bottom': '8px', 'margin-left': '1px' } : {}} />
+            <span id="cursor"
+            style={darkMode ? { 'background-color': 'white'} : {}}
+            className={classes.cursorNotMobile}
+            />
         </h1>
     );
 }
