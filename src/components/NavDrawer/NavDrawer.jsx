@@ -103,7 +103,7 @@ const NavDrawer = ({ children, window }) => {
 
   const linkStyles = {
     textDecoration: "none",
-    color: darkMode ? "white" : "black",
+    color: !darkMode ? "black" : "white",
   }
 
   const activeStyle = {

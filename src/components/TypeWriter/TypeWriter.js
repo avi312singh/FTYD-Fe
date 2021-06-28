@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-
 const CONSTANTS = {
     DELETING_SPEED: 50,
     TYPING_SPEED: 180,
