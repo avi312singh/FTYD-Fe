@@ -199,7 +199,7 @@ export default function Home() {
           ["Welcome", "Bienvenue", "Benvenuta", "добро пожаловать", "Bienvenidas", "欢迎", "Hoşgeldiniz", "Добре дошли", "어서 오세요", "Willkommen", "Witamy", "Vítejte", "Welkom", "Bine ati venit"]
         }></TypeWriter>
         <Typography variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
-          To the official website of the fall to your death server
+          To the official website of the Fall to your Death server
         </Typography>
         {
           items !== [] ?
