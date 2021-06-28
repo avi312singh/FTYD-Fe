@@ -214,7 +214,7 @@ export default function Home() {
         {
           chivSteamBrowser &&
         <Typography className={classes.chivSteamBrowserText} variant={"body1"} component={"body1"}>
-            Press <Typography variant="caption">Open website</Typography> for a much better experience
+            Press <Typography variant="caption">Open website</Typography> and expand window for a much better experience
         </Typography>
         }
         {
