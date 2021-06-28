@@ -3,7 +3,6 @@ body {
 }
 
 #cursor {
-  border-left: .1em solid #09110b;
   animation: blink .7s steps(1) infinite;
 }
 
