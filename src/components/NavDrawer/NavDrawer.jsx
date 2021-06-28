@@ -111,11 +111,11 @@ const NavDrawer = ({ children, window }) => {
     color: "red",
   }
 
-  const appBarColour = darkMode ? { 'background-color': '#333' } : { 'background-color':'#2196f3'};
+  const appBarColour = !darkMode ? { 'background-color': '#2196f3' } : { 'background-color': '#333' };
 
   const darkModeStyling = createMuiTheme({
     palette: {
-      type: darkMode ? "dark" : "light",
+      type: !darkMode ? "light" : "dark",
     },
   })
 
