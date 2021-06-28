@@ -12,6 +12,7 @@ import Carousel from 'react-material-ui-carousel'
 import Seo from "../components/Seo/Seo";
 
 // import { Link } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
 
 const useStyles = makeStyles((theme) => ({
   miniCardContainers: {
@@ -48,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   specialThanks: {
+    paddingTop: theme.spacing(4),
+  },
+  ftydPlaylistHeading: {
     paddingTop: theme.spacing(4),
   },
   websiteHits: {
@@ -97,12 +101,16 @@ export default function Home() {
     axios(configViewCountUpdate)
       .catch((error) => {
         console.log(error);
-      }).then(
+      })
+      .then(
         axios(configViewCount)
           .then((viewCount) => {
             if (viewCount.status === 201 | 200) {
               setViewCount(viewCount.data.result.result[0].hits)
             }
+          })
+          .catch((error) => {
+            console.log(error);
           })
       )
     axios(config)
@@ -113,6 +121,7 @@ export default function Home() {
       })
       .catch((error) => {
         console.log(error);
+
       });
   }, [])
 
@@ -130,18 +139,27 @@ export default function Home() {
       // name: "response[0][0]",
       name: response[0] ? response[0][0] : "No 1st player yet!",
       kills: response[0] ? response[0][1] : "",
+      imageSrc: response[0] ? response[0][4] : "",
     },
     {
       // name: "response[1][0]",
       name: response[1] ? response[1][0] : "No 2nd player yet",
       kills: response[1] ? response[1][1] : "",
+      imageSrc: response[1] ? response[1][4] : "",
     },
     {
       // name: "response[2][0]",
       name: response[2] ? response[2][0] : "No 3rd player yet",
       kills: response[2] ? response[2][1] : "",
+      imageSrc: response[2] ? response[2][4] : "",
     }
   ]
+
+  const imageSrc1 = items[0].imageSrc
+  const imageSrc2 = items[1].imageSrc
+  const imageSrc3 = items[2].imageSrc
+
+  console.log('items ', items)
 
   const contentCreators = [
     { name: "Lord Wisel" },
@@ -151,12 +169,9 @@ export default function Home() {
   ]
 
 
-  items.filter(el => el != null)
-  // console.log(items)
-
   const opts = {
-    height: notMobile ? '390' : '195',
-    width: notMobile ? '640' : '320',
+    height: notMobile ? '480' : '195',
+    width: notMobile ? '800' : '320',
     playerVars: {
       autoplay: 1,
       listType: 'playlist',
@@ -180,8 +195,9 @@ export default function Home() {
     <>
       <Seo />
       <NavDrawer>
-        <TypeWriter className={classes.welcomeTypewriter} messages={["Welcome", "Bienvenue", "Benvenuta", "добро пожаловать",
-          "Bienvenidas", "欢迎", "Hosgeldiniz"]}></TypeWriter>
+        <TypeWriter className={classes.welcomeTypewriter} messages={
+          ["Welcome", "Bienvenue", "Benvenuta", "добро пожаловать", "Bienvenidas", "欢迎", "Hoşgeldiniz", "Добре дошли", "어서 오세요", "Willkommen", "Witamy", "Vítejte", "Welkom", "Bine ati venit"]
+        }></TypeWriter>
         <Typography variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
           To the official website of the fall to your death server
         </Typography>
@@ -196,25 +212,31 @@ export default function Home() {
                 interval={6000}>
                 {
                   items
-                    .map((item, i) =>
-                      <Paper className={classes.carouselTopPlayerItems}>
-                        <h2>{item.name}</h2>
-                        {item.kills ? <><Typography color="primary" variant="body">Kills:</Typography> <Typography color="primary" variant="body">{item.kills}</Typography></> : ''}
-                        {/*
-                        <Button className="CheckButton">
-                          <Link style={linkStyles} to={'player-info'}>Leaderboards</Link>
-                        </Button> */}
-                      </Paper>)
+                    .map((item, i) => {
+                      const imageSrc = { item }
+                      return (
+                        <Paper className={classes.carouselTopPlayerItems}>
+                          <Typography style={{ 'text-align': 'center' }} variant={notMobile ? "h3" : "h6"} component={notMobile ? "h3" : "h6"}>{item.name}</Typography>
+                          {item.kills && imageSrc ? <>
+                            <Typography style={{ 'text-align': 'center'  }} variant={notMobile ? "h5" : "body"} component={notMobile ? "h5" : "body"}color="primary">Kills</Typography>
+                            <Typography style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "body"} component={notMobile ? "h5" : "body"} color="primary">{item.kills}</Typography>
+                            <StaticImage
+                              src="http://clipart-library.com/images_k/blue-flame-transparent-background/blue-flame-transparent-background-13.png"
+                              alt="Player Avatar"
+                              placeholder="blurred"
+                              layout="constrained"
+                               />
+                          </> : ''}
+                        </Paper>
+                      )
+                    })
                 }
               </Carousel>
-
-              <Typography variant="h4" gutterBottom className={classes.carouselHeading}>
-              </Typography>
             </>
             :
             <br />
         }
-        <Typography gutterBottom style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "h6"} component={notMobile ? "h5" : "h6"}>
+        <Typography className={classes.ftydPlaylistHeading} gutterBottom style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "h6"} component={notMobile ? "h5" : "h6"}>
           FTYD Playlist
         </Typography>
         <YouTube

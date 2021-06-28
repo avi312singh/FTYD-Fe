@@ -28,7 +28,7 @@ export default function TypeWriter({ messages, heading }) {
         let timer = "";
         const handleType = () => {
             setState(cs => ({
-                ...cs, // cs means currentState
+                ...cs,
                 text: getCurrentText(cs),
                 typingSpeed: getTypingSpeed(cs)
             }));
@@ -45,10 +45,10 @@ export default function TypeWriter({ messages, heading }) {
                     ...cs,
                     isDeleting: true
                 }))
-            }, 500);
+            }, 1500);
         } else if (state.isDeleting && state.text === "") {
             setState(cs => ({
-                ...cs, // cs means currentState
+                ...cs,
                 isDeleting: false,
                 loopNum: cs.loopNum + 1,
                 message: getMessage(cs, messages)

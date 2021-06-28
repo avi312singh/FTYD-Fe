@@ -9,7 +9,7 @@ require("dotenv").config({
 
 module.exports = {
   /* Your site config here */
-  plugins: [`gatsby-plugin-material-ui`, `gatsby-plugin-react-helmet`],
+  plugins: [`gatsby-plugin-material-ui`, `gatsby-plugin-react-helmet`, `gatsby-plugin-image`, `gatsby-plugin-sharp`,],
   siteMetadata: {
     title: "Fall to Your Death",
     titleTemplate: "%s · The official server website",

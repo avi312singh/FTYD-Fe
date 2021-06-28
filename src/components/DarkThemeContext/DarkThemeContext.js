@@ -6,7 +6,7 @@ const DarkThemeContext = React.createContext({
 })
 
 export const DarkThemeProvider = ({ children }) => {
-  const [isDark, setIsDark] = useState(false)
+  const [isDark, setIsDark] = useState(true)
 
   return (
     <DarkThemeContext.Provider
