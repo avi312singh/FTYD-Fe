@@ -209,7 +209,8 @@ export default function Home() {
               </Typography>
               <Carousel
                 className={classes.carouselContainer}
-                interval={6000}>
+                interval={5200}
+                stopAutoPlayOnHover={false}>
                 {
                   items
                     .map((item, i) => {
