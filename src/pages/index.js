@@ -63,6 +63,16 @@ const useStyles = makeStyles((theme) => ({
   },
   chivSteamBrowserText: {
     paddingTop: theme.spacing(4)
+  },
+  playerAvatarContainer:{
+    textAlign: 'center',
+    paddingTop: theme.spacing(.5),
+  },
+  playerAvatar: {
+    justifyContent: 'center',
+    justifyItems: 'center',
+    width: '7%',
+    height: '7%',
   }
 }))
 
@@ -72,7 +82,6 @@ export default function Home() {
   const googleAnalytics = process.env.GATSBY_GA || (() => { new Error("Provide a server IP in env vars") });
   const [response, setResponse] = useState([]);
   const [viewCount, setViewCount] = useState(0);
-  // const [youtubeReady, setYoutubeReady] = useState(false);
 
   const config = {
     method: 'get',
@@ -133,10 +142,6 @@ export default function Home() {
   const chivSteamBrowser = useMediaQuery(theme.breakpoints.between('sm', 'md'));
   const classes = useStyles();
 
-  // console.log(response[0])
-  // console.log(response[1])
-  // console.log(response[2])
-
   const items = [
     {
       // name: "response[0][0]",
@@ -145,24 +150,18 @@ export default function Home() {
       imageSrc: response[0] ? response[0][4] : "",
     },
     {
-      // name: "response[1][0]",
+    //   // name: "response[1][0]",
       name: response[1] ? response[1][0] : "No 2nd player yet",
       kills: response[1] ? response[1][1] : "",
       imageSrc: response[1] ? response[1][4] : "",
     },
     {
-      // name: "response[2][0]",
+    //   // name: "response[2][0]",
       name: response[2] ? response[2][0] : "No 3rd player yet",
       kills: response[2] ? response[2][1] : "",
       imageSrc: response[2] ? response[2][4] : "",
     }
   ]
-
-  // const imageSrc1 = items[0].imageSrc
-  // const imageSrc2 = items[1].imageSrc
-  // const imageSrc3 = items[2].imageSrc
-
-  // console.log('items ', items)
 
   const contentCreators = [
     { name: "Lord Wisel" },
@@ -170,7 +169,6 @@ export default function Home() {
     { name: "| avi312singh" },
     { name: "OberTechno" },
   ]
-
 
   const opts = {
     height: notMobile ? '480' : '195',
@@ -231,6 +229,9 @@ export default function Home() {
                           {item.kills && imageSrc ? <>
                             <Typography style={{ 'text-align': 'center'  }} variant={notMobile ? "h5" : "body"} component={notMobile ? "h5" : "body"}color="primary">Kills</Typography>
                             <Typography style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "body"} component={notMobile ? "h5" : "body"} color="primary">{item.kills}</Typography>
+                            <div className={classes.playerAvatarContainer}>
+                            <img className={classes.playerAvatar} src={items[i].imageSrc}/>
+                            </div>
                             <StaticImage
                               src="http://clipart-library.com/images_k/blue-flame-transparent-background/blue-flame-transparent-background-13.png"
                               alt="Player Avatar"
