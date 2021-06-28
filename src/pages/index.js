@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
   welcomeTypewriter: {
     height: '100%'
   },
+  chivSteamBrowserText: {
+    paddingTop: theme.spacing(4)
+  }
 }))
 
 export default function Home() {
@@ -127,6 +130,7 @@ export default function Home() {
 
   const theme = useTheme();
   const notMobile = useMediaQuery(theme.breakpoints.up('sm'));
+  const chivSteamBrowser = useMediaQuery(theme.breakpoints.between('sm', 'md'));
   const classes = useStyles();
 
   console.log(viewCount)
@@ -155,11 +159,11 @@ export default function Home() {
     }
   ]
 
-  const imageSrc1 = items[0].imageSrc
-  const imageSrc2 = items[1].imageSrc
-  const imageSrc3 = items[2].imageSrc
+  // const imageSrc1 = items[0].imageSrc
+  // const imageSrc2 = items[1].imageSrc
+  // const imageSrc3 = items[2].imageSrc
 
-  console.log('items ', items)
+  // console.log('items ', items)
 
   const contentCreators = [
     { name: "Lord Wisel" },
@@ -198,9 +202,21 @@ export default function Home() {
         <TypeWriter className={classes.welcomeTypewriter} messages={
           ["Welcome", "Bienvenue", "Benvenuta", "добро пожаловать", "Bienvenidas", "欢迎", "Hoşgeldiniz", "Добре дошли", "어서 오세요", "Willkommen", "Witamy", "Vítejte", "Welkom", "Bine ati venit"]
         }></TypeWriter>
+        {!chivSteamBrowser ?
         <Typography variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
           To the official website of the Fall to your Death server
         </Typography>
+        :
+        <Typography gutter variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
+          To the official website of the Fall to your Death server
+        </Typography>
+        }
+        {
+          chivSteamBrowser &&
+        <Typography className={classes.chivSteamBrowserText} variant={"body1"} component={"body1"}>
+            Press <Typography variant="caption">Open website</Typography> for a much better experience
+        </Typography>
+        }
         {
           items !== [] ?
             <>
