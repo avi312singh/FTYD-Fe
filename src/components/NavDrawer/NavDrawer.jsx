@@ -102,6 +102,14 @@ const NavDrawer = ({ children, window }) => {
     setMobileOpen(!mobileOpen)
   }
 
+  const [hasMounted, setHasMounted] = React.useState(false);
+  React.useEffect(() => {
+    setHasMounted(true);
+  }, []);
+  if (!hasMounted) {
+    return null;
+  }
+
   const linkStyles = {
     textDecoration: "none",
     color: darkMode ? "white" : "black",
