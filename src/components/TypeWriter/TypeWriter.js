@@ -87,7 +87,7 @@ export default function TypeWriter({ messages, heading }) {
     return (
         <h1>
             {heading}&nbsp;
-            <Typography style={{ 'display': 'inline-flex' }} Typography variant={notMobile ? "h2" : "h4"} component={notMobile ? "h3" : "h5"} gutterBottom>{state.text}</Typography>
+            <Typography style={{ 'display': 'inline-flex', 'min-height': '100%' }} Typography variant={notMobile ? "h2" : "h4"} component={notMobile ? "h3" : "h5"} gutterBottom>{state.text}</Typography>
             <span id="cursor"
                 style={darkMode ? { 'background-color': 'white', 'border-left': '.1em solid #303030' } : { 'background-color': 'white', 'border-left': '.1em solid #09110b' }}
             className={classes.cursorNotMobile}
