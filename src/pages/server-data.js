@@ -130,7 +130,7 @@ export default function ServerData() {
                                 <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#000" : "#ccc"} />
                                 <XAxis dataKey="time" />
                                 <YAxis dataKey="playerCount" />
-                            <Tooltip contentStyle={{'background':'grey'}} />
+                                {darkMode ? <Tooltip contentStyle={{ 'background': '#4e4e4e', 'color': 'white' }} /> : <Tooltip contentStyle={{ 'background': '#fff', 'color': 'black' }} />}
                             </LineChart>
                         </>}
                     {value === 1 &&
