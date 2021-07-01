@@ -126,11 +126,11 @@ export default function ServerData() {
                                 data={response}
                                 margin={{ top: 10, right: 20, left: 10, bottom: 5 }}
                             >
-                                <Line type="monotone" dataKey="playerCount" stroke={darkMode ? "white": "black"} />
-                            <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#000" : "#ccc"} />
+                                <Line type="monotone" dataKey="playerCount" stroke={darkMode ? "white" : "black"} />
+                                <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#000" : "#ccc"} />
                                 <XAxis dataKey="time" />
                                 <YAxis dataKey="playerCount" />
-                                <Tooltip />
+                            <Tooltip contentStyle={{'background':'grey'}} />
                             </LineChart>
                         </>}
                     {value === 1 &&
