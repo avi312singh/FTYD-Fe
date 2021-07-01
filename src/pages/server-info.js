@@ -36,8 +36,8 @@ export default function ServerInfo() {
         }
     }
 
-    const configViewCount = {
-        method: 'get',
+    const configViewCountUpdate = {
+        method: 'put',
         url: `${endpoint}aggregatedstats/pageCount/?page=server-info`,
         headers: {
             'Authorization': `Basic ${authorisation}`,
@@ -45,10 +45,6 @@ export default function ServerInfo() {
     };
 
     useEffect(() => {
-        axios(configViewCount)
-            .catch((error) => {
-                console.log(error);
-            });
         axios(config)
             .then((response) => {
                 if (response.status === 201 || 200) {
@@ -60,7 +56,12 @@ export default function ServerInfo() {
             })
             .catch((error) => {
                 console.log(error);
-            });
+            }).then(
+                axios(configViewCountUpdate)
+                    .catch((error) => {
+                        console.log(error);
+                    })
+            )
     }, [refreshIndex])
 
     if (serverInfo.status === "online") {
@@ -78,13 +79,13 @@ export default function ServerInfo() {
 
     const columns = [
         {
-        name: "name",
-        label: "Name",
-        options: {
-            filter: true,
-            sort: true,
-        }
-    },
+            name: "name",
+            label: "Name",
+            options: {
+                filter: true,
+                sort: true,
+            }
+        },
         {
             name: "score",
             label: "Score",
@@ -113,7 +114,7 @@ export default function ServerInfo() {
         filter: false,
         download: false,
         viewColumns: false,
-        sortOrder: {name: 'name', direction: 'asc'},
+        sortOrder: { name: 'name', direction: 'asc' },
         customToolbar: () => {
             return (
                 <Tooltip

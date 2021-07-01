@@ -44,8 +44,8 @@ export default function Donate() {
     const donationAmountRegex = /^[0-9]*\.{1}[0-9][0-9]$/g;
     const clientId = process.env.GATSBY_PAYPAL_CLIENTID;
 
-    const configViewCount = {
-        method: 'get',
+    const configViewCountUpdate = {
+        method: 'put',
         url: `${endpoint}aggregatedstats/pageCount/?page=donate`,
         headers: {
             'Authorization': `Basic ${authorisation}`,
@@ -53,7 +53,7 @@ export default function Donate() {
     };
 
     useEffect(() => {
-        axios(configViewCount)
+        axios(configViewCountUpdate)
             .catch((error) => {
                 console.log(error);
             });
@@ -78,10 +78,10 @@ export default function Donate() {
                     shipping_preference: "NO_SHIPPING"
                 }
             })
-            // .then((orderID) => {
-            //     setOrderID(orderID);
-            //     return orderID;
-            // });
+        // .then((orderID) => {
+        //     setOrderID(orderID);
+        //     return orderID;
+        // });
     }
     return (
         <>

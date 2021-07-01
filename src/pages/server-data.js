@@ -37,8 +37,8 @@ export default function ServerData() {
         }
     })
 
-    const configViewCount = {
-        method: 'get',
+    const configViewCountUpdate = {
+        method: 'put',
         url: `${endpoint}aggregatedstats/pageCount/?page=server-data`,
         headers: {
             'Authorization': `Basic ${authorisation}`,
@@ -46,10 +46,6 @@ export default function ServerData() {
     };
 
     useEffect(() => {
-        axios(configViewCount)
-            .catch((error) => {
-                console.log(error);
-            });
         axios(config)
             .then((response) => {
                 if (response.status === 201 || 200) {
@@ -58,7 +54,12 @@ export default function ServerData() {
             })
             .catch((error) => {
                 console.log(error);
-            });
+            }).then(
+                axios(configViewCountUpdate)
+                    .catch((error) => {
+                        console.log(error);
+                    })
+            )
     }, [currentOption, config])
 
     const parseSelected = (event) => {

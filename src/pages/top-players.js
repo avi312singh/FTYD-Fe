@@ -27,8 +27,8 @@ export default function TopPlayers() {
         }
     };
 
-    const configViewCount = {
-        method: 'get',
+    const configViewCountUpdate = {
+        method: 'put',
         url: `${endpoint}aggregatedstats/pageCount/?page=top-players`,
         headers: {
             'Authorization': `Basic ${authorisation}`,
@@ -36,10 +36,6 @@ export default function TopPlayers() {
     };
 
     useEffect(() => {
-        axios(configViewCount)
-            .catch((error) => {
-                console.log(error);
-            });
         axios(config)
             .then((response) => {
                 if (response.status === 201 || 200) {
@@ -48,7 +44,12 @@ export default function TopPlayers() {
             })
             .catch((error) => {
                 console.log(error);
-            });
+            }).then(
+                axios(configViewCountUpdate)
+                    .catch((error) => {
+                        console.log(error);
+                    })
+            )
     }, [refreshIndex])
 
     const refreshButton = () => {
@@ -62,10 +63,10 @@ export default function TopPlayers() {
     const topPlayerColour = darkMode ? "rgba(255,255,255,0.3)" : "#e3e3e3";
 
     const columns = [
-        {name: "name", label: "Name"},
-        {name: "weeklyKills", label: "Weekly Kills"},
-        {name: "weeklyHours", label: "Weekly Minutes"},
-        {name: "killsPerTimeRatio", label: "Kills Per Time Ratio"},
+        { name: "name", label: "Name" },
+        { name: "weeklyKills", label: "Weekly Kills" },
+        { name: "weeklyHours", label: "Weekly Minutes" },
+        { name: "killsPerTimeRatio", label: "Kills Per Time Ratio" },
     ];
 
     const options = {

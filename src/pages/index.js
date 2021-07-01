@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   chivSteamBrowserText: {
     paddingTop: theme.spacing(4)
   },
-  playerAvatarContainer:{
+  playerAvatarContainer: {
     textAlign: 'center',
     paddingTop: theme.spacing(.5),
   },
@@ -110,21 +110,6 @@ export default function Home() {
 
 
   useEffect(() => {
-    axios(configViewCountUpdate)
-      .catch((error) => {
-        console.log(error);
-      })
-      .then(
-        axios(configViewCount)
-          .then((viewCount) => {
-            if (viewCount.status === 201 | 200) {
-              setViewCount(viewCount.data.result.result[0].hits)
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          })
-      )
     axios(config)
       .then((response) => {
         if (response.status === 201 || 200) {
@@ -135,6 +120,21 @@ export default function Home() {
         console.log(error);
 
       });
+    axios(configViewCount)
+      .then((viewCount) => {
+        if (viewCount.status === 201 | 200) {
+          setViewCount(viewCount.data.result.result[0].hits)
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(
+        axios(configViewCountUpdate)
+          .catch((error) => {
+            console.log(error);
+          })
+      )
   }, [])
 
   const theme = useTheme();
@@ -150,13 +150,13 @@ export default function Home() {
       imageSrc: response[0] ? response[0][4] : "",
     },
     {
-    //   // name: "response[1][0]",
+      //   // name: "response[1][0]",
       name: response[1] ? response[1][0] : "No 2nd player yet",
       kills: response[1] ? response[1][1] : "",
       imageSrc: response[1] ? response[1][4] : "",
     },
     {
-    //   // name: "response[2][0]",
+      //   // name: "response[2][0]",
       name: response[2] ? response[2][0] : "No 3rd player yet",
       kills: response[2] ? response[2][1] : "",
       imageSrc: response[2] ? response[2][4] : "",
@@ -195,19 +195,19 @@ export default function Home() {
           ["Welcome", "Bienvenue", "Benvenuta", "добро пожаловать", "Bienvenidas", "欢迎", "Hoşgeldiniz", "Добре дошли", "어서 오세요", "Willkommen", "Witamy", "Vítejte", "Welkom", "Bine ati venit"]
         }></TypeWriter>
         {!chivSteamBrowser ?
-        <Typography variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
-          To the official website of the Fall to your Death server
-        </Typography>
-        :
-        <Typography gutter variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
-          To the official website of the Fall to your Death server
-        </Typography>
+          <Typography variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
+            To the official website of the Fall to your Death server
+          </Typography>
+          :
+          <Typography gutter variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
+            To the official website of the Fall to your Death server
+          </Typography>
         }
         {
           chivSteamBrowser &&
-        <Typography className={classes.chivSteamBrowserText} variant={"body1"} component={"body1"}>
+          <Typography className={classes.chivSteamBrowserText} variant={"body1"} component={"body1"}>
             Press <Typography variant="caption">Open website</Typography> and expand window for a much better experience
-        </Typography>
+          </Typography>
         }
         {
           items !== [] ?
@@ -227,17 +227,17 @@ export default function Home() {
                         <Paper className={classes.carouselTopPlayerItems}>
                           <Typography style={{ 'text-align': 'center' }} variant={notMobile ? "h3" : "h6"} component={notMobile ? "h3" : "h6"}>{item.name}</Typography>
                           {item.kills && imageSrc ? <>
-                            <Typography style={{ 'text-align': 'center'  }} variant={notMobile ? "h5" : "body"} component={notMobile ? "h5" : "body"}color="primary">Kills</Typography>
+                            <Typography style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "body"} component={notMobile ? "h5" : "body"} color="primary">Kills</Typography>
                             <Typography style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "body"} component={notMobile ? "h5" : "body"} color="primary">{item.kills}</Typography>
                             <div className={classes.playerAvatarContainer}>
-                            <img className={classes.playerAvatar} src={items[i].imageSrc}/>
+                              <img className={classes.playerAvatar} src={items[i].imageSrc} />
                             </div>
                             <StaticImage
                               src="http://clipart-library.com/images_k/blue-flame-transparent-background/blue-flame-transparent-background-13.png"
                               alt="Player Avatar"
                               placeholder="blurred"
                               layout="constrained"
-                               />
+                            />
                           </> : ''}
                         </Paper>
                       )

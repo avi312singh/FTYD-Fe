@@ -26,8 +26,8 @@ export default function PlayerStats() {
             'Authorization': `Basic ${authorisation}`,
         }
     };
-    const configViewCount = {
-        method: 'get',
+    const configViewCountUpdate = {
+        method: 'put',
         url: `${endpoint}aggregatedstats/pageCount/?page=player-stats`,
         headers: {
             'Authorization': `Basic ${authorisation}`,
@@ -35,10 +35,6 @@ export default function PlayerStats() {
     };
 
     useEffect(() => {
-        axios(configViewCount)
-            .catch((error) => {
-                console.log(error);
-            });
         axios(config)
             .then((players) => {
                 if (players.status === 201 || 200) {
@@ -47,7 +43,12 @@ export default function PlayerStats() {
             })
             .catch((error) => {
                 console.log(error);
-            });
+            }).then(
+                axios(configViewCountUpdate)
+                    .catch((error) => {
+                        console.log(error);
+                    })
+            )
     }, [refreshIndex])
 
     ReactGA.initialize(googleAnalytics);
