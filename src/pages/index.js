@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, Suspense } from "react"
 import axios from 'axios'
 import { Card, CardContent, Paper, Typography } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -251,12 +251,14 @@ export default function Home() {
         <Typography className={classes.ftydPlaylistHeading} gutterBottom style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "h6"} component={notMobile ? "h5" : "h6"}>
           FTYD Playlist
         </Typography>
+        <Suspense fallback={<CircularProgress size="1.5rem" />}>
         <YouTube
           className={'string'}
           containerClassName={classes.youtubeMusicContainer}
           opts={opts}
-        // onReady={setYoutubeReady(true)}
-        />
+          // onReady={setYoutubeReady(true)}
+          />
+          </Suspense>
         <Typography className={classes.specialThanks} style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "h6"} component={notMobile ? "h5" : "h6"}>
           Special Thanks
         </Typography>
