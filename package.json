@@ -20,7 +20,7 @@
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@paypal/react-paypal-js": "^7.1.0",
     "axios": "^0.21.1",
-    "gatsby": "^3.8.0",
+    "gatsby": "^3.8.1",
     "gatsby-plugin-image": "^1.8.0",
     "gatsby-plugin-material-ui": "^3.0.1",
     "gatsby-plugin-react-helmet": "^4.8.0",
