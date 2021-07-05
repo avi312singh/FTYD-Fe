@@ -114,7 +114,7 @@ export default function ServerInfo() {
         filter: false,
         download: false,
         viewColumns: false,
-        sortOrder: { name: 'name', direction: 'asc' },
+        sortOrder: { name: 'score', direction: 'desc' },
         customToolbar: () => {
             return (
                 <Tooltip
