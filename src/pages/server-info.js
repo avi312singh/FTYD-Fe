@@ -105,6 +105,13 @@ export default function ServerInfo() {
     ];
 
     const options = {
+        textLabels: {
+            body: {
+                noMatch: serverInfo.loading === true ? <CircularProgress size="3.5rem" /> :  "No players currently on the server",
+                // toolTip: "Sort",
+                // columnHeaderTooltip: column => `Sort for ${column.label}`
+            },
+        },
         filterType: 'checkbox',
         responsive: "simple",
         selectableRows: "none",
