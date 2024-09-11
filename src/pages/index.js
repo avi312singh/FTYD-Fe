@@ -1,298 +1,235 @@
-import React, { useEffect, useState, Suspense } from "react"
-import axios from 'axios'
-import { Card, CardContent, CircularProgress, Paper, Typography } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import YouTube from 'react-youtube';
-import ReactGA from 'react-ga';
+import React, { useEffect, useState } from "react"
+import axios from "axios"
+import { ThemeProvider, createTheme } from "@mui/material/styles"
+import CssBaseline from "@mui/material/CssBaseline"
+import { Box, Typography, useMediaQuery } from "@mui/material"
+import { useDarkThemeContext } from "../components/DarkThemeContext/DarkThemeContext"
+import NavDrawer from "../components/NavDrawer/NavDrawer"
+import TypeWriter from "../components/TypeWriter/TypeWriter"
+import Seo from "../components/Seo/Seo"
+import YouTubePlaylist from "../components/YouTubePlaylist/YouTubePlaylist"
+import SpecialThanksCarousel from "../components/SpecialThanksCarousel/SpecialThanksCarousel"
+import Carousel from "react-material-ui-carousel"
+import { Paper } from "@mui/material"
 
-import TypeWriter from '../components/TypeWriter/TypeWriter'
-import NavDrawer from '../components/NavDrawer/NavDrawer';
-import Carousel from 'react-material-ui-carousel'
-import Seo from "../components/Seo/Seo";
+const Home = () => {
+  const { darkMode } = useDarkThemeContext()
+  const [response, setResponse] = useState([])
+  const [viewCount, setViewCount] = useState(0)
 
-// import { Link } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? "dark" : "light",
+    },
+    spacing: 8,
+  })
 
-const useStyles = makeStyles((theme) => ({
-  miniCardContainers: {
-    maxWidth: 220,
-    margin: theme.spacing(0.5),
-    marginTop: theme.spacing(4),
-    backgroundColor: 'rgba(33,150,243,0.1)'
-  },
-  cardsContainer: {
-    display: 'inline-flex',
-    width: '100%',
-    justifyContent: 'center',
-    height: '180px'
-  },
-  carouselTopPlayerItems: {
-    backgroundColor: 'rgba(33,150,243,0.1)'
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-  carouselHeading: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-    textAlign: 'center',
-  },
-  carouselContainerThanks: {
-    paddingBottom: theme.spacing(0.5),
-  },
-  youtubeMusicContainer: {
-    paddingTop: theme.spacing(4),
-    textAlign: 'center',
-  },
-  specialThanks: {
-    paddingTop: theme.spacing(4),
-  },
-  ftydPlaylistHeading: {
-    paddingTop: theme.spacing(4),
-  },
-  websiteHits: {
-    textAlign: "center",
-    margin: theme.spacing(1)
-  },
-  welcomeTypewriter: {
-    height: '100%'
-  },
-  chivSteamBrowserText: {
-    paddingTop: theme.spacing(4)
-  },
-  playerAvatarContainer: {
-    textAlign: 'center',
-    paddingTop: theme.spacing(.5),
-  },
-  playerAvatar: {
-    justifyContent: 'center',
-    justifyItems: 'center',
-    width: '7%',
-    height: '7%',
-  }
-}))
+  const endpoint = process.env.GATSBY_ENDPOINT
+  const authorisation = process.env.GATSBY_AUTHORISATION
 
-export default function Home() {
-  const endpoint = process.env.GATSBY_ENDPOINT || (() => { new Error("Provide an endpoint in env vars") });
-  const authorisation = process.env.GATSBY_AUTHORISATION || (() => { new Error("Provide a server IP in env vars") });
-  const googleAnalytics = process.env.GATSBY_GA || (() => { new Error("Provide a server IP in env vars") });
-  const [response, setResponse] = useState([]);
-  const [viewCount, setViewCount] = useState(0);
+  console.log("GATSBY_ENDPOINT", endpoint)
 
   const config = {
-    method: 'get',
+    method: "get",
     url: `${endpoint}aggregatedstats/topPlayers`,
     headers: {
-      'Authorization': `Basic ${authorisation}`,
-    }
-  };
+      Authorization: `Basic ${authorisation}`,
+    },
+  }
+
   const configViewCount = {
-    method: 'get',
+    method: "get",
     url: `${endpoint}aggregatedstats/pageCount/?page=/`,
     headers: {
-      'Authorization': `Basic ${authorisation}`,
-    }
-  };
+      Authorization: `Basic ${authorisation}`,
+    },
+  }
+
   const configViewCountUpdate = {
-    method: 'put',
+    method: "put",
     url: `${endpoint}aggregatedstats/pageCount/?page=/`,
     headers: {
-      'Authorization': `Basic ${authorisation}`,
-    }
-  };
-
-  ReactGA.initialize(googleAnalytics);
-  ReactGA.pageview('/');
-
+      Authorization: `Basic ${authorisation}`,
+    },
+  }
 
   useEffect(() => {
     axios(config)
-      .then((response) => {
-        if (response.status === 201 || 200) {
-          setResponse(response.data.result.response);
+      .then(response => {
+        if (response.status === 200 || response.status === 201) {
+          console.log(response.data.result.topPlayers)
+          setResponse(response.data.result.topPlayers)
         }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(error => {
+        console.error(error)
+      })
 
-      });
     axios(configViewCount)
-      .then((viewCount) => {
-        if (viewCount.status === 201 | 200) {
+      .then(viewCount => {
+        if (viewCount.status === 201 || viewCount.status === 200) {
           setViewCount(viewCount.data.result.result[0].hits)
         }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(error => {
+        console.log(error)
       })
       .then(
-        axios(configViewCountUpdate)
-          .catch((error) => {
-            console.log(error);
-          })
+        axios(configViewCountUpdate).catch(error => {
+          console.log(error)
+        }),
       )
   }, [])
 
-  const theme = useTheme();
-  const notMobile = useMediaQuery(theme.breakpoints.up('sm'));
-  const chivSteamBrowser = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-  const classes = useStyles();
+  const notMobile = useMediaQuery(theme.breakpoints.up("sm"))
+  const chivSteamBrowser = useMediaQuery(theme.breakpoints.between("sm", "md"))
 
-  const items = [
-    {
-      // name: "response[0][0]",
-      name: response[0] ? response[0][0] : "No 1st player yet!",
-      kills: response[0] ? response[0][1] : "",
-      imageSrc: response[0] ? response[0][4] : "",
-    },
-    {
-      //   // name: "response[1][0]",
-      name: response[1] ? response[1][0] : "No 2nd player yet",
-      kills: response[1] ? response[1][1] : "",
-      imageSrc: response[1] ? response[1][4] : "",
-    },
-    {
-      //   // name: "response[2][0]",
-      name: response[2] ? response[2][0] : "No 3rd player yet",
-      kills: response[2] ? response[2][1] : "",
-      imageSrc: response[2] ? response[2][4] : "",
-    }
-  ]
-
-  const contentCreators = [
-    { name: "Lord Wisel" },
-    { name: "Llyweln Ap-Pudding" },
-    { name: "| avi312singh" },
-    { name: "OberTechno" },
-  ]
+  // Set up default items with blue-flame as a placeholder image
+  const items = response.map(player => ({
+    name: player.playerName || "No player yet!",
+    kills: player.totalKills || "N/A",
+    imageSrc:
+      player.imageSrc !== null && player.imageSrc !== ""
+        ? player.imageSrc
+        : "http://clipart-library.com/images_k/blue-flame-transparent-background/blue-flame-transparent-background-13.png",
+  }))
 
   const opts = {
-    height: notMobile ? '480' : '195',
-    width: notMobile ? '800' : '320',
+    height: notMobile ? "480" : "195",
+    width: notMobile ? "800" : "320",
     playerVars: {
       autoplay: 1,
-      listType: 'playlist',
-      list: 'PLqBaHNBE-DBxLB8VfMaaAONaJJ3Jxf5bz',
-      playlist: 'PLqBaHNBE-DBxLB8VfMaaAONaJJ3Jxf5bz',
+      listType: "playlist",
+      list: "PLqBaHNBE-DBxLB8VfMaaAONaJJ3Jxf5bz", // Use your playlist ID here
       showinfo: 0,
       fs: 0,
       controls: 1,
-      modestbranding: 0,
-      color: 'white',
+      modestbranding: 1,
       iv_load_policy: 3,
     },
-  };
+  }
 
   return (
-    <>
-      <Seo />
-      <NavDrawer>
-        <TypeWriter className={classes.welcomeTypewriter} messages={
-          ["Welcome", "Bienvenue", "Benvenuta", "добро пожаловать", "Bienvenidas", "欢迎", "Hoşgeldiniz", "Добре дошли", "어서 오세요", "Willkommen", "Witamy", "Vítejte", "Welkom", "Bine ati venit"]
-        }></TypeWriter>
-        {!chivSteamBrowser ?
-          <Typography variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
-            To the official website of the Fall to your Death server
-          </Typography>
-          :
-          <Typography gutter variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
-            To the official website of the Fall to your Death server
-          </Typography>
-        }
-        {
-          chivSteamBrowser &&
-          <Typography className={classes.chivSteamBrowserText} variant={"body1"} component={"body1"}>
-            Press <Typography variant="caption">Open website</Typography> and expand window for a much better experience
-          </Typography>
-        }
-        {
-          items !== [] ?
-            <>
-              <Typography style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "h6"} component={notMobile ? "h5" : "h6"} className={classes.carouselHeading}>
-                Players of the Week
-              </Typography>
-              <Carousel
-                className={classes.carouselContainer}
-                interval={5200}
-                stopAutoPlayOnHover={false}>
-                {
-                  items
-                    .map((item, i) => {
-                      const imageSrc = { item }
-                      return (
-                        <Paper className={classes.carouselTopPlayerItems}>
-                          <Typography style={{ 'text-align': 'center' }} variant={notMobile ? "h3" : "h6"} component={notMobile ? "h3" : "h6"}>{item.name}</Typography>
-                          {item.kills && imageSrc ? <>
-                            <Typography style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "body"} component={notMobile ? "h5" : "body"} color="primary">Kills</Typography>
-                            <Typography style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "body"} component={notMobile ? "h5" : "body"} color="primary">{item.kills}</Typography>
-                            <div className={classes.playerAvatarContainer}>
-                              <img className={classes.playerAvatar} src={items[i].imageSrc} />
-                            </div>
-                            <StaticImage
-                              src="http://clipart-library.com/images_k/blue-flame-transparent-background/blue-flame-transparent-background-13.png"
-                              alt="Player Avatar"
-                              placeholder="blurred"
-                              layout="constrained"
-                            />
-                          </> : ''}
-                        </Paper>
-                      )
-                    })
-                }
-              </Carousel>
-            </>
-            :
-            <br />
-        }
-        <Typography className={classes.ftydPlaylistHeading} gutterBottom style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "h6"} component={notMobile ? "h5" : "h6"}>
-          FTYD Playlist
-        </Typography>
-        <Suspense fallback={<CircularProgress size="1.5rem" />}>
-        <YouTube
-          className={'string'}
-          containerClassName={classes.youtubeMusicContainer}
-          opts={opts}
-          // onReady={setYoutubeReady(true)}
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Box sx={{ display: "flex" }}>
+        <NavDrawer />
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            padding: theme.spacing(3),
+            marginLeft: "240px",
+            marginTop: theme.spacing(3),
+          }}
+        >
+          <Seo />
+          <TypeWriter
+            sx={{ height: "100%" }}
+            messages={[
+              "Welcome",
+              "Bienvenue",
+              "Benvenuta",
+              "добро пожаловать",
+              "Bienvenidas",
+              "欢迎",
+              "Hoşgeldiniz",
+              "Добре дошли",
+              "어서 오세요",
+              "Willkommen",
+              "Witamy",
+              "Vítejte",
+              "Welkom",
+              "Bine ati venit",
+            ]}
           />
-          </Suspense>
-        <Typography className={classes.specialThanks} style={{ 'text-align': 'center' }} variant={notMobile ? "h5" : "h6"} component={notMobile ? "h5" : "h6"}>
-          Special Thanks
-        </Typography>
+          {!chivSteamBrowser ? (
+            <Typography
+              variant={notMobile ? "h4" : "h6"}
+              component={notMobile ? "h4" : "h6"}
+            >
+              To the official website of the Fall to your Death server
+            </Typography>
+          ) : (
+            <Typography
+              gutter
+              variant={notMobile ? "h4" : "h6"}
+              component={notMobile ? "h4" : "h6"}
+            >
+              To the official website of the Fall to your Death server
+            </Typography>
+          )}
+          {chivSteamBrowser && (
+            <Typography variant={"body1"} component={"body1"}>
+              Press <Typography variant="caption">Open website</Typography> and
+              expand window for a much better experience
+            </Typography>
+          )}
 
-        <div className={classes.cardsContainer}>
-          <>
-            <Carousel
-              className={classes.carouselContainerThanks}
-              stopAutoPlayOnHover={false}
-              interval={4000}
-              navButtonsAlwaysInvisible={true}
-              swipe={false}
-              indicators={false}>
-              {contentCreators.map((item, i) =>
-                <Card className={classes.miniCardContainers}>
-                  <CardContent>
-                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                      Content Creator
-                    </Typography>
-                    <Typography variant={notMobile ? "h4" : "body"} component={notMobile ? "h3" : "body2"}>
-                      {item.name}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              )
-              }
-            </Carousel>
-          </>
-        </div>
-        <div className={classes.websiteHits}>
-          <Typography variant="body2">
-            Website hits: {viewCount === 0 ? 0 : viewCount}
+          {/* Carousel for Players of the Week */}
+          <Typography
+            sx={{ paddingTop: 4, textAlign: "center" }}
+            gutterBottom
+            variant={notMobile ? "h5" : "h6"}
+          >
+            Players of the Week
           </Typography>
-        </div>
-      </NavDrawer>
-    </>)
+          <Carousel interval={5200} stopAutoPlayOnHover={false}>
+            {items.map((item, i) => (
+              <Paper
+                key={i}
+                sx={{
+                  backgroundColor:
+                    theme.palette.mode === "dark" ? "#333" : "#fff",
+                  color: theme.palette.mode === "dark" ? "#fff" : "#000",
+                  padding: "16px",
+                  borderRadius: "8px",
+                  boxShadow:
+                    theme.palette.mode === "dark"
+                      ? "0px 0px 12px rgba(255,255,255,0.2)"
+                      : "0px 0px 12px rgba(0,0,0,0.2)",
+                  transition: "background-color 0.3s, color 0.3s",
+                }}
+              >
+                <Typography
+                  sx={{
+                    textAlign: "center",
+                    color: theme.palette.mode === "dark" ? "#fff" : "#000",
+                  }}
+                  variant={notMobile ? "h3" : "h6"}
+                >
+                  {item.name}
+                </Typography>
+                <Typography
+                  sx={{
+                    textAlign: "center",
+                    color: theme.palette.mode === "dark" ? "#fff" : "#000",
+                  }}
+                  variant={notMobile ? "h5" : "body"}
+                >
+                  Kills: {item.kills}
+                </Typography>
+                <Box sx={{ textAlign: "center", paddingTop: "8px" }}>
+                  <img
+                    src={item.imageSrc}
+                    alt={`Avatar of ${item.name}`}
+                    style={{ width: "100px", height: "100px" }}
+                  />
+                </Box>
+              </Paper>
+            ))}
+          </Carousel>
+          <YouTubePlaylist notMobile={notMobile} opts={opts} />
+          <SpecialThanksCarousel notMobile={notMobile} />
+          <div>
+            <Typography variant="body2">
+              Website hits: {viewCount === 0 ? 0 : viewCount}
+            </Typography>
+          </div>
+        </Box>
+      </Box>
+    </ThemeProvider>
+  )
 }
+
+export default Home

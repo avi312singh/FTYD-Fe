@@ -1,25 +1,15 @@
-import React, { useState, useContext } from "react"
+import React, { createContext, useContext, useState } from "react";
 
-const DarkThemeContext = React.createContext({
-  darkMode: false,
-  setDarkMode: () => {},
-})
+const DarkThemeContext = createContext();
 
 export const DarkThemeProvider = ({ children }) => {
-  const [isDark, setIsDark] = useState(true)
+  const [darkMode, setDarkMode] = useState(false);
 
   return (
-    <DarkThemeContext.Provider
-      value={{
-        darkMode: isDark,
-        setDarkMode: setIsDark,
-      }}
-    >
+    <DarkThemeContext.Provider value={{ darkMode, setDarkMode }}>
       {children}
     </DarkThemeContext.Provider>
-  )
-}
+  );
+};
 
-const useDarkThemeContext = () => useContext(DarkThemeContext);
-
-export default useDarkThemeContext;
+export const useDarkThemeContext = () => useContext(DarkThemeContext);

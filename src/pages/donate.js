@@ -1,136 +1,167 @@
 import React, { useEffect } from "react"
-import { TextField, InputAdornment, Typography, Box } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import ReactGA from 'react-ga';
-import axios from 'axios'
+import { TextField, InputAdornment, Typography, Box } from "@mui/material"
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js"
+import { ThemeProvider, createTheme } from "@mui/material/styles"
+import { useDarkThemeContext } from "../components/DarkThemeContext/DarkThemeContext"
+import ReactGA from "react-ga"
+import axios from "axios"
 
 import NavDrawer from "../components/NavDrawer/NavDrawer"
-import Seo from "../components/Seo/Seo";
-
-const useStyles = makeStyles((theme) => ({
-    donateContainer: {
-        marginLeft: theme.spacing(7),
-        width: '60%'
-    },
-    PayPalContainer: {
-        marginTop: theme.spacing(2),
-    },
-    PayPalButton: {
-        maxWidth: "100%"
-    },
-    amountInput: {
-        minWidth: 'auto',
-        maxWidth: '100%',
-        width: '100%'
-    },
-    form: {
-        maxWidth: '749px',
-        minWidth: '200px'
-    },
-    donateMessage: {
-        marginBottom: theme.spacing(3)
-    }
-}))
-
+import Seo from "../components/Seo/Seo"
 
 export default function Donate() {
-    const classes = useStyles();
-    const endpoint = process.env.GATSBY_ENDPOINT || (() => { new Error("Provide an endpoint in env vars") });
-    const authorisation = process.env.GATSBY_AUTHORISATION || (() => { new Error("Provide a server IP in env vars") });
-    const googleAnalytics = process.env.GATSBY_GA || (() => { new Error("Provide a server IP in env vars") });
-    const [donationAmount, setDonationAmount] = React.useState("5.00");
-    // const [orderID, setOrderID] = React.useState(false);
-    const donationAmountRegex = /^[0-9]*\.{1}[0-9][0-9]$/g;
-    const clientId = process.env.GATSBY_PAYPAL_CLIENTID;
+  const endpoint =
+    process.env.GATSBY_ENDPOINT ||
+    (() => {
+      new Error("Provide an endpoint in env vars")
+    })
+  const authorisation =
+    process.env.GATSBY_AUTHORISATION ||
+    (() => {
+      new Error("Provide a server IP in env vars")
+    })
+  const googleAnalytics =
+    process.env.GATSBY_GA ||
+    (() => {
+      new Error("Provide a server IP in env vars")
+    })
+  const [donationAmount, setDonationAmount] = React.useState("5.00")
+  const donationAmountRegex = /^[0-9]*\.{1}[0-9][0-9]$/g
+  const clientId = process.env.GATSBY_PAYPAL_CLIENTID
 
-    const configViewCountUpdate = {
-        method: 'put',
-        url: `${endpoint}aggregatedstats/pageCount/?page=donate`,
-        headers: {
-            'Authorization': `Basic ${authorisation}`,
-        }
-    };
+  const configViewCountUpdate = {
+    method: "put",
+    url: `${endpoint}aggregatedstats/pageCount/?page=donate`,
+    headers: {
+      Authorization: `Basic ${authorisation}`,
+    },
+  }
 
-    useEffect(() => {
-        axios(configViewCountUpdate)
-            .catch((error) => {
-                console.log(error);
-            });
-    }, [])
+  const { darkMode } = useDarkThemeContext()
 
-    ReactGA.initialize(googleAnalytics);
-    ReactGA.pageview('/donate');
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? "dark" : "light",
+    },
+    spacing: 8,
+  })
 
-    const createOrder = (data, actions) => {
-        return actions.order
-            .create({
-                purchase_units: [
-                    {
-                        amount: {
-                            value: donationAmount,
-                        },
-                        description: "Fall to your death donation",
-                        category: "DIGITAL_GOODS"
-                    },
-                ],
-                application_context: {
-                    shipping_preference: "NO_SHIPPING"
-                }
-            })
-        // .then((orderID) => {
-        //     setOrderID(orderID);
-        //     return orderID;
-        // });
-    }
-    return (
-        <>
-            <Seo />
-            <NavDrawer customDrawerWidth={5}>
-                <div className={classes.donateMessage}>
-                    <Typography >
-                        Please support the server and this site for future content and free hosting!
-                    </Typography>
-                </div>
-                <Box className={classes.donateContainer}>
-                    {
-                        donationAmount.match(donationAmountRegex) && donationAmount >= 0.01 ?
-                            <form className={classes.form} noValidate autoComplete="off">
-                                <TextField defaultValue="5.00"
-                                    className={classes.amountInput}
-                                    id="outlined-basic"
-                                    label="Donation Amount"
-                                    variant="outlined"
-                                    onChange={e => setDonationAmount(e.target.value)}
-                                    InputProps={{
-                                        startAdornment: <InputAdornment position="start">£</InputAdornment>,
-                                    }} />
-                            </form>
-                            :
-                            <form className={classes.form} noValidate autoComplete="off">
-                                <TextField
-                                    className={classes.amountInput}
-                                    defaultValue="5.00"
-                                    helperText="Please enter a valid donation amount of at least £0.01"
-                                    id="outlined-basic"
-                                    label="Donation Amount"
-                                    variant="outlined"
-                                    onChange={e => setDonationAmount(e.target.value)}
-                                    InputProps={{
-                                        startAdornment: <InputAdornment position="start">£</InputAdornment>,
-                                    }} />
-                            </form>
-                    }
-                    <div className={classes.PayPalContainer}>
-                        <PayPalScriptProvider options={{ "client-id": clientId, currency: "GBP", "disable-funding": "sofort" }}>
-                            {donationAmount.match(donationAmountRegex) && donationAmount >= 0.01 ?
-                                <PayPalButtons className={classes.PayPalButton} forceReRender={[donationAmount]} createOrder={createOrder} />
-                                :
-                                <PayPalButtons className={classes.PayPalButton} disabled />}
-                        </PayPalScriptProvider>
-                    </div>
-                </Box>
-            </NavDrawer>
+  useEffect(() => {
+    axios(configViewCountUpdate).catch(error => {
+      console.log(error)
+    })
+  }, [])
 
-        </>)
+  ReactGA.initialize(googleAnalytics)
+  ReactGA.pageview("/donate")
+
+  const createOrder = (data, actions) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: donationAmount,
+          },
+          description: "Fall to your death donation",
+          category: "DIGITAL_GOODS",
+        },
+      ],
+      application_context: {
+        shipping_preference: "NO_SHIPPING",
+      },
+    })
+  }
+
+  return (
+    <>
+      <ThemeProvider theme={theme}>
+        <Seo
+          title="Donate to Fall to Your Death"
+          description="Support the Fall to Your Death server and website by making a donation. Help us continue providing great content and free hosting."
+          image="/path/to/donation-page-image.jpg" // replace with the correct path if available
+          article={false}
+        />
+        <NavDrawer customDrawerWidth={5}>
+          <Box sx={{ mb: 3 }}>
+            <Typography>
+              Please support the server and this site for future content and
+              free hosting!
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              ml: 7,
+              width: "60%",
+              flexGrow: 1,
+              padding: theme.spacing(3),
+              marginLeft: "240px",
+              marginTop: theme.spacing(3),
+            }}
+          >
+            {donationAmount.match(donationAmountRegex) &&
+            donationAmount >= 0.01 ? (
+              <form
+                noValidate
+                autoComplete="off"
+                style={{ maxWidth: "749px", minWidth: "200px" }}
+              >
+                <TextField
+                  defaultValue="5.00"
+                  fullWidth
+                  label="Donation Amount"
+                  variant="outlined"
+                  onChange={e => setDonationAmount(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">£</InputAdornment>
+                    ),
+                  }}
+                />
+              </form>
+            ) : (
+              <form
+                noValidate
+                autoComplete="off"
+                style={{ maxWidth: "749px", minWidth: "200px" }}
+              >
+                <TextField
+                  fullWidth
+                  defaultValue="5.00"
+                  helperText="Please enter a valid donation amount of at least £0.01"
+                  label="Donation Amount"
+                  variant="outlined"
+                  onChange={e => setDonationAmount(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">£</InputAdornment>
+                    ),
+                  }}
+                />
+              </form>
+            )}
+            <Box sx={{ mt: 2 }}>
+              <PayPalScriptProvider
+                options={{
+                  "client-id": clientId,
+                  currency: "GBP",
+                  "disable-funding": "sofort",
+                }}
+              >
+                {donationAmount.match(donationAmountRegex) &&
+                donationAmount >= 0.01 ? (
+                  <PayPalButtons
+                    style={{ maxWidth: "100%" }}
+                    forceReRender={[donationAmount]}
+                    createOrder={createOrder}
+                  />
+                ) : (
+                  <PayPalButtons style={{ maxWidth: "100%" }} disabled />
+                )}
+              </PayPalScriptProvider>
+            </Box>
+          </Box>
+        </NavDrawer>
+      </ThemeProvider>
+    </>
+  )
 }

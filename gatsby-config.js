@@ -1,15 +1,20 @@
-/**
- * Configure your Gatsby site with this file.
- *
- * See: https://www.gatsbyjs.com/docs/gatsby-config/
- */
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
 module.exports = {
-  /* Your site config here */
-  plugins: [`gatsby-plugin-material-ui`, `gatsby-plugin-react-helmet`, `gatsby-plugin-image`, `gatsby-plugin-sharp`,],
+  plugins: [
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/static/images/`,
+      },
+    },
+    // Add other plugins as needed
+  ],
   siteMetadata: {
     title: "Fall to Your Death",
     titleTemplate: "%s · The official server website",
