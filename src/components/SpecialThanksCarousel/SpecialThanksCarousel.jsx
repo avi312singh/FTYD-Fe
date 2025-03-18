@@ -12,16 +12,26 @@ const contentCreators = [
 
 const SpecialThanksCarousel = ({ notMobile }) => {
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", paddingTop: "16px" }}>
+    <Box sx={{ display: "contents", justifyContent: "center", paddingTop: "16px", width: "100%" }}>
       <Carousel
         stopAutoPlayOnHover={false}
         interval={4000}
-        navButtonsAlwaysInvisible={true}
-        swipe={false}
-        indicators={false}
+        navButtonsAlwaysInvisible={false}  
+        swipe={false}  
+        indicators={false}  
+        sx={{marginTop: "16px"}}
       >
         {contentCreators.map((item, i) => (
-          <Card key={i} sx={{ maxWidth: 220, margin: 1 }}>
+          <Card
+            key={i}
+            sx={{
+              maxWidth: "280px",  
+              minWidth: "250px",
+              minHeight: "120px",
+              margin: "auto",
+              textAlign: "center",
+            }}
+          >
             <CardContent>
               <Typography variant="subtitle1" gutterBottom>
                 Content Creator
