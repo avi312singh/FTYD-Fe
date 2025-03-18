@@ -8,6 +8,25 @@ body {
 
 @keyframes blink {
   50% {
-    border-color: transparent;
+    opacity: 0;
   }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Blinking Cursor Effect */
+#cursor {
+  display: inline-block;
+  width: 10px;
+  height: 2rem;
+  background-color: transparent;
+  border-left: 2px solid white;
+  animation: blink 0.8s infinite;
 }

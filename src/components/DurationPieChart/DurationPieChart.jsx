@@ -9,7 +9,7 @@ const DurationPieChart = () => {
 
     const config = {
         method: 'get',
-        url: `${endpoint}aggregatedstats/duration?duration=999`,
+        url: `${endpoint}aggregatedStats/duration?duration=999`,
         headers: {
             'Authorization': `Basic ${authorisation}`,
         }

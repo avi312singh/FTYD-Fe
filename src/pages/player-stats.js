@@ -35,16 +35,12 @@ export default function PlayerStats() {
   const config = {
     method: "get",
     url: `${endpoint}dbinteractions/allrows?tableName=playerInfo`,
-    headers: {
-      Authorization: `Basic ${authorisation}`,
-    },
+
   }
   const configViewCountUpdate = {
     method: "put",
-    url: `${endpoint}aggregatedstats/pageCount/?page=player-stats`,
-    headers: {
-      Authorization: `Basic ${authorisation}`,
-    },
+    url: `${endpoint}aggregatedStats/pageCount/?page=player-stats`,
+
   }
 
   useEffect(() => {

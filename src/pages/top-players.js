@@ -34,18 +34,14 @@ export default function TopPlayers() {
 
   const config = {
     method: "get",
-    url: `${endpoint}aggregatedstats/topPlayers`,
-    headers: {
-      Authorization: `Basic ${authorisation}`,
-    },
+    url: `${endpoint}aggregatedStats/topPlayers`,
+
   }
 
   const configViewCountUpdate = {
     method: "put",
-    url: `${endpoint}aggregatedstats/pageCount/?page=top-players`,
-    headers: {
-      Authorization: `Basic ${authorisation}`,
-    },
+    url: `${endpoint}aggregatedStats/pageCount/?page=top-players`,
+
   }
 
   useEffect(() => {

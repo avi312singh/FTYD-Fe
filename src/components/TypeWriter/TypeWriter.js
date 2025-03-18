@@ -74,20 +74,20 @@ export default function TypeWriter({ messages, heading }) {
     <h1>
       {heading}&nbsp;
       <Typography
-        style={{ display: "inline-flex", minHeight: "100%" }}
+        style={{
+          display: "inline-flex",
+          minHeight: "100%",
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          borderRight: "2px solid transparent",
+        }}
         variant={notMobile ? "h2" : "h4"}
         component={notMobile ? "h3" : "h5"}
         gutterBottom
       >
         {state.text}
       </Typography>
-      <span
-        id="cursor"
-        style={{
-          backgroundColor: "white",
-          borderLeft: `.1em solid ${darkMode ? "#303030" : "#09110b"}`,
-        }}
-      />
+      <span id="cursor" />
     </h1>
   )
 }

@@ -40,17 +40,13 @@ export default function ServerInfo() {
   const config = {
     method: "get",
     url: `${endpoint}serverStats`,
-    headers: {
-      Authorization: `Basic ${authorisation}`,
-    },
+
   }
 
   const configViewCountUpdate = {
     method: "put",
-    url: `${endpoint}aggregatedstats/pageCount/?page=server-info`,
-    headers: {
-      Authorization: `Basic ${authorisation}`,
-    },
+    url: `${endpoint}aggregatedStats/pageCount/?page=server-info`,
+
   }
 
   useEffect(() => {

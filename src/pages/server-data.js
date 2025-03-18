@@ -43,18 +43,14 @@ export default function ServerData() {
 
   const [config, setConfig] = React.useState({
     method: "get",
-    url: `${endpoint}aggregatedstats/playerCount?duration=${currentOption}`,
-    headers: {
-      Authorization: `Basic ${authorisation}`,
-    },
+    url: `${endpoint}aggregatedStats/playerCount?duration=${currentOption}`,
+
   })
 
   const configViewCountUpdate = {
     method: "put",
-    url: `${endpoint}aggregatedstats/pageCount/?page=server-data`,
-    headers: {
-      Authorization: `Basic ${authorisation}`,
-    },
+    url: `${endpoint}aggregatedStats/pageCount/?page=server-data`,
+
   }
 
   useEffect(() => {
@@ -79,7 +75,7 @@ export default function ServerData() {
     setCurrentOption(valueToParse)
     setConfig({
       method: "get",
-      url: `${endpoint}aggregatedstats/playerCount?duration=${valueToParse}`,
+      url: `${endpoint}aggregatedStats/playerCount?duration=${valueToParse}`,
       headers: {
         Authorization: `Basic ${authorisation}`,
       },

@@ -9,7 +9,7 @@ const KillsPieChart = () => {
 
     const config = {
         method: 'get',
-        url: `${endpoint}aggregatedstats/killCount?duration=999`,
+        url: `${endpoint}aggregatedStats/killCount?duration=999`,
         headers: {
             'Authorization': `Basic ${authorisation}`,
         }

@@ -31,10 +31,8 @@ export default function Donate() {
 
   const configViewCountUpdate = {
     method: "put",
-    url: `${endpoint}aggregatedstats/pageCount/?page=donate`,
-    headers: {
-      Authorization: `Basic ${authorisation}`,
-    },
+    url: `${endpoint}aggregatedStats/pageCount/?page=donate`,
+
   }
 
   const { darkMode } = useDarkThemeContext()
