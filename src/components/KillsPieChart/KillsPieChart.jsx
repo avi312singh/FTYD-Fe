@@ -1,73 +1,70 @@
-import React, { useEffect, useState } from "react"
-import axios from 'axios'
-import { Tooltip, Pie, PieChart, Cell } from 'recharts'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Box, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import { Tooltip, Pie, PieChart, Cell, ResponsiveContainer } from "recharts";
 
-const KillsPieChart = () => {
-    const [response, setResponse] = useState([]);
-    const endpoint = process.env.GATSBY_ENDPOINT || (() => { new Error("Provide an endpoint in env vars") });
-    const authorisation = process.env.GATSBY_AUTHORISATION || (() => { new Error("Provide a server IP in env vars") });
+const KillsPieChart = ({ serverId = "ftyd" }) => {
+  const [response, setResponse] = useState([]);
+  const endpoint = process.env.GATSBY_ENDPOINT;
 
-    const config = {
-        method: 'get',
-        url: `${endpoint}aggregatedStats/killCount?duration=999`,
-        headers: {
-            'Authorization': `Basic ${authorisation}`,
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
+
+  useEffect(() => {
+    axios
+      .get(`${endpoint}aggregatedStats/killCount?duration=999&serverId=${serverId}`)
+      .then(res => {
+        if (res.status === 200 || res.status === 201) {
+          setResponse(res.data.totalKills);
         }
-    };
+      })
+      .catch(console.error);
+  }, [serverId]);
 
-    useEffect(() => {
-        axios(config)
-            .then((response) => {
-                if (response.status === 201 || 200) {
-                    setResponse(response.data.result.response);
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, [])
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#42C1FF"];
 
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#42C1FF'];
-    return (
-        <PieChart width={800} height={400}>
-            <Tooltip />
-            <Pie
-                data={response.filter(duration => duration.name !== "All")}
-                dataKey="kills"
-                cx={240}
-                cy={200}
-                innerRadius={100}
-                outerRadius={130}
-                fill="#8884d8"
-                paddingAngle={5}
-                label
-                labelLine
-                animationDuration={500}
-            >
-                {response.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-            </Pie>
-            <Pie
-                data={response}
-                dataKey="kills"
-                cx={620}
-                cy={200}
-                startAngle={180}
-                endAngle={0}
-                innerRadius={60}
-                outerRadius={80}
-                fill="#8884d8"
-                paddingAngle={5}
-                label
-                labelLine
-            >
-                {response.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-            </Pie>
+  return (
+    <Box sx={{ width: "100%", maxWidth: isLargeScreen ? 900 : 700, height: isLargeScreen ? 500 : 400,  maxWidth: "1600px", mx: "auto", boxSizing: "border-box" }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Tooltip />
+          <Pie
+            data={response.filter(duration => duration.name !== "All")}
+            dataKey="kills"
+            cx="30%"
+            cy="50%"
+            innerRadius={isLargeScreen ? 80 : 60}
+            outerRadius={isLargeScreen ? 120 : 90}
+            paddingAngle={5}
+            label
+            labelLine
+          >
+            {response.map((entry, index) => (
+              <Cell key={`cell-1-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Pie
+            data={response}
+            dataKey="kills"
+            cx="70%"
+            cy="50%"
+            startAngle={180}
+            endAngle={0}
+            innerRadius={isLargeScreen ? 50 : 30}
+            outerRadius={isLargeScreen ? 70 : 50}
+            paddingAngle={5}
+            label
+            labelLine
+          >
+            {response.map((entry, index) => (
+              <Cell key={`cell-2-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
         </PieChart>
-    )
-}
+      </ResponsiveContainer>
+    </Box>
+  );
+};
 
 export default KillsPieChart;

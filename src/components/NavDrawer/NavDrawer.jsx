@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import PropTypes from "prop-types"
 import {
   AppBar,
@@ -25,14 +25,27 @@ import MenuIcon from "@mui/icons-material/Menu"
 import PieChartIcon from "@mui/icons-material/PieChart"
 import DarkThemeSwitcher from "../DarkThemeSwitcher/DarkThemeSwitcher"
 import { useDarkThemeContext } from '../DarkThemeContext/DarkThemeContext';
+import usePageTracking from "../../utils/usePageTracking"
+import { useLocation } from "@reach/router"
 import { Link } from "gatsby"
 
 const drawerWidth = 240
 
-const NavDrawer = ({ children, window }) => {
+const NavDrawer = ({ children, window: windowProp }) => {
   const theme = useTheme()
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const { darkMode } = useDarkThemeContext()
+  usePageTracking();
+
+  const location = useLocation()
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 0); // Wait for the route to fully mount
+  
+    return () => clearTimeout(timeout); // cleanup
+  }, [location.pathname]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
@@ -84,7 +97,7 @@ const NavDrawer = ({ children, window }) => {
     </div>
   )
 
-  const container = window !== undefined ? () => window().document.body : undefined
+  const container = windowProp !== undefined ? () => window().document.body : undefined
 
   return (
     <ThemeProvider theme={darkModeStyling}>

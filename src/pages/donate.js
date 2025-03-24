@@ -3,7 +3,6 @@ import { TextField, InputAdornment, Typography, Box } from "@mui/material"
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js"
 import { ThemeProvider, createTheme } from "@mui/material/styles"
 import { useDarkThemeContext } from "../components/DarkThemeContext/DarkThemeContext"
-import ReactGA from "react-ga"
 import axios from "axios"
 
 import NavDrawer from "../components/NavDrawer/NavDrawer"
@@ -15,16 +14,7 @@ export default function Donate() {
     (() => {
       new Error("Provide an endpoint in env vars")
     })
-  const authorisation =
-    process.env.GATSBY_AUTHORISATION ||
-    (() => {
-      new Error("Provide a server IP in env vars")
-    })
-  const googleAnalytics =
-    process.env.GATSBY_GA ||
-    (() => {
-      new Error("Provide a server IP in env vars")
-    })
+
   const [donationAmount, setDonationAmount] = React.useState("5.00")
   const donationAmountRegex = /^[0-9]*\.{1}[0-9][0-9]$/g
   const clientId = process.env.GATSBY_PAYPAL_CLIENTID
@@ -50,9 +40,6 @@ export default function Donate() {
     })
   }, [])
 
-  ReactGA.initialize(googleAnalytics)
-  ReactGA.pageview("/donate")
-
   const createOrder = (data, actions) => {
     return actions.order.create({
       purchase_units: [
@@ -76,7 +63,7 @@ export default function Donate() {
         <Seo
           title="Donate to Fall to Your Death"
           description="Support the Fall to Your Death server and website by making a donation. Help us continue providing great content and free hosting."
-          image="/path/to/donation-page-image.jpg" // replace with the correct path if available
+          image="\static\images\ftyd.jpg"
           article={false}
         />
         <NavDrawer customDrawerWidth={5}>

@@ -1,74 +1,95 @@
 import React, { useEffect, useState } from "react"
-import axios from 'axios'
-import { Tooltip, Pie, PieChart, Cell } from 'recharts'
+import axios from "axios"
+import { Box, useTheme, useMediaQuery } from "@mui/material"
+import { Tooltip, Pie, PieChart, Cell, ResponsiveContainer } from "recharts"
 
-const DurationPieChart = () => {
-    const [response, setResponse] = useState([]);
-    const endpoint = process.env.GATSBY_ENDPOINT || (() => { new Error("Provide an endpoint in env vars") });
-    const authorisation = process.env.GATSBY_AUTHORISATION || (() => { new Error("Provide a server IP in env vars") });
+const DurationPieChart = ({ serverId = "ftyd" }) => {
+  const [response, setResponse] = useState([])
+  const endpoint = process.env.GATSBY_ENDPOINT
 
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
+
+  useEffect(() => {
     const config = {
-        method: 'get',
-        url: `${endpoint}aggregatedStats/duration?duration=999`,
-        headers: {
-            'Authorization': `Basic ${authorisation}`,
+      method: "get",
+      url: `${endpoint}aggregatedStats/duration?duration=999&serverId=${serverId}`,
+    }
+
+    axios(config)
+      .then(res => {
+        if (res.status === 200 || res.status === 201) {
+          setResponse(res.data.result.response)
         }
-    };
+      })
+      .catch(console.error)
+  }, [serverId])
 
-    useEffect(() => {
-        axios(config)
-            .then((response) => {
-                if (response.status === 201 || 200) {
-                    setResponse(response.data.result.response);
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, [])
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#42C1FF"]
 
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#42C1FF'];
-
-    return (
-        <PieChart width={800} height={400}>
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", sm: "row" },
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 4,
+        width: "100%",
+        mt: 4,
+      }}
+    >
+      {/* First Pie Chart */}
+      <Box sx={{ width: 350, height: 350 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
             <Tooltip />
             <Pie
-                data={response.filter(duration => duration.name !== "All")}
-                dataKey="kills"
-                cx={240}
-                cy={200}
-                innerRadius={100}
-                outerRadius={130}
-                fill="#8884d8"
-                paddingAngle={5}
-                label
-                labelLine
-                animationDuration={500}
+              data={response.filter(item => item.name !== "All")}
+              dataKey="minutes"
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={90}
+              fill="#8884d8"
+              paddingAngle={5}
+              label
             >
-                {response.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
+              {response.map((entry, index) => (
+                <Cell key={`cell-a-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
             </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+      </Box>
+
+      {/* Second Pie Chart */}
+      <Box sx={{ width: 350, height: 350 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Tooltip />
             <Pie
-                data={response}
-                dataKey="kills"
-                cx={620}
-                cy={200}
-                startAngle={180}
-                endAngle={0}
-                innerRadius={60}
-                outerRadius={80}
-                fill="#8884d8"
-                paddingAngle={5}
-                label
-                labelLine
+              data={response}
+              dataKey="minutes"
+              cx="50%"
+              cy="50%"
+              startAngle={180}
+              endAngle={0}
+              innerRadius={30}
+              outerRadius={60}
+              fill="#8884d8"
+              paddingAngle={5}
+              label
             >
-                {response.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
+              {response.map((entry, index) => (
+                <Cell key={`cell-b-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
             </Pie>
-        </PieChart>
-    )
+          </PieChart>
+        </ResponsiveContainer>
+      </Box>
+    </Box>
+  )
 }
 
-export default DurationPieChart;
+export default DurationPieChart

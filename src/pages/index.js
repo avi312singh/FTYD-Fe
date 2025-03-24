@@ -88,7 +88,7 @@ const ConfettiEffect = () => {
     axios(configViewCount)
       .then(viewCount => {
         if (viewCount.status === 201 || viewCount.status === 200) {
-          setViewCount(viewCount.data.result.result[0].hits);
+          setViewCount(viewCount.data.hits);
         }
       })
       .catch(error => {
@@ -144,8 +144,6 @@ trophyIcons = trophyIcons.map(icon => encodeURI(icon));
         : "http://clipart-library.com/images_k/blue-flame-transparent-background/blue-flame-transparent-background-13.png",
         rank: index + 1
   }))
-  console.log('items', items)
-  console.log('response', response)
 
   const opts = {
     height: notMobile ? "480" : "195",
@@ -168,7 +166,12 @@ trophyIcons = trophyIcons.map(icon => encodeURI(icon));
     <Box sx={{ display: "flex" }}>
       <NavDrawer sx={{ position: "fixed", top: 0, left: 0, height: "100vh", zIndex: 1200 }} />
       <Box component="main" sx={{ flexGrow: 1, padding: theme.spacing(3), marginLeft: notMobile && "240px", marginTop: theme.spacing(3) }}>
-        <Seo />
+        <Seo
+          title="Fall to Your Death | Official Website"
+          description="Welcome to the website of the iconic Fall to your Death server. Enjoy your stay!"
+          image="\static\images\ftyd.jpg"
+          article={false}
+        />
         <TypeWriter
           sx={{ height: "100%" }}
           messages={[
