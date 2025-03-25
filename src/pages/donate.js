@@ -67,7 +67,15 @@ export default function Donate() {
           article={false}
         />
         <NavDrawer customDrawerWidth={5}>
-          <Box sx={{ mb: 3 }}>
+        <Box
+          sx={{
+            mb: 3,
+            mt: { xs: 6, sm: 10 },
+            textAlign: { xs: "center", sm: "left" },
+            ml: { xs: 0, sm: "240px" },
+            px: { xs: 2, sm: 0 },
+          }}
+        >
             <Typography>
               Please support the server and this site for future content and
               free hosting!
@@ -75,12 +83,16 @@ export default function Donate() {
           </Box>
           <Box
             sx={{
-              ml: 7,
-              width: "60%",
+              ml: { xs: 0, sm: 7 },
+              marginLeft: { xs: 0, sm: "240px" },
+              width: { xs: "90%", sm: "60%" },
               flexGrow: 1,
               padding: theme.spacing(3),
-              marginLeft: "240px",
-              marginTop: theme.spacing(3),
+              mt: { xs: 4, sm: theme.spacing(3) },
+              px: { xs: 2, sm: 0 },
+              display: "flex",
+              flexDirection: "column",
+              alignItems: { xs: "center", sm: "flex-start" },
             }}
           >
             {donationAmount.match(donationAmountRegex) &&
@@ -88,7 +100,7 @@ export default function Donate() {
               <form
                 noValidate
                 autoComplete="off"
-                style={{ maxWidth: "749px", minWidth: "200px" }}
+                style={{ width: "100%", maxWidth: "749px" }}
               >
                 <TextField
                   defaultValue="5.00"
@@ -107,7 +119,7 @@ export default function Donate() {
               <form
                 noValidate
                 autoComplete="off"
-                style={{ maxWidth: "749px", minWidth: "200px" }}
+                style={{ width: "100%", maxWidth: "749px" }}
               >
                 <TextField
                   fullWidth
@@ -124,7 +136,7 @@ export default function Donate() {
                 />
               </form>
             )}
-            <Box sx={{ mt: 2 }}>
+            <Box sx={{ mt: 2, width: "100%", maxWidth: "749px" }}>
               <PayPalScriptProvider
                 options={{
                   "client-id": clientId,

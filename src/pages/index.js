@@ -265,13 +265,12 @@ trophyIcons = trophyIcons.map(icon => encodeURI(icon));
         };
         trophyIcon = BronzeTrophy;
       } else {
-        // ✅ Apply Blue Flame for Non-Top-3 Players
         bgStyle = {
           backgroundImage: "url('http://clipart-library.com/images_k/blue-flame-transparent-background/blue-flame-transparent-background-13.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          boxShadow: "0px 0px 12px rgba(0, 162, 255, 0.5)", // 🔵 Blue glow effect
+          boxShadow: "0px 0px 12px rgba(0, 162, 255, 0.5)",
         };
       }
       return (
@@ -303,10 +302,91 @@ trophyIcons = trophyIcons.map(icon => encodeURI(icon));
       )
     })} 
   </Carousel>
+  <Box
+  sx={{
+    mt: 4,
+    textAlign: "center",
+    animation: `${fadeInZoom} 1s ease-in`,
+  }}
+>
+<Typography
+  variant="h4"
+  sx={{
+    fontWeight: "bold",
+    mb: 2,
+    color: "#7289da",
+    textShadow: `
+      0 0 5px #7289da,
+      0 0 10px #7289da,
+      0 0 15px #7289da,
+      0 0 20px #99aab5
+    `,
+    animation: `
+      pulseGlow 8s ease-in-out infinite
+    `,
+    "@keyframes pulseGlow": {
+      "0%": {
+        textShadow: `
+          0 0 5px #7289da,
+          0 0 10px #7289da,
+          0 0 15px #7289da,
+          0 0 20px #99aab5
+        `,
+      },
+      "50%": {
+        textShadow: `
+          0 0 10px #7289da,
+          0 0 20px #7289da,
+          0 0 25px #7289da,
+          0 0 30px #99aab5
+        `,
+      },
+      "100%": {
+        textShadow: `
+          0 0 5px #7289da,
+          0 0 10px #7289da,
+          0 0 15px #7289da,
+          0 0 20px #99aab5
+        `,
+      },
+    },
+  }}
+>
+  Join the Migraine Central Medieval Discord!
+</Typography>
+
+  <a
+    href="https://discord.gg/EjpnynHR2B"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{ textDecoration: "none" }}
+  >
+    <Box
+      sx={{
+        display: "inline-block",
+        mt:2,
+        backgroundColor: "#5865F2",
+        padding: "12px 24px",
+        borderRadius: "8px",
+        color: "white",
+        fontWeight: "bold",
+        boxShadow: "0 0 20px #5865F2",
+        transition: "transform 0.3s, box-shadow 0.3s",
+        "&:hover": {
+          transform: "scale(1.05)",
+          boxShadow: "0 0 30px #5865F2",
+        },
+      }}
+    >
+      💬 Join Our Discord
+    </Box>
+  </a>
+</Box>
+
         <YouTubePlaylist notMobile={notMobile} opts={opts} />
         <SpecialThanksCarousel notMobile={notMobile} />
         <div>
-          <Typography variant="body2">Website hits: {viewCount === 0 ? 0 : viewCount}</Typography>
+          <Typography sx={{mt:4}} variant="body2">Website hits: {viewCount === 0 ? 0 : viewCount}</Typography>
         </div>
       </Box>
     </Box>
