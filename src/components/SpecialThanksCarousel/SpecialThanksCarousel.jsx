@@ -13,13 +13,20 @@ const contentCreators = [
 const SpecialThanksCarousel = ({ notMobile }) => {
   return (
     <Box sx={{ display: "contents", justifyContent: "center", paddingTop: "16px", width: "100%" }}>
+      <Typography
+        sx={{ paddingTop: 2, textAlign: "center" }}
+        gutterBottom
+        variant={notMobile ? "h5" : "h6"}
+      >
+        Content Creators
+      </Typography>
       <Carousel
         stopAutoPlayOnHover={false}
         interval={4000}
         navButtonsAlwaysInvisible={false}  
         swipe={false}  
         indicators={false}  
-        sx={{marginTop: "16px"}}
+        sx={{marginTop: "30px"}}
       >
         {contentCreators.map((item, i) => (
           <Card

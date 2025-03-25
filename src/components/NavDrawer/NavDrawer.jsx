@@ -77,22 +77,63 @@ const NavDrawer = ({ children, window: windowProp }) => {
       <DarkThemeSwitcher mobile />
       <Divider />
       <List>
-        {[
-          { text: "Home", href: "/", icon: <HomeIcon /> },
-          { text: "Weekly Leaderboards", href: "/top-players/", icon: <PersonIcon /> },
-          { text: "Donate", href: "/donate/", icon: <AttachMoneyIcon /> },
-          { text: "Current Players", href: "/server-info/", icon: <InfoIcon /> },
-          { text: "Player Stats", href: "/player-stats/", icon: <SearchIcon /> },
-          { text: "Server Data", href: "/server-data/", icon: <PieChartIcon /> },
-        ].map((link) => (
-          <ListItem key={link.text}>
-            <ListItemIcon>{link.icon}</ListItemIcon>
-            <Link to={link.href} activeStyle={activeStyle} style={linkStyles}>
-              {link.text}
-            </Link>
-          </ListItem>
-        ))}
-      </List>
+  {[
+    { text: "Home", href: "/", icon: <HomeIcon /> },
+    { text: "Weekly Leaderboards", href: "/top-players/", icon: <PersonIcon /> },
+    { text: "Donate", href: "/donate/", icon: <AttachMoneyIcon /> },
+    { text: "Current Players", href: "/server-info/", icon: <InfoIcon /> },
+    { text: "Player Stats", href: "/player-stats/", icon: <SearchIcon /> },
+    { text: "Server Data", href: "/server-data/", icon: <PieChartIcon /> },
+  ].map((link) => (
+    <ListItem key={link.text}>
+      <ListItemIcon>{link.icon}</ListItemIcon>
+      <Link to={link.href} activeStyle={activeStyle} style={linkStyles}>
+        {link.text}
+      </Link>
+    </ListItem>
+  ))}
+
+    {/* Join Discord */}
+    <ListItem>
+      <ListItemIcon>
+        <img
+          src="https://img.icons8.com/color/48/discord-logo.png"
+          alt="Discord"
+          width={24}
+          height={24}
+        />
+      </ListItemIcon>
+      <a
+        href="https://discord.gg/EjpnynHR2B"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ ...linkStyles, display: "block", width: "100%" }}
+      >
+        Join Discord
+      </a>
+    </ListItem>
+
+    {/* YouTube Playlist */}
+    <ListItem>
+      <ListItemIcon>
+        <img
+          src="https://img.icons8.com/color/48/youtube-play.png"
+          alt="YouTube"
+          width={24}
+          height={24}
+        />
+      </ListItemIcon>
+      <a
+        href="https://www.youtube.com/watch?v=0FU3iAdJwsU&list=PLqBaHNBE-DBxLB8VfMaaAONaJJ3Jxf5bz&index=1&t=4s&pp=gAQBiAQB8AUB"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ ...linkStyles, display: "block", width: "100%" }}
+      >
+        FTYD Playlist
+      </a>
+    </ListItem>
+  </List>
+
       <Divider />
     </div>
   )
@@ -115,9 +156,17 @@ const NavDrawer = ({ children, window: windowProp }) => {
               <MenuIcon />
             </IconButton>
             <Typography sx={{ flexGrow: 1 }} variant="h6" noWrap>
-              <IconButton>
-                <Link to="/"> {/* Your logo here */}</Link>
-              </IconButton>
+            <IconButton component={Link} to="/">
+            <img
+              src={
+                !darkMode
+                  ? "https://images.steamusercontent.com/ugc/53586226632920673/31D9439FAF9382E9636FFA5898E1AEDFCAF8C228/"
+                  : "https://images.steamusercontent.com/ugc/16431529707213018/897D2E2C5E2873907DCC1E0FDC0FA4F32F1C8565/"
+              }
+              alt="FTYD Logo"
+              style={{ height: "40px", borderRadius: "4px" }}
+            />
+          </IconButton>
             </Typography>
             <DarkThemeSwitcher mobile={false} />
           </Toolbar>
