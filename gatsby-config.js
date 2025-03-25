@@ -4,6 +4,7 @@ require("dotenv").config({
 
 module.exports = {
   plugins: [
+    `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
     {
@@ -20,7 +21,7 @@ module.exports = {
     titleTemplate: "%s · The official server website",
     description:
       "The official website of the Fall to Your Death server",
-    url: "https://falltoyourdeath.gatsbyjs.io/", // No trailing slash allowed!
-    image: "/images/ftyd.jpg", // Path to your image you placed in the 'static' folder
+    url: "https://falltoyourdeath.net", // No trailing slash allowed!
+    image: "process.env.GATSBY_FTYD_IMAGE", // Path to your image you placed in the 'static' folder
   },
 }

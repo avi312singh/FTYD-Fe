@@ -20,7 +20,7 @@ const Seo = ({ title, description, image, article }) => {
     const seo = {
         title: title || defaultTitle,
         description: description || defaultDescription,
-        image: `${siteUrl}${image || defaultImage}`,
+        image: process.env.GATSBY_FTYD_IMAGE,
         url: `${siteUrl}${pathname}`,
     }
 
