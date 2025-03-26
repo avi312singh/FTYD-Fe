@@ -160,8 +160,8 @@ const NavDrawer = ({ children, window: windowProp }) => {
             <img
               src={
                 !darkMode
-                  ? "https://images.steamusercontent.com/ugc/53586226632920673/31D9439FAF9382E9636FFA5898E1AEDFCAF8C228/"
-                  : "https://images.steamusercontent.com/ugc/16431529707213018/897D2E2C5E2873907DCC1E0FDC0FA4F32F1C8565/"
+                  ? "https://images.steamusercontent.com/ugc/16431529707519534/EECE279D61FE0C8ACDD06CE6656E3FE3761304E6/"
+                  : "https://images.steamusercontent.com/ugc/16431529707522218/03639E5FEB003A2E384BC4A17AA9DAB510F8A421/"
               }
               alt="FTYD Logo"
               style={{ height: "40px", borderRadius: "4px" }}

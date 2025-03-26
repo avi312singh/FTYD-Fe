@@ -138,11 +138,10 @@ trophyIcons = trophyIcons.map(icon => encodeURI(icon));
   const items = response.map((player, index) => ({
     name: player.playerName || "No player yet!",
     kills: player.totalKillsWeekly || "N/A",
-    imageSrc:
-      player.imageSrc !== null && player.imageSrc !== ""
-        ? player.imageSrc
-        : "http://clipart-library.com/images_k/blue-flame-transparent-background/blue-flame-transparent-background-13.png",
-        rank: index + 1
+    avatarUrl: player.avatarUrl,
+    avatarFrameUrl: player.avatarFrameUrl,
+    imageSrc: "http://clipart-library.com/images_k/blue-flame-transparent-background/blue-flame-transparent-background-13.png",
+    rank: index + 1
   }))
 
   const opts = {
@@ -235,7 +234,7 @@ trophyIcons = trophyIcons.map(icon => encodeURI(icon));
         >
           Players of the Week
         </Typography>
-        <Carousel interval={7500} stopAutoPlayOnHover={false}>
+        <Carousel interval={8000} stopAutoPlayOnHover={false}>
     {items.map((item, i) => {
       let bgStyle = {};
       let trophyIcon = null;
@@ -292,10 +291,77 @@ trophyIcons = trophyIcons.map(icon => encodeURI(icon));
         >
           {i === 0 && <ConfettiEffect />}
           {trophyIcon && <Avatar src={trophyIcon} sx={{ width: 64, height: 64, position: "absolute", top: 10, left: 10 }} />}
-          <Box sx={{ padding: "16px", textAlign: "center" }}>
-            <Typography sx={{ fontWeight: "bold" }} variant={notMobile ? "h3" : "h6"}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: "16px",
+            }}
+          >
+           <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: item.avatarUrl ? "flex-start" : "center",
+              width: "100%",
+              gap: 2,
+            }}
+          >
+            {item.avatarUrl && (
+              <Box
+                sx={{
+                  position: "relative",
+                  width: 64,
+                  height: 64,
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                }}
+              >
+              <Avatar
+                src={item.avatarUrl}
+                alt={`${item.name}'s avatar`}
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  filter: darkMode
+                    ? "brightness(1.2) contrast(1.1)"
+                    : "brightness(0.95) contrast(1)",
+                  transition: "filter 0.3s ease-in-out",
+                }}
+              />
+                {item.avatarFrameUrl && (
+                  <Box
+                    component="img"
+                    src={item.avatarFrameUrl}
+                    alt="Avatar Frame"
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      zIndex: 1,
+                      pointerEvents: "none",
+                      borderRadius: "50%",
+                    }}
+                  />
+                )}
+              </Box>
+            )}
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                textAlign: item.avatarUrl ? "left" : "center",
+                width: "100%",
+              }}
+              variant={notMobile ? "h3" : "h6"}
+            >
               {item.name}
             </Typography>
+          </Box>
+
+
             <Typography variant={notMobile ? "h5" : "body1"}>Kills: {item.kills}</Typography>
           </Box>
         </Paper>
@@ -309,51 +375,51 @@ trophyIcons = trophyIcons.map(icon => encodeURI(icon));
     animation: `${fadeInZoom} 1s ease-in`,
   }}
 >
-<Typography
-  variant="h4"
-  sx={{
-    fontWeight: "bold",
-    mb: 2,
-    color: "#7289da",
-    textShadow: `
-      0 0 5px #7289da,
-      0 0 10px #7289da,
-      0 0 15px #7289da,
-      0 0 20px #99aab5
-    `,
-    animation: `
-      pulseGlow 8s ease-in-out infinite
-    `,
-    "@keyframes pulseGlow": {
-      "0%": {
-        textShadow: `
-          0 0 5px #7289da,
-          0 0 10px #7289da,
-          0 0 15px #7289da,
-          0 0 20px #99aab5
-        `,
+  <Typography
+    variant="h4"
+    sx={{
+      fontWeight: "bold",
+      mb: 2,
+      color: "#7289da",
+      textShadow: `
+        0 0 5px #7289da,
+        0 0 10px #7289da,
+        0 0 15px #7289da,
+        0 0 20px #99aab5
+      `,
+      animation: `
+        pulseGlow 8s ease-in-out infinite
+      `,
+      "@keyframes pulseGlow": {
+        "0%": {
+          textShadow: `
+            0 0 5px #7289da,
+            0 0 10px #7289da,
+            0 0 15px #7289da,
+            0 0 20px #99aab5
+          `,
+        },
+        "50%": {
+          textShadow: `
+            0 0 10px #7289da,
+            0 0 20px #7289da,
+            0 0 25px #7289da,
+            0 0 30px #99aab5
+          `,
+        },
+        "100%": {
+          textShadow: `
+            0 0 5px #7289da,
+            0 0 10px #7289da,
+            0 0 15px #7289da,
+            0 0 20px #99aab5
+          `,
+        },
       },
-      "50%": {
-        textShadow: `
-          0 0 10px #7289da,
-          0 0 20px #7289da,
-          0 0 25px #7289da,
-          0 0 30px #99aab5
-        `,
-      },
-      "100%": {
-        textShadow: `
-          0 0 5px #7289da,
-          0 0 10px #7289da,
-          0 0 15px #7289da,
-          0 0 20px #99aab5
-        `,
-      },
-    },
-  }}
->
-  Join the Migraine Central Medieval Discord!
-</Typography>
+    }}
+  >
+    Join the Migraine Central Medieval Discord!
+  </Typography>
 
   <a
     href="https://discord.gg/EjpnynHR2B"
@@ -382,7 +448,6 @@ trophyIcons = trophyIcons.map(icon => encodeURI(icon));
     </Box>
   </a>
 </Box>
-
         <YouTubePlaylist notMobile={notMobile} opts={opts} />
         <SpecialThanksCarousel notMobile={notMobile} />
         <div>
