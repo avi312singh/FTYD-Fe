@@ -3,7 +3,7 @@ body {
 }
 
 #cursor {
-  animation: blink .7s steps(1) infinite;
+  animation: blink 0.7s steps(1) infinite;
 }
 
 @keyframes blink {

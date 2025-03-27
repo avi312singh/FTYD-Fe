@@ -2,8 +2,7 @@ import React from "react"
 import { IconButton, Tooltip, useTheme } from "@mui/material"
 import LightThemeIcon from "@mui/icons-material/Brightness7"
 import DarkThemeIcon from "@mui/icons-material/Brightness4"
-import { useDarkThemeContext } from "../DarkThemeContext/DarkThemeContext";
-
+import { useDarkThemeContext } from "../DarkThemeContext/DarkThemeContext"
 
 const DarkThemeSwitcher = ({ mobile }) => {
   const theme = useTheme() // Ensure this is from @mui/material/styles

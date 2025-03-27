@@ -1,6 +1,6 @@
-import React, { Suspense } from "react";
-import { CircularProgress, Typography, Box } from "@mui/material";
-import YouTube from "react-youtube";
+import React, { Suspense } from "react"
+import { CircularProgress, Typography, Box } from "@mui/material"
+import YouTube from "react-youtube"
 
 const YouTubePlaylist = ({ notMobile, opts }) => {
   return (
@@ -23,7 +23,7 @@ const YouTubePlaylist = ({ notMobile, opts }) => {
         </Box>
       </Suspense>
     </>
-  );
-};
+  )
+}
 
-export default YouTubePlaylist;
+export default YouTubePlaylist

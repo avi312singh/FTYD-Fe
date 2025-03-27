@@ -34,12 +34,7 @@ export default function NotFoundPage() {
           <Typography variant="h5" sx={{ mb: 3 }}>
             Oops, this page doesn’t exist.
           </Typography>
-          <Button
-            component={Link}
-            to="/"
-            variant="contained"
-            color="primary"
-          >
+          <Button component={Link} to="/" variant="contained" color="primary">
             Go Back Home
           </Button>
         </Box>

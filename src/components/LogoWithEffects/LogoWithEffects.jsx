@@ -29,7 +29,8 @@ const LogoWithEffects = ({ darkMode }) => {
       clearTimeout(scrollTimeout.current)
       scrollTimeout.current = setTimeout(() => {
         if (logoRef.current) {
-          logoRef.current.style.transition = "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)"
+          logoRef.current.style.transition =
+            "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)"
           logoRef.current.style.transform = "rotate(0deg)"
         }
       }, 150)

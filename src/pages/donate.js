@@ -22,7 +22,6 @@ export default function Donate() {
   const configViewCountUpdate = {
     method: "put",
     url: `${endpoint}aggregatedStats/pageCount/?page=donate`,
-
   }
 
   const { darkMode } = useDarkThemeContext()
@@ -67,15 +66,15 @@ export default function Donate() {
           article={false}
         />
         <NavDrawer customDrawerWidth={5}>
-        <Box
-          sx={{
-            mb: 3,
-            mt: { xs: 6, sm: 10 },
-            textAlign: { xs: "center", sm: "left" },
-            ml: { xs: 0, sm: "240px" },
-            px: { xs: 2, sm: 0 },
-          }}
-        >
+          <Box
+            sx={{
+              mb: 3,
+              mt: { xs: 6, sm: 10 },
+              textAlign: { xs: "center", sm: "left" },
+              ml: { xs: 0, sm: "240px" },
+              px: { xs: 2, sm: 0 },
+            }}
+          >
             <Typography>
               Please support the server and this site for future content and
               free hosting!

@@ -56,7 +56,10 @@ const DurationPieChart = ({ serverId = "ftyd" }) => {
               label
             >
               {response.map((entry, index) => (
-                <Cell key={`cell-a-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell
+                  key={`cell-a-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
               ))}
             </Pie>
           </PieChart>
@@ -82,7 +85,10 @@ const DurationPieChart = ({ serverId = "ftyd" }) => {
               label
             >
               {response.map((entry, index) => (
-                <Cell key={`cell-b-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell
+                  key={`cell-b-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
               ))}
             </Pie>
           </PieChart>

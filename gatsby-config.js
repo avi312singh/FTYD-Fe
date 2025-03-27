@@ -19,8 +19,7 @@ module.exports = {
   siteMetadata: {
     title: "Fall to Your Death",
     titleTemplate: "%s · The official server website",
-    description:
-      "The official website of the Fall to Your Death server",
+    description: "The official website of the Fall to Your Death server",
     url: "https://falltoyourdeath.net", // No trailing slash allowed!
     image: "process.env.GATSBY_FTYD_IMAGE", // Path to your image you placed in the 'static' folder
   },

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Typography, useTheme } from "@mui/material"
 import useMediaQuery from "@mui/material/useMediaQuery"
-import { useDarkThemeContext } from '../DarkThemeContext/DarkThemeContext';
+import { useDarkThemeContext } from "../DarkThemeContext/DarkThemeContext"
 import "./TypeWriter.css"
 
 const CONSTANTS = {
