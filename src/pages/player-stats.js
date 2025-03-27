@@ -106,10 +106,9 @@ export default function PlayerStats() {
 
   const tableOptions = {
     filterType: "multiselect",
-    rowsPerPage: 100,
-    rowsPerPageOptions: [100, 200, 1000],
     searchPlaceholder: "Search Player",
-    responsive: "standard",
+    responsive: "scrollFullHeight",
+    pagination: true,
     customToolbar: () => (
       <Tooltip title="Refresh">
         <IconButton onClick={refreshButton} disabled={disableRefresh}>
@@ -159,11 +158,9 @@ export default function PlayerStats() {
           columns={columns}
           options={{
             ...tableOptions,
-            pagination: false,
-            rowsPerPage: players.length,
+            pagination: true,
+            rowsPerPage: 100,
             rowsPerPageOptions: [],
-            tableBodyHeight: "75vh",
-            tableBodyMaxHeight: "80vh",
           }}
         />
       ) : (

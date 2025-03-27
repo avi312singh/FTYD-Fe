@@ -28,6 +28,7 @@ import { useDarkThemeContext } from '../DarkThemeContext/DarkThemeContext';
 import usePageTracking from "../../utils/usePageTracking"
 import { useLocation } from "@reach/router"
 import { Link } from "gatsby"
+import LogoWithEffects from "../LogoWithEffects/LogoWithEffects"
 
 const drawerWidth = 240
 
@@ -92,6 +93,25 @@ const NavDrawer = ({ children, window: windowProp }) => {
       </Link>
     </ListItem>
   ))}
+    {/* YouTube Playlist */}
+    <ListItem>
+      <ListItemIcon>
+        <img
+          src="https://img.icons8.com/color/48/youtube-play.png"
+          alt="YouTube"
+          width={24}
+          height={24}
+        />
+      </ListItemIcon>
+      <a
+        href="https://www.youtube.com/watch?v=0FU3iAdJwsU&list=PLqBaHNBE-DBxLB8VfMaaAONaJJ3Jxf5bz&index=1&t=4s&pp=gAQBiAQB8AUB"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ ...linkStyles, display: "block", width: "100%" }}
+      >
+        FTYD Playlist
+      </a>
+    </ListItem>
 
     {/* Join Discord */}
     <ListItem>
@@ -110,26 +130,6 @@ const NavDrawer = ({ children, window: windowProp }) => {
         style={{ ...linkStyles, display: "block", width: "100%" }}
       >
         Join Discord
-      </a>
-    </ListItem>
-
-    {/* YouTube Playlist */}
-    <ListItem>
-      <ListItemIcon>
-        <img
-          src="https://img.icons8.com/color/48/youtube-play.png"
-          alt="YouTube"
-          width={24}
-          height={24}
-        />
-      </ListItemIcon>
-      <a
-        href="https://www.youtube.com/watch?v=0FU3iAdJwsU&list=PLqBaHNBE-DBxLB8VfMaaAONaJJ3Jxf5bz&index=1&t=4s&pp=gAQBiAQB8AUB"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ ...linkStyles, display: "block", width: "100%" }}
-      >
-        FTYD Playlist
       </a>
     </ListItem>
   </List>
@@ -157,15 +157,7 @@ const NavDrawer = ({ children, window: windowProp }) => {
             </IconButton>
             <Typography sx={{ flexGrow: 1 }} variant="h6" noWrap>
             <IconButton component={Link} to="/">
-            <img
-              src={
-                !darkMode
-                  ? "https://images.steamusercontent.com/ugc/16431529707519534/EECE279D61FE0C8ACDD06CE6656E3FE3761304E6/"
-                  : "https://images.steamusercontent.com/ugc/16431529707522218/03639E5FEB003A2E384BC4A17AA9DAB510F8A421/"
-              }
-              alt="FTYD Logo"
-              style={{ height: "40px", borderRadius: "4px" }}
-            />
+            <LogoWithEffects darkMode={darkMode}/>
           </IconButton>
             </Typography>
             <DarkThemeSwitcher mobile={false} />

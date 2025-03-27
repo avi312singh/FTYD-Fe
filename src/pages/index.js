@@ -32,9 +32,13 @@ const Home = () => {
 
   const endpoint = process.env.GATSBY_ENDPOINT
 
+  const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+  const serverId = searchParams?.get("serverId") || "ftyd"; // default to ftyd
+
+
   const config = useMemo(() => ({
     method: "GET",
-    url: `${endpoint}aggregatedStats/topPlayers?serverId=ftyd`,
+    url: `${endpoint}aggregatedStats/topPlayers?serverId=${serverId}`,
     mode: "cors",
   }), [endpoint]);
 
@@ -165,12 +169,16 @@ trophyIcons = trophyIcons.map(icon => encodeURI(icon));
     <Box sx={{ display: "flex" }}>
       <NavDrawer sx={{ position: "fixed", top: 0, left: 0, height: "100vh", zIndex: 1200 }} />
       <Box component="main" sx={{ flexGrow: 1, padding: theme.spacing(3), marginLeft: notMobile && "240px", marginTop: theme.spacing(3) }}>
-        <Seo
-          title="Fall to Your Death | Official Website"
-          description="Welcome to the website of the iconic Fall to your Death server. Enjoy your stay!"
-          image="\static\images\ftyd.jpg"
-          article={false}
-        />
+      <Seo
+        title={serverId === "lasersword" ? "Laser Sword | Official Website" : "Fall to Your Death | Official Website"}
+        description={
+          serverId === "lasersword"
+            ? "Welcome to the website of the Laser Sword server. Enjoy your stay!"
+            : "Welcome to the website of the iconic Fall to your Death server. Enjoy your stay!"
+        }
+        image={serverId === "lasersword" ? "/static/images/lasersword.jpg" : "/static/images/ftyd.jpg"}
+        article={false}
+      />
         <TypeWriter
           sx={{ height: "100%" }}
           messages={[
@@ -191,12 +199,19 @@ trophyIcons = trophyIcons.map(icon => encodeURI(icon));
           ]}
         />
         {!chivSteamBrowser ? (
-          <Typography variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
-            To the official website of the Fall to your Death server
+          <Typography
+            variant={notMobile ? "h4" : "h6"}
+            component={notMobile ? "h4" : "h6"}
+          >
+            To the official website of the {serverId === "lasersword" ? "Laser Sword" : "Fall to Your Death"} server
           </Typography>
         ) : (
-          <Typography gutter variant={notMobile ? "h4" : "h6"} component={notMobile ? "h4" : "h6"}>
-            To the official website of the Fall to your Death server
+          <Typography
+            variant={notMobile ? "h4" : "h6"}
+            component={notMobile ? "h4" : "h6"}
+            gutterBottom
+          >
+            To the official website of the {serverId === "lasersword" ? "Laser Sword" : "Fall to Your Death"} server
           </Typography>
         )}
         {chivSteamBrowser && (
@@ -224,15 +239,15 @@ trophyIcons = trophyIcons.map(icon => encodeURI(icon));
                 : "linear-gradient(90deg, #ff8a00, #e52e71, #ff2e2e, #ff8a00)",
               backgroundSize: "200% 100%",
               transform: "translateX(-50%)",
-              transition: "all 0.4s ease-in-out", // ✅ Smooth transition effect
+              transition: "all 0.4s ease-in-out",
             },
             "&:hover::after": {
-              width: "100%", // ✅ Grows from 50% to 100% on hover
+              width: "100%",
             },
           }}
           gutterBottom
         >
-          Players of the Week
+          {serverId === "lasersword" ? "Top Warriors of the Week" : "Players of the Week"}
         </Typography>
         <Carousel interval={8000} stopAutoPlayOnHover={false}>
     {items.map((item, i) => {
@@ -360,9 +375,7 @@ trophyIcons = trophyIcons.map(icon => encodeURI(icon));
               {item.name}
             </Typography>
           </Box>
-
-
-            <Typography variant={notMobile ? "h5" : "body1"}>Kills: {item.kills}</Typography>
+            <Typography variant={notMobile ? "h5" : "body1"}>{serverId === "lasersword" ? "Score" : "Kills"}: {item.kills}</Typography>
           </Box>
         </Paper>
       )
