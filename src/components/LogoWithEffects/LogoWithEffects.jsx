@@ -2,6 +2,9 @@ import React, { useEffect, useRef } from "react"
 import { Box, IconButton } from "@mui/material"
 import { Link } from "gatsby"
 
+import darkModeChivalry from "/static/images/favicon_dark.webp"
+import lightModeChivalry from "/static/images/favicon_light.webp"
+
 const LogoWithEffects = ({ darkMode }) => {
   const logoRef = useRef()
   const lastScroll = useRef(0)
@@ -29,9 +32,22 @@ const LogoWithEffects = ({ darkMode }) => {
       clearTimeout(scrollTimeout.current)
       scrollTimeout.current = setTimeout(() => {
         if (logoRef.current) {
-          logoRef.current.style.transition =
-            "transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)"
-          logoRef.current.style.transform = "rotate(0deg)"
+          // Wobble sequence (decreasing angles)
+          const logo = logoRef.current
+          const sequence = [8, -5, 3, -1.5, 0]
+          let i = 0
+
+          const wobble = () => {
+            if (!logo) return
+            logo.style.transition = "transform 0.15s ease-out"
+            logo.style.transform = `rotate(${sequence[i]}deg)`
+            i++
+            if (i < sequence.length) {
+              setTimeout(wobble, 100)
+            }
+          }
+
+          wobble()
         }
       }, 150)
 
@@ -51,11 +67,7 @@ const LogoWithEffects = ({ darkMode }) => {
       <IconButton component={Link} to="/" sx={{ p: 0 }}>
         <img
           ref={logoRef}
-          src={
-            !darkMode
-              ? "https://images.steamusercontent.com/ugc/16431529707519534/EECE279D61FE0C8ACDD06CE6656E3FE3761304E6/"
-              : "https://images.steamusercontent.com/ugc/16431529707522218/03639E5FEB003A2E384BC4A17AA9DAB510F8A421/"
-          }
+          src={darkMode ? darkModeChivalry : lightModeChivalry}
           alt="FTYD Logo"
           style={{ height: "40px", borderRadius: "4px" }}
         />
