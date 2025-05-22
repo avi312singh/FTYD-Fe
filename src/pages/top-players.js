@@ -132,6 +132,11 @@ export default function TopPlayers() {
               responsive: "standard",
               selectableRows: "none",
               pagination: false, // ✅ Disabled
+              textLabels: {
+                body: {
+                  noMatch: "No top players so far this week :(",
+                },
+              },
               filter: false,
               download: false,
               viewColumns: false,
